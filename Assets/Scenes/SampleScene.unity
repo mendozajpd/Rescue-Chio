@@ -962,57 +962,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52e70352a487ea4d8b213f4185a0291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerControls:
-    m_Name: Player Controls
+  _anim: {fileID: 0}
+  _sprite: {fileID: 0}
+  _move:
+    m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 509256eb-30be-42c4-b58f-0f9cdb175c3d
+    m_Id: 1b39d8b9-13db-4941-a8b4-307adf47e916
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: WASD
-      m_Id: d3e68f95-f58d-4e74-b658-5fc17f32bc4f
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 4
-    - m_Name: up
-      m_Id: b974a2bc-13dd-4eee-b8eb-1e652f39b87c
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 9eab172b-8913-4906-b269-42d4d5dd9c67
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 6ee39849-b074-45e5-baaa-20429daeeba4
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 875db61c-9d9e-4eaf-921f-ec504b76c54a
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
+    m_SingletonActionBindings: []
     m_Flags: 0
-  _anim: {fileID: 0}
+  _dash:
+    m_Name: Dash
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: bc28e6a3-461b-46ca-9708-93266fce999e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   _moveSpeed: 5
+  _dashCooldown: 0.5
+  _dashDuration: 0.15
+  _dashSpeed: 17
 --- !u!58 &1506409099
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1049,7 +1022,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &1779804878
 GameObject:
   m_ObjectHideFlags: 0
