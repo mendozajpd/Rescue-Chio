@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Animator _anim;
-    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Animator anim;
+    [SerializeField] private SpriteRenderer sprite;
     private Rigidbody2D _rb;
 
     // Input System Variables
-    [SerializeField] private PlayerControls _playerControls;
-    [SerializeField] private InputAction _move;
-    [SerializeField] private InputAction _dash;
+    [SerializeField] private PlayerControls playerControls;
+    [SerializeField] private InputAction move;
+    [SerializeField] private InputAction dash;
 
     // MouseLocation
     private float _mouseLocation;
@@ -21,25 +21,36 @@ public class PlayerController : MonoBehaviour
     private Vector2 _mouseDir;
 
     // Movespeed related
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float moveSpeed;
     // Direction
     private Vector2 moveDirection;
 
     // Dash Variables
-    [SerializeField] private float _dashCooldown;
-    [SerializeField] private float _dashDuration;
-    [SerializeField] private float _dashSpeed;
+    [SerializeField] DashStatsSO dashStats;
+    private float _dashCooldown;
+    private float _dashDuration;
+    private float _dashSpeed;
     private Vector2 _dashDirection;
     private float _dashCooldownTime;
     private float _dashTime;
 
+    // Dash Animation Variables
+    //[SerializeField] private bool hasAnim;
+    //[SerializeField] private float baseValue;
+    //[SerializeField] private float targetValue = 1;
+    //[SerializeField] private float lerpSpeed = 3.5f;
+    private float _currentValue;
+
+
+
+
 
     private void Awake()
     {
-        _playerControls = new PlayerControls();
+        playerControls = new PlayerControls();
         _rb = GetComponent<Rigidbody2D>();
-        _anim = GetComponentInChildren<Animator>();
-        _sprite = GetComponentInChildren<SpriteRenderer>();
+        anim = GetComponentInChildren<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
     void Start()
     {
@@ -48,24 +59,30 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        moveDirection = _move.ReadValue<Vector2>();
-
         anim_RunHandler();
         _spriteFlipper();
-        _dashHandler();
+
+        if (dashStats != null)
+        {
+            _setDashStats(dashStats);
+            _dashHandler();
+        }
+
 
 
     }
 
     private void anim_RunHandler()
     {
+        moveDirection = move.ReadValue<Vector2>();
+
         if (moveDirection.magnitude > 0)
         {
-            _anim.SetBool("isRunning", true);
+            anim.SetBool("isRunning", true);
         }
         else
         {
-            _anim.SetBool("isRunning", false);
+            anim.SetBool("isRunning", false);
         }
     }
 
@@ -77,12 +94,12 @@ public class PlayerController : MonoBehaviour
         {
             if (_mouseLocation > 0)
             {
-                _sprite.flipX = true;
+                sprite.flipX = true;
             }
 
             if (_mouseLocation < 0)
             {
-                _sprite.flipX = false;
+                sprite.flipX = false;
             }
         }
     }
@@ -91,7 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_dashTime <= 0)
         {
-            _rb.velocity = new Vector2(moveDirection.x * _moveSpeed, moveDirection.y * _moveSpeed);
+            _rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
         } else
         {
             _dashMovement();
@@ -102,16 +119,16 @@ public class PlayerController : MonoBehaviour
     #region InputControls
     private void OnEnable()
     {
-        _move = _playerControls.Player.Move;
-        _dash = _playerControls.Player.Dash;
-        _move.Enable();
-        _dash.Enable();
+        move = playerControls.Player.Move;
+        dash = playerControls.Player.Dash;
+        move.Enable();
+        dash.Enable();
     }
 
     private void OnDisable()
     {
-        _move.Disable();
-        _dash.Disable();
+        move.Disable();
+        dash.Disable();
     }
     #endregion
 
@@ -125,6 +142,13 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Dash
+
+    private void _setDashStats(DashStatsSO DashStats)
+    {
+        _dashCooldown = DashStats.DashCooldown;
+        _dashDuration = DashStats.DashDuration;
+        _dashSpeed = DashStats.DashSpeed;
+    }
     private void _dashDurationTimer()
     {
         if (_dashTime > 0)
@@ -150,28 +174,33 @@ public class PlayerController : MonoBehaviour
             _dashCooldownTimer();
         }
 
-        if (_dash.triggered && _dashTime <= 0 && _dashCooldownTime <= 0 )
+        if (dash.triggered && _dashTime <= 0 && _dashCooldownTime <= 0 )
         {
-            if (_move.ReadValue<Vector2>().magnitude > 0)
+            if (move.ReadValue<Vector2>().magnitude > 0)
             {
-                _dashDirection = _move.ReadValue<Vector2>().normalized;
+                _dashDirection = move.ReadValue<Vector2>().normalized;
             } else
             {
                 _dashDirection = _mouseDir.normalized;
             }
 
+            if (dashStats.hasAnim) _currentValue = dashStats.baseValue;
             _dashTime = _dashDuration;
         }
 
         if (_dashTime > 0)
         {
-            _anim.SetBool("isDashing", true);
+            anim.SetBool("isDashing", true);
+            if (dashStats.hasAnim)
+            {
+                _dashAnimation();
+            }
         }
 
-        if (_dashTime <= 0 && _anim.GetBool("isDashing"))
+        if (_dashTime <= 0 && anim.GetBool("isDashing"))
         {
             _dashCooldownTime = _dashCooldown;
-            _anim.SetBool("isDashing", false);
+            anim.SetBool("isDashing", false);
         }
 
     }
@@ -182,6 +211,14 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = _dashDirection * _dashSpeed;
         }
+    }
+
+    private void _dashAnimation()
+    {
+        _currentValue = Mathf.MoveTowards(_currentValue, dashStats.targetValue, dashStats.lerpSpeed * Time.deltaTime);
+
+        sprite.gameObject.transform.localScale = new Vector2(sprite.gameObject.transform.localScale.x, _currentValue);
+
     }
     #endregion
 }

@@ -962,30 +962,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52e70352a487ea4d8b213f4185a0291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _anim: {fileID: 0}
-  _sprite: {fileID: 0}
-  _move:
+  anim: {fileID: 0}
+  sprite: {fileID: 0}
+  move:
     m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 1b39d8b9-13db-4941-a8b4-307adf47e916
+    m_Id: 936df769-54c3-4b4b-a51f-dd90e6253e12
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _dash:
+  dash:
     m_Name: Dash
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: bc28e6a3-461b-46ca-9708-93266fce999e
+    m_Id: 8f3df291-6b6f-40b5-9899-28c21826e939
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _moveSpeed: 5
-  _dashCooldown: 0.5
-  _dashDuration: 0.15
-  _dashSpeed: 17
+  moveSpeed: 5
+  dashStats: {fileID: 11400000, guid: 9afcc65a029f46e4c9db031ae4982adc, type: 2}
 --- !u!58 &1506409099
 CircleCollider2D:
   m_ObjectHideFlags: 0
