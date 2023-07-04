@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     // Dash Variables
     [SerializeField] DashStatsSO dashStats;
+    private AudioClip _dashSound;
     private float _dashCooldown;
     private float _dashDuration;
     private float _dashSpeed;
@@ -35,13 +36,14 @@ public class PlayerController : MonoBehaviour
     private float _dashTime;
 
     // Dash Animation Variables
-    //[SerializeField] private bool hasAnim;
-    //[SerializeField] private float baseValue;
-    //[SerializeField] private float targetValue = 1;
-    //[SerializeField] private float lerpSpeed = 3.5f;
     private float _currentValue;
 
+    // Particle System Variables - AFTERIMAGES
+    [SerializeField] private ParticleSystem PS_afterimages;
+    private ParticleSystem.EmissionModule afterimages;
 
+    // Audio
+    [SerializeField] private AudioSource audioSource;
 
 
 
@@ -51,6 +53,8 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        afterimages = PS_afterimages.emission;
+        audioSource = GetComponent<AudioSource>();
     }
     void Start()
     {
@@ -68,8 +72,31 @@ public class PlayerController : MonoBehaviour
             _dashHandler();
         }
 
+        if (PS_afterimages != null)
+        {
+            _showAfterimages();
+        }
 
 
+    }
+
+    private void _showAfterimages()
+    {
+        
+        if (_rb.velocity.magnitude > 10)
+        {
+            if (sprite.flipX)
+            {
+                PS_afterimages.gameObject.transform.localScale = new Vector2(-1,PS_afterimages.gameObject.transform.localScale.y);
+            } else
+            {
+                PS_afterimages.gameObject.transform.localScale = new Vector2(1,PS_afterimages.gameObject.transform.localScale.y);
+            }
+            afterimages.rateOverTime = 20;
+        } else
+        {
+            afterimages.rateOverTime = 0;
+        }
     }
 
     private void anim_RunHandler()
@@ -108,12 +135,18 @@ public class PlayerController : MonoBehaviour
     {
         if (_dashTime <= 0)
         {
-            _rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-        } else
+            _moveCharacter();
+        }
+        else
         {
             _dashMovement();
         }
 
+    }
+
+    private void _moveCharacter()
+    {
+        _rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
     }
 
     #region InputControls
@@ -148,6 +181,8 @@ public class PlayerController : MonoBehaviour
         _dashCooldown = DashStats.DashCooldown;
         _dashDuration = DashStats.DashDuration;
         _dashSpeed = DashStats.DashSpeed;
+        _dashSound = DashStats.DashSound;
+        audioSource.clip = _dashSound;
     }
     private void _dashDurationTimer()
     {
@@ -185,6 +220,7 @@ public class PlayerController : MonoBehaviour
             }
 
             if (dashStats.hasAnim) _currentValue = dashStats.baseValue;
+            audioSource.Play();
             _dashTime = _dashDuration;
         }
 
@@ -209,7 +245,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_dashTime > 0)
         {
-            _rb.velocity = _dashDirection * _dashSpeed;
+            _rb.velocity = _dashDirection * _dashSpeed * (moveSpeed * 0.2f);
         }
     }
 

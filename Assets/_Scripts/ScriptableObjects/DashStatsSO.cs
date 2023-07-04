@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DashStats", menuName = "ScriptableObjects/DashStats")]
 public class DashStatsSO : ScriptableObject
 {
+    public AudioClip DashSound;
     public string DashName;
     public float DashCooldown;
     public float DashDuration;
