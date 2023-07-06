@@ -92,10 +92,10 @@ public class PlayerController : MonoBehaviour
             {
                 PS_afterimages.gameObject.transform.localScale = new Vector2(1,PS_afterimages.gameObject.transform.localScale.y);
             }
-            afterimages.rateOverTime = 20;
+            afterimages.enabled = true;
         } else
         {
-            afterimages.rateOverTime = 0;
+            afterimages.enabled = false;
         }
     }
 
