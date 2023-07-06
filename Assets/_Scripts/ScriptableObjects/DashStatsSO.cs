@@ -6,6 +6,7 @@ using UnityEngine;
 public class DashStatsSO : ScriptableObject
 {
     public AudioClip DashSound;
+    public GameObject DashParticles;
     public string DashName;
     public float DashCooldown;
     public float DashDuration;

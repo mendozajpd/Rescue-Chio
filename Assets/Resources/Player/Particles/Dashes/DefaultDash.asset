@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DefaultDash
   m_EditorClassIdentifier: 
   DashSound: {fileID: 8300000, guid: f6737bac38b78524ca2ec26f48618332, type: 3}
+  DashParticles: {fileID: 4946359925864294399, guid: c5f127799946153489f2d9e5831aa4b9, type: 3}
   DashName: Default
   DashCooldown: 0.5
   DashDuration: 0.15

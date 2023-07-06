@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
 
     // Dash Variables
-    [SerializeField] DashStatsSO dashStats;
+    [SerializeField] private DashStatsSO dashStats;
     private AudioClip _dashSound;
     private float _dashCooldown;
     private float _dashDuration;
@@ -34,16 +35,37 @@ public class PlayerController : MonoBehaviour
     private Vector2 _dashDirection;
     private float _dashCooldownTime;
     private float _dashTime;
+    public DashStatsSO DashStats 
+    { 
+        get => dashStats;
+        set
+        {
+            // Destroy previous particles
+            dashStats = value;
+            // Set new dashstats
+            _setDashStats(dashStats);
+            // Instantiate new dash particles
 
-    // Dash Animation Variables
+        }
+    }
+
+    // Dash Actions
+    public Action hasDashed;
+    public Action hasStoppedDashing;
+
+    // Changes DashStats Whenever it is changed
+
+    // Dash Animation Variables - SCALE PLAYER
     private float _currentValue;
 
-    // Particle System Variables - AFTERIMAGES
-    [SerializeField] private ParticleSystem PS_afterimages;
-    private ParticleSystem.EmissionModule afterimages;
+    // Dash Particle System Variables
+
+    //[SerializeField] private ParticleSystem PS_afterimages;
+    //private ParticleSystem.EmissionModule afterimages;
 
     // Audio
     [SerializeField] private AudioSource audioSource;
+
 
 
 
@@ -53,8 +75,10 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        afterimages = PS_afterimages.emission;
         audioSource = GetComponent<AudioSource>();
+        //afterimages = PS_afterimages.emission;
+
+        if (dashStats != null) _setDashStats(dashStats);
     }
     void Start()
     {
@@ -68,36 +92,35 @@ public class PlayerController : MonoBehaviour
 
         if (dashStats != null)
         {
-            _setDashStats(dashStats);
             _dashHandler();
         }
 
-        if (PS_afterimages != null)
-        {
-            _showAfterimages();
-        }
+        //if (PS_afterimages != null)
+        //{
+        //    _showAfterimages();
+        //}
 
 
     }
 
-    private void _showAfterimages()
-    {
+    //private void _showAfterimages()
+    //{
         
-        if (_rb.velocity.magnitude > 10)
-        {
-            if (sprite.flipX)
-            {
-                PS_afterimages.gameObject.transform.localScale = new Vector2(-1,PS_afterimages.gameObject.transform.localScale.y);
-            } else
-            {
-                PS_afterimages.gameObject.transform.localScale = new Vector2(1,PS_afterimages.gameObject.transform.localScale.y);
-            }
-            afterimages.enabled = true;
-        } else
-        {
-            afterimages.enabled = false;
-        }
-    }
+    //    if (_rb.velocity.magnitude > 10)
+    //    {
+    //        if (sprite.flipX)
+    //        {
+    //            PS_afterimages.gameObject.transform.localScale = new Vector2(-1,PS_afterimages.gameObject.transform.localScale.y);
+    //        } else
+    //        {
+    //            PS_afterimages.gameObject.transform.localScale = new Vector2(1,PS_afterimages.gameObject.transform.localScale.y);
+    //        }
+    //        afterimages.enabled = true;
+    //    } else
+    //    {
+    //        afterimages.enabled = false;
+    //    }
+    //}
 
     private void anim_RunHandler()
     {
@@ -183,6 +206,7 @@ public class PlayerController : MonoBehaviour
         _dashSpeed = DashStats.DashSpeed;
         _dashSound = DashStats.DashSound;
         audioSource.clip = _dashSound;
+        Instantiate(DashStats.DashParticles, gameObject.transform);
     }
     private void _dashDurationTimer()
     {
@@ -221,6 +245,7 @@ public class PlayerController : MonoBehaviour
 
             if (dashStats.hasAnim) _currentValue = dashStats.baseValue;
             audioSource.Play();
+            hasDashed?.Invoke();
             _dashTime = _dashDuration;
         }
 
@@ -235,6 +260,7 @@ public class PlayerController : MonoBehaviour
 
         if (_dashTime <= 0 && anim.GetBool("isDashing"))
         {
+            hasStoppedDashing?.Invoke();
             _dashCooldownTime = _dashCooldown;
             anim.SetBool("isDashing", false);
         }
