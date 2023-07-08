@@ -57,12 +57,20 @@ public class MeleeWeapon : Weapon
 
     void Update()
     {
-        _swingWeapon();
+        //_weaponSwingHandler();
         _rotateWeaponAroundAnchor();
     }
 
-
     private void _swingWeapon()
+    {
+        if (swinging) return;
+
+        // Attack
+        _swing *= -1;
+        swinging = true;
+    }
+
+    private void _weaponSwingHandler()
     {
         _determineSwingDirection();
 
@@ -72,7 +80,7 @@ public class MeleeWeapon : Weapon
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
         if (Mathf.Abs(t - target.z) < 5 && swinging)
         {
-            _swing *= -1;
+            //_swing *= -1; // Double Swing
             swinging = false;
         }
         transform.localRotation = Quaternion.Euler(target);
@@ -127,14 +135,6 @@ public class MeleeWeapon : Weapon
 
     }
 
-    private void _spriteFlipper()
-    {
-        if (_mousePos.x < 0)
-        {
-            sprite.flipX = false;
-        }
-    }
-
     private void _rotateWeaponAroundAnchor()
     {
         _getMousePosition();
@@ -154,11 +154,7 @@ public class MeleeWeapon : Weapon
     {
         Debug.Log("Firee");
 
-        if (swinging) return;
-
-        // Attack
-        _swing *= -1;
-        swinging = true;
+        //_swingWeapon();
     }
 
 }
