@@ -267,7 +267,7 @@
                     "name": "",
                     "id": "f40ef1dc-d405-42f0-8d43-7373271f0f5e",
                     "path": "<Keyboard>/leftShift",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Dash",

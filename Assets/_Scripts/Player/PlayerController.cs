@@ -11,9 +11,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
 
     // Input System Variables
-    [SerializeField] private PlayerControls playerControls;
+    [SerializeField] private PlayerInputActions playerControls;
     [SerializeField] private InputAction move;
     [SerializeField] private InputAction dash;
+    [SerializeField] private InputAction fire;
 
     // MouseLocation
     private float _mouseLocation;
@@ -60,8 +61,6 @@ public class PlayerController : MonoBehaviour
 
     // Dash Particle System Variables
 
-    //[SerializeField] private ParticleSystem PS_afterimages;
-    //private ParticleSystem.EmissionModule afterimages;
 
     // Audio
     [SerializeField] private AudioSource audioSource;
@@ -71,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
+        playerControls = new PlayerInputActions();
         _rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -95,32 +94,10 @@ public class PlayerController : MonoBehaviour
             _dashHandler();
         }
 
-        //if (PS_afterimages != null)
-        //{
-        //    _showAfterimages();
-        //}
 
 
     }
 
-    //private void _showAfterimages()
-    //{
-        
-    //    if (_rb.velocity.magnitude > 10)
-    //    {
-    //        if (sprite.flipX)
-    //        {
-    //            PS_afterimages.gameObject.transform.localScale = new Vector2(-1,PS_afterimages.gameObject.transform.localScale.y);
-    //        } else
-    //        {
-    //            PS_afterimages.gameObject.transform.localScale = new Vector2(1,PS_afterimages.gameObject.transform.localScale.y);
-    //        }
-    //        afterimages.enabled = true;
-    //    } else
-    //    {
-    //        afterimages.enabled = false;
-    //    }
-    //}
 
     private void anim_RunHandler()
     {
@@ -177,9 +154,14 @@ public class PlayerController : MonoBehaviour
     {
         move = playerControls.Player.Move;
         dash = playerControls.Player.Dash;
+        fire = playerControls.Player.Fire;
+
         move.Enable();
         dash.Enable();
+        fire.Enable();
+
     }
+
 
     private void OnDisable()
     {
