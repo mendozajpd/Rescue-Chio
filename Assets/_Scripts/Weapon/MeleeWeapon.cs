@@ -10,8 +10,7 @@ public class MeleeWeapon : Weapon
     // Weapon Rotation Variables
     [SerializeField] private float totalAtkSpeed;
     [SerializeField] private float weaponAngle;
-    private float _angleRotation;
-    private float _angleOfTheWeapon = -90;
+    private float angleOfTheWeapon = 90;
     private GameObject _anchor;
     private Vector2 _mousePos;
     private Vector3 target;
@@ -19,10 +18,9 @@ public class MeleeWeapon : Weapon
     private float _angle;
     private float _swing = 1;
 
-    // Weapon Flipping Variables
-    [SerializeField] private float weaponScaleX;
-    [SerializeField] private bool meleeIsFlipped;
 
+    // Weapon Direction Variables
+    [SerializeField] private bool isLookingLeft;
 
     private bool swinging;
 
@@ -59,10 +57,6 @@ public class MeleeWeapon : Weapon
 
     void Update()
     {
-        if (!swinging)
-        {
-            _weaponFlipper();
-        }
         _swingWeapon();
         _rotateWeaponAroundAnchor();
     }
@@ -70,17 +64,75 @@ public class MeleeWeapon : Weapon
 
     private void _swingWeapon()
     {
+        _determineSwingDirection();
+
         // Weapon Swing
-        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (_angleOfTheWeapon), Time.deltaTime * totalAtkSpeed);
+        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * totalAtkSpeed);
         float t = _swing == 1 ? 0 : -225;
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
-        if (Mathf.Abs(t - target.z) < 5 && swinging) 
+        if (Mathf.Abs(t - target.z) < 5 && swinging)
         {
+            _swing *= -1;
             swinging = false;
         }
         transform.localRotation = Quaternion.Euler(target);
+        
+
+    }
+
+    private void _determineSwingDirection()
+    {
+        // Looking Left
+        if (_mousePos.x < 0)
+        {
+            if (_swing == 1 && !swinging)
+            {
+                sprite.flipX = false;
+            } else if (_swing == -1 && !swinging)
+            {
+                sprite.flipX = true;
+            }
+
+            if (!isLookingLeft)
+            {
+                _swing = -1;
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                isLookingLeft = true;
+            }
 
 
+        }
+
+
+        // Looking Right
+        if (_mousePos.x > 0)
+        {
+            if (_swing == 1 && !swinging)
+            {
+                sprite.flipX = true;
+            }
+            else if (_swing == -1 && !swinging)
+            {
+                sprite.flipX = false;
+            }
+
+            if (isLookingLeft)
+            {
+                _swing = 1;
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                isLookingLeft = false;
+            }
+
+        }
+
+    }
+
+    private void _spriteFlipper()
+    {
+        if (_mousePos.x < 0)
+        {
+            sprite.flipX = false;
+        }
     }
 
     private void _rotateWeaponAroundAnchor()
@@ -90,37 +142,6 @@ public class MeleeWeapon : Weapon
         Vector3 rotation = _anchor.transform.eulerAngles;
         rotation.z = _angle + _swingAngle;
         _anchor.transform.eulerAngles = rotation;
-    }
-
-    private void _weaponFlipper()
-    {
-        weaponScaleX = _mousePos.x < 0 ? -1 : 1;
-        // when looking left
-        if (_mousePos.x < 0 && !meleeIsFlipped)
-        {
-            // flip weapon
-            sprite.flipX = false;
-            // move position of weapon gameobject
-            if (transform.localScale.x > 0)
-            {
-                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-            }
-            // change the swing of rotation of the swing
-            //_swing *= 1;
-
-            meleeIsFlipped = true;
-        }
-
-        // looking right
-        if (_mousePos.x > 0 && meleeIsFlipped)
-        {
-            sprite.flipX = true;
-            if (transform.localScale.x < 0)
-            {
-                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-            }
-            meleeIsFlipped = false;
-        }
     }
 
 
