@@ -18,36 +18,65 @@ public class MeleeWeapon : Weapon
     private float _angle;
     private float _swing = 1;
 
+    // Type of Attack
+    [SerializeField] private bool isUsingSwingAttack;
+    [SerializeField] private bool isUsingThrustAttack;
+    private int _currentWeapon = 1;
+
 
     // Weapon Direction Variables
     [SerializeField] private bool isLookingLeft;
 
     private bool swinging;
 
-    // Weapon Sprite Variables
-    [SerializeField] private SpriteRenderer sprite;
+    // On Variable Change Using Swinging
+    public bool IsUsingSwingAttack 
+    { 
+        get => isUsingSwingAttack;
+        set 
+        { 
+            isUsingSwingAttack = value;
+            if (isUsingSwingAttack)
+            {
+                _setSwingingPosition();
+            }
 
+            if (!isUsingSwingAttack)
+            {
+                _setThrustingPosition();
+            }
+            _swingAngle = 0;           
+        }
+    }
 
     private void Awake()
     {
         _anchor = gameObject.transform.gameObject;
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        Sprite = GetComponentInChildren<SpriteRenderer>();
+
 
         // Input System Variables
 
         playerControls = new PlayerInputActions();
         Fire = playerControls.Player.Fire;
+        ChangeAttack = playerControls.Player.ChangeAttack;
     }
 
     private void OnEnable()
     {
         Fire.Enable();
         Fire.performed += Attack;
+
+        ChangeAttack.Enable();
+        ChangeAttack.performed += ChangeCurrentAttack;
     }
 
     private void OnDisable()
     {
+        Fire.performed -= Attack;
         Fire.Disable();
+        ChangeAttack.performed -= ChangeCurrentAttack;
+        ChangeAttack.Disable();
     }
 
     void Start()
@@ -57,8 +86,29 @@ public class MeleeWeapon : Weapon
 
     void Update()
     {
-        //_weaponSwingHandler();
+        _weaponSpriteFlipper();
+        _weaponAttackHandler();
         _rotateWeaponAroundAnchor();
+    }
+
+    private void _weaponAttackHandler()
+    {
+
+        if (isUsingSwingAttack)
+        {
+            _getSwingAngle();
+            _calculateWeaponSwingTrajectory();
+        }
+
+
+    }
+
+    #region Weapon Swing Functions
+
+    private void _setSwingingPosition()
+    {
+        transform.localPosition = new Vector2(0, 0.5f);
+        Sprite.transform.localPosition = new Vector2(0.5f, 0.15f);
     }
 
     private void _swingWeapon()
@@ -70,12 +120,9 @@ public class MeleeWeapon : Weapon
         swinging = true;
     }
 
-    private void _weaponSwingHandler()
+    private void _calculateWeaponSwingTrajectory()
     {
-        _determineSwingDirection();
-
         // Weapon Swing
-        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * totalAtkSpeed);
         float t = _swing == 1 ? 0 : -225;
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
         if (Mathf.Abs(t - target.z) < 5 && swinging)
@@ -84,24 +131,34 @@ public class MeleeWeapon : Weapon
             swinging = false;
         }
         transform.localRotation = Quaternion.Euler(target);
-        
 
     }
 
-    private void _determineSwingDirection()
+    private void _getSwingAngle()
+    {
+        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * totalAtkSpeed);
+    }
+
+    #endregion
+
+    #region Weapon Thrust Functions
+    private void _setThrustingPosition()
+    {
+        transform.localPosition = new Vector2(0, 0.3f);
+        Sprite.transform.localPosition = new Vector2(0, 0.3f);
+    }
+
+    #endregion
+
+    #region Sprite Flipper
+    private void _weaponSpriteFlipper()
     {
         // Looking Left
         if (_mousePos.x < 0)
         {
-            if (_swing == 1 && !swinging)
-            {
-                sprite.flipX = false;
-            } else if (_swing == -1 && !swinging)
-            {
-                sprite.flipX = true;
-            }
+            //_flipSpriteLookingLeft();
 
-            if (!isLookingLeft)
+            if (!isLookingLeft && !swinging)
             {
                 _swing = -1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
@@ -115,16 +172,9 @@ public class MeleeWeapon : Weapon
         // Looking Right
         if (_mousePos.x > 0)
         {
-            if (_swing == 1 && !swinging)
-            {
-                sprite.flipX = true;
-            }
-            else if (_swing == -1 && !swinging)
-            {
-                sprite.flipX = false;
-            }
+            //_flipSpriteLookingRight();
 
-            if (isLookingLeft)
+            if (isLookingLeft && !swinging)
             {
                 _swing = 1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
@@ -135,6 +185,34 @@ public class MeleeWeapon : Weapon
 
     }
 
+
+
+    private void _flipSpriteLookingRight()
+    {
+        if (_swing == 1 && !swinging)
+        {
+            Sprite.flipX = true;
+        }
+        else if (_swing == -1 && !swinging)
+        {
+            Sprite.flipX = false;
+        }
+    }
+
+    private void _flipSpriteLookingLeft()
+    {
+        if (_swing == 1 && !swinging)
+        {
+            Sprite.flipX = false;
+        }
+        else if (_swing == -1 && !swinging)
+        {
+            Sprite.flipX = true;
+        }
+    }
+    #endregion
+
+
     private void _rotateWeaponAroundAnchor()
     {
         _getMousePosition();
@@ -143,7 +221,6 @@ public class MeleeWeapon : Weapon
         rotation.z = _angle + _swingAngle;
         _anchor.transform.eulerAngles = rotation;
     }
-
 
     private void _getMousePosition()
     {
@@ -154,7 +231,30 @@ public class MeleeWeapon : Weapon
     {
         Debug.Log("Firee");
 
-        //_swingWeapon();
+        if (isUsingSwingAttack)
+        {
+            _swingWeapon();
+        }
+    }
+
+    private void ChangeCurrentAttack(InputAction.CallbackContext context)
+    {
+        if (!swinging)
+        {
+            _currentWeapon *= -1;
+
+            switch (_currentWeapon)
+            {
+                case 1:
+                    IsUsingSwingAttack = true;
+                    break;
+                case -1:
+                    IsUsingSwingAttack = false;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 }

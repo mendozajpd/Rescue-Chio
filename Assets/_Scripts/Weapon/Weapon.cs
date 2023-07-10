@@ -13,11 +13,16 @@ public abstract class Weapon : MonoBehaviour
     //Input System Variables
     public PlayerInputActions playerControls;
     public InputAction Fire;
+    public InputAction ChangeAttack;
+
+    // Weapon Sprite
+    public SpriteRenderer Sprite;
+
 
 
     private void Awake()
     {
-
+        Sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void UseTimer()

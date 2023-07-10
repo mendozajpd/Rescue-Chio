@@ -1070,6 +1070,8 @@ MonoBehaviour:
     m_Flags: 0
   totalAtkSpeed: 36.3
   weaponAngle: 90
+  isUsingSwingAttack: 0
+  isUsingThrustAttack: 0
   isLookingLeft: 0
   sprite: {fileID: 0}
 --- !u!1 &1506409096
@@ -1142,10 +1144,10 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   fire:
-    m_Name: 
+    m_Name: Fire
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: 232ee4db-1a6f-4d47-96af-5bf1eed18e5e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
