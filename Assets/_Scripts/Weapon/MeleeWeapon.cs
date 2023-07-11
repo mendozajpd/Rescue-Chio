@@ -14,9 +14,19 @@ public class MeleeWeapon : Weapon
     private GameObject _anchor;
     private Vector2 _mousePos;
     private Vector3 target;
+
+    // Melee Swing Variables
     private float _swingAngle;
     private float _angle;
     private float _swing = 1;
+
+    // Melee Thrust Variables
+    [SerializeField] private Vector2 targetThrustPosition;
+    [SerializeField] private float thrustDistance;
+    [SerializeField] private float currentThrustPosition;
+    [SerializeField] private float thrustSpeed;
+    [SerializeField] private float thrust;
+    
 
     // Type of Attack
     [SerializeField] private bool isUsingSwingAttack;
@@ -27,7 +37,11 @@ public class MeleeWeapon : Weapon
     // Weapon Direction Variables
     [SerializeField] private bool isLookingLeft;
 
-    private bool swinging;
+    // Weapon Action Variables
+    private bool _swinging;
+    private bool _thrusting;
+
+
 
     // On Variable Change Using Swinging
     public bool IsUsingSwingAttack 
@@ -86,6 +100,7 @@ public class MeleeWeapon : Weapon
 
     void Update()
     {
+        _getMousePosition();
         _weaponSpriteFlipper();
         _weaponAttackHandler();
         _rotateWeaponAroundAnchor();
@@ -98,6 +113,9 @@ public class MeleeWeapon : Weapon
         {
             _getSwingAngle();
             _calculateWeaponSwingTrajectory();
+        } else
+        {
+            _calculateWeaponThrustTrajectory();
         }
 
 
@@ -113,11 +131,11 @@ public class MeleeWeapon : Weapon
 
     private void _swingWeapon()
     {
-        if (swinging) return;
+        if (_swinging) return;
 
         // Attack
         _swing *= -1;
-        swinging = true;
+        _swinging = true;
     }
 
     private void _calculateWeaponSwingTrajectory()
@@ -125,10 +143,10 @@ public class MeleeWeapon : Weapon
         // Weapon Swing
         float t = _swing == 1 ? 0 : -225;
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
-        if (Mathf.Abs(t - target.z) < 5 && swinging)
+        if (Mathf.Abs(t - target.z) < 5 && _swinging)
         {
             //_swing *= -1; // Double Swing
-            swinging = false;
+            _swinging = false;
         }
         transform.localRotation = Quaternion.Euler(target);
 
@@ -148,6 +166,37 @@ public class MeleeWeapon : Weapon
         Sprite.transform.localPosition = new Vector2(0, 0.3f);
     }
 
+    private void _calculateWeaponThrustTrajectory()
+    {
+        // Get the angle and mouse position relative to the camera screen position
+        //thrustAngle = Vector2.Angle( transform.position, _mousePos );
+        targetThrustPosition = new Vector2(0, thrustDistance);
+        Vector2 defaultThrustPosition = new Vector2(0, 0.3f);
+        // Lerp the trajectory
+        currentThrustPosition = Mathf.MoveTowards(currentThrustPosition, thrust, thrustSpeed * Time.deltaTime);
+        // make the weapon move back first then move towards the mouseposition
+        Sprite.gameObject.transform.localPosition = Vector2.Lerp(defaultThrustPosition, targetThrustPosition, currentThrustPosition);
+        Vector2 weaponPosition = Sprite.gameObject.transform.localPosition;
+
+        if (weaponPosition == targetThrustPosition && _thrusting)
+        {
+            thrust = 0;
+            _thrusting = false;
+        }
+        // when weapon has reached the end of its movement, make _thrusting false;
+    }
+
+    private void _thrustWeapon()
+    {
+        if (_thrusting) return;
+
+        thrust = thrust == 0f ? 1 : 0f;
+        // do the thrust
+        _thrusting = true;
+    }
+
+
+
     #endregion
 
     #region Sprite Flipper
@@ -158,7 +207,7 @@ public class MeleeWeapon : Weapon
         {
             //_flipSpriteLookingLeft();
 
-            if (!isLookingLeft && !swinging)
+            if (!isLookingLeft && !_swinging)
             {
                 _swing = -1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
@@ -174,7 +223,7 @@ public class MeleeWeapon : Weapon
         {
             //_flipSpriteLookingRight();
 
-            if (isLookingLeft && !swinging)
+            if (isLookingLeft && !_swinging)
             {
                 _swing = 1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
@@ -189,11 +238,11 @@ public class MeleeWeapon : Weapon
 
     private void _flipSpriteLookingRight()
     {
-        if (_swing == 1 && !swinging)
+        if (_swing == 1 && !_swinging)
         {
             Sprite.flipX = true;
         }
-        else if (_swing == -1 && !swinging)
+        else if (_swing == -1 && !_swinging)
         {
             Sprite.flipX = false;
         }
@@ -201,11 +250,11 @@ public class MeleeWeapon : Weapon
 
     private void _flipSpriteLookingLeft()
     {
-        if (_swing == 1 && !swinging)
+        if (_swing == 1 && !_swinging)
         {
             Sprite.flipX = false;
         }
-        else if (_swing == -1 && !swinging)
+        else if (_swing == -1 && !_swinging)
         {
             Sprite.flipX = true;
         }
@@ -215,7 +264,6 @@ public class MeleeWeapon : Weapon
 
     private void _rotateWeaponAroundAnchor()
     {
-        _getMousePosition();
         _angle = (Mathf.Atan2(_mousePos.y, _mousePos.x) * Mathf.Rad2Deg) - weaponAngle;
         Vector3 rotation = _anchor.transform.eulerAngles;
         rotation.z = _angle + _swingAngle;
@@ -234,12 +282,15 @@ public class MeleeWeapon : Weapon
         if (isUsingSwingAttack)
         {
             _swingWeapon();
+        } else
+        {
+            _thrustWeapon();
         }
     }
 
     private void ChangeCurrentAttack(InputAction.CallbackContext context)
     {
-        if (!swinging)
+        if (!_swinging)
         {
             _currentWeapon *= -1;
 

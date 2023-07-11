@@ -1068,12 +1068,26 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  ChangeAttack:
+    m_Name: Change Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 83e91923-36b5-48fe-83b0-54707354b273
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  Sprite: {fileID: 0}
   totalAtkSpeed: 36.3
   weaponAngle: 90
+  targetThrustPosition: {x: 0, y: 0}
+  thrustDistance: 0
+  currentThrustPosition: 0
+  thrustSpeed: 0
+  thrust: 0
   isUsingSwingAttack: 0
   isUsingThrustAttack: 0
   isLookingLeft: 0
-  sprite: {fileID: 0}
 --- !u!1 &1506409096
 GameObject:
   m_ObjectHideFlags: 0

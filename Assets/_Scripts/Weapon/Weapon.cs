@@ -19,12 +19,6 @@ public abstract class Weapon : MonoBehaviour
     public SpriteRenderer Sprite;
 
 
-
-    private void Awake()
-    {
-        Sprite = GetComponentInChildren<SpriteRenderer>();
-    }
-
     public void UseTimer()
     {
         if (UseTime > 0)
