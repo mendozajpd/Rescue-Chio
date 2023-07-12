@@ -19,7 +19,6 @@ public class MeleeWeapon : Weapon
     private float _swingAngle;
     private float _angle;
     [SerializeField] private float _swing = 1;
-    [SerializeField] private float _swingPosition;
 
     // Melee Thrust Variables
     [SerializeField] private Vector2 targetThrustPosition;
@@ -32,7 +31,7 @@ public class MeleeWeapon : Weapon
     [SerializeField] private float attackComboGraceTime = 0.3f;
     [SerializeField] private float attackComboTime;
     [SerializeField] private int currentCombo;
-
+    
     // Type of Attack
     [SerializeField] private bool isUsingSwingAttack;
     [SerializeField] private bool isUsingThrustAttack;
@@ -49,11 +48,11 @@ public class MeleeWeapon : Weapon
 
 
     // On Variable Change Using Swinging
-    public bool IsUsingSwingAttack
-    {
+    public bool IsUsingSwingAttack 
+    { 
         get => isUsingSwingAttack;
-        set
-        {
+        set 
+        { 
             isUsingSwingAttack = value;
             if (isUsingSwingAttack)
             {
@@ -64,7 +63,7 @@ public class MeleeWeapon : Weapon
             {
                 _setThrustingPosition();
             }
-            _swingAngle = 0;
+            _swingAngle = 0;           
         }
     }
 
@@ -100,7 +99,7 @@ public class MeleeWeapon : Weapon
 
     void Start()
     {
-
+        
     }
 
     void Update()
@@ -122,43 +121,89 @@ public class MeleeWeapon : Weapon
         //{
         //    _calculateWeaponThrustTrajectory();
         //}
-        if (currentCombo == 1 || currentCombo == 2)
-        {
-            _calculateWeaponSwingTrajectory();
-            _getSwingAngle();
-        }
 
-        if (currentCombo == 3)
-        {
-
-        }
-
+        _determineAttack();
         _comboTimer();
-        _comboAttackHandler();
+
 
     }
 
     #region Weapon Combo Handler
     private void _attackHandler()
     {
-        //if (_swinging || _thrusting) return;
+        if (_swinging || _thrusting) return;
 
-        attackComboTime = attackComboGraceTime;
-        currentCombo += 1;
-    }
+        if (currentCombo < 3)
+        {
+            attackComboTime = attackComboGraceTime;
+            currentCombo += 1;
+        }
 
-    private void _comboAttackHandler()
-    {
         switch (currentCombo)
         {
             case 1:
                 _setSwingingPosition();
-                _swingWeapon(currentCombo);
+                _swingWeapon();
                 break;
-            
+            case 2:
+                _swingWeapon();
+                break;
+            case 3:
+                _setThrustingPosition();
+                if (_thrusting) return;
+                _thrustWeapon();
+                break;
         }
     }
-    
+
+
+
+    // DETERMINS WHAT ATTACK
+    private void _determineAttack()
+    {
+        switch (currentCombo)
+        {
+            case 1:
+                _doWeaponSwing();
+                break;
+            case 2:
+                _doWeaponSwing();
+                break;
+            case 3:
+                _doWeaponThrust();
+                break;
+            default:
+                _doReturnToDefaultPosition();
+                break;
+        }
+    }
+
+    private void _doReturnToDefaultPosition()
+    {
+        if (isLookingLeft)
+        {
+            _swing = -1;
+        }
+
+        if (!isLookingLeft)
+        {
+            _swing = 1;
+        }
+        _doWeaponSwing();
+        _resetCombo();
+    }
+
+    private void _doWeaponThrust()
+    {
+        _calculateWeaponThrustTrajectory();
+    }
+
+    private void _doWeaponSwing()
+    {
+        _getSwingAngle();
+        _calculateWeaponSwingTrajectory();
+    }
+
     private void _comboTimer()
     {
         if (attackComboTime > 0 && (!_swinging || !_thrusting))
@@ -167,8 +212,13 @@ public class MeleeWeapon : Weapon
         }
         if (attackComboTime <= 0)
         {
-            currentCombo = 0;
+            _doReturnToDefaultPosition();
         }
+    }
+
+    private void _resetCombo()
+    {
+        currentCombo = 0;
     }
 
     #endregion
@@ -181,47 +231,21 @@ public class MeleeWeapon : Weapon
         Sprite.transform.localPosition = new Vector2(0.5f, 0.15f);
     }
 
-    private void _swingWeapon(int swingValue)
+    private void _swingWeapon()
     {
         if (_swinging) return;
 
         // Attack
-        _swing *= 1;
+        _swing *= -1;
         _swinging = true;
     }
 
     private void _calculateWeaponSwingTrajectory()
     {
-
         // Weapon Swing
-        if (currentCombo == 1)
-        {
-            if (!isLookingLeft)
-            {
-                _swingPosition = 0;
-            }
-            else
-            {
-                _swingPosition = -255;
-            }
-
-        }
-
-        if (currentCombo == 2)
-        {
-            if (!isLookingLeft)
-            {
-                _swingPosition = -255;
-            }
-            else
-            {
-                _swingPosition = 0;
-            }
-        }
-
-
-        target.z = Mathf.Lerp(target.z, _swingPosition, Time.deltaTime * totalAtkSpeed);
-        if (Mathf.Abs(_swingPosition - target.z) < 5 && _swinging)
+        float t = _swing == 1 ? 0 : -225;
+        target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
+        if (Mathf.Abs(t - target.z) < 5 && _swinging)
         {
             //_swing *= -1; // Double Swing
             _swinging = false;
@@ -240,6 +264,7 @@ public class MeleeWeapon : Weapon
     #region Weapon Thrust Functions
     private void _setThrustingPosition()
     {
+        _swingAngle = 0;
         transform.localPosition = new Vector2(0, 0.3f);
         Sprite.transform.localPosition = new Vector2(0, 0.3f);
     }
@@ -257,6 +282,7 @@ public class MeleeWeapon : Weapon
         if (weaponPosition == defaultThrustPosition)
         {
             _thrusting = false;
+            _resetCombo();
         }
     }
 
@@ -278,13 +304,6 @@ public class MeleeWeapon : Weapon
 
 
 
-    #endregion
-
-    #region Weapon Calculators
-    private void _calculateWeaponAttack()
-    {
-        //_calculateWeaponThrustTrajectory();
-    }
     #endregion
 
     #region Sprite Flipper
@@ -367,7 +386,6 @@ public class MeleeWeapon : Weapon
 
     private void Attack(InputAction.CallbackContext context)
     {
-        Debug.Log("Firee");
 
         _attackHandler();
 
