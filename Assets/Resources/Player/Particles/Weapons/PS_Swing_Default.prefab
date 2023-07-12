@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4946359925864294398}
   - component: {fileID: 4946359925864294384}
   - component: {fileID: 4946359925864294385}
-  - component: {fileID: 5871160114654727505}
+  - component: {fileID: 5711984092281767680}
   m_Layer: 0
   m_Name: PS_Swing_Default
   m_TagString: Untagged
@@ -863,7 +863,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -4116,7 +4116,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.49803922}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.9019608}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4814,7 +4814,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5871160114654727505
+--- !u!114 &5711984092281767680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4823,7 +4823,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4946359925864294399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a08240cb940950419d584796567b34f, type: 3}
+  m_Script: {fileID: 11500000, guid: c905c51eb8ad05642bac68b599c125b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  weapon: {fileID: 0}

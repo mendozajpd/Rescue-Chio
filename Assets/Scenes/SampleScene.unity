@@ -1070,7 +1070,7 @@ GameObject:
   - component: {fileID: 1390998991}
   - component: {fileID: 1390998992}
   m_Layer: 0
-  m_Name: Weapon
+  m_Name: Melee Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1085,7 +1085,7 @@ Transform:
   m_GameObject: {fileID: 1390998990}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: -0.5}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1247924620}
@@ -1125,16 +1125,15 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   Sprite: {fileID: 0}
-  totalAtkSpeed: 36.3
+  totalAtkSpeed: 35
   weaponAngle: 90
-  targetThrustPosition: {x: 0, y: 0}
-  thrustDistance: 2
-  currentThrustPosition: 0
+  thrustDistance: 1.5
   thrustSpeed: 15
-  thrust: 0
-  isUsingSwingAttack: 0
-  isUsingThrustAttack: 0
+  attackComboGraceTime: 0.3
+  currentCombo: 0
+  _attackComboTime: 0
   isLookingLeft: 0
+  _swinging: 0
   _thrusting: 0
 --- !u!1 &1506409096
 GameObject:
@@ -1597,6 +1596,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_Swing_Default
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5871160114654727505, guid: 8bfaa57d91298be438f11c01911bc072, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bfaa57d91298be438f11c01911bc072, type: 3}

@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class MeleeWeapon : Weapon
 {
-
+    // Player Variables
+    private Rigidbody2D _rb;
 
     // Weapon Rotation Variables
     [SerializeField] private float totalAtkSpeed;
@@ -18,63 +19,58 @@ public class MeleeWeapon : Weapon
     // Melee Swing Variables
     private float _swingAngle;
     private float _angle;
-    [SerializeField] private float _swing = 1;
+    private float _swing = 1;
 
     // Melee Thrust Variables
-    [SerializeField] private Vector2 targetThrustPosition;
     [SerializeField] private float thrustDistance;
-    [SerializeField] private float currentThrustPosition;
     [SerializeField] private float thrustSpeed;
-    [SerializeField] private float thrust;
+    private Vector2 _targetThrustPosition;
+    private float _currentThrustPosition;
+    private float _thrust;
 
     // Attack Combo Variables
-    [SerializeField] private float attackComboGraceTime = 0.3f;
-    [SerializeField] private float attackComboTime;
+    [SerializeField] private float attackComboGraceTime;
     [SerializeField] private int currentCombo;
+    [SerializeField] private float _attackComboTime;
     
-    // Type of Attack
-    [SerializeField] private bool isUsingSwingAttack;
-    [SerializeField] private bool isUsingThrustAttack;
-    private int _currentWeapon = 1;
-
-
     // Weapon Direction Variables
     [SerializeField] private bool isLookingLeft;
 
     // Weapon Action Variables
-    private bool _swinging;
+    [SerializeField] private bool _swinging;
     [SerializeField] private bool _thrusting;
 
+    // Audio Variables
+    public AudioClip[] WeaponSwingAudio;
+    private AudioSource audioSource;
+    [Range(0.1f, 0.5f)]
+    public float volumeChangeMultiplier;
+    [Range(0.1f, 0.5f)]
+    public float pitchChangeMultiplier;
 
-
-    // On Variable Change Using Swinging
-    public bool IsUsingSwingAttack 
+    public bool Swinging 
     { 
-        get => isUsingSwingAttack;
-        set 
-        { 
-            isUsingSwingAttack = value;
-            if (isUsingSwingAttack)
-            {
-                _setSwingingPosition();
-            }
-
-            if (!isUsingSwingAttack)
-            {
-                _setThrustingPosition();
-            }
-            _swingAngle = 0;           
-        }
+        get => _swinging; 
+         
     }
+    public bool Thrusting 
+    { 
+        get => _thrusting; 
+    }
+
+
 
     private void Awake()
     {
+        // Player Variables
+        _rb = GetComponentInParent<Equipment>().player.GetComponent<Rigidbody2D>();
+
+        // Weapon Variables
         _anchor = gameObject.transform.gameObject;
         Sprite = GetComponentInChildren<SpriteRenderer>();
-
+        audioSource = GetComponent<AudioSource>();
 
         // Input System Variables
-
         playerControls = new PlayerInputActions();
         Fire = playerControls.Player.Fire;
         ChangeAttack = playerControls.Player.ChangeAttack;
@@ -85,16 +81,12 @@ public class MeleeWeapon : Weapon
         Fire.Enable();
         Fire.performed += Attack;
 
-        ChangeAttack.Enable();
-        ChangeAttack.performed += ChangeCurrentAttack;
     }
 
     private void OnDisable()
     {
         Fire.performed -= Attack;
         Fire.Disable();
-        ChangeAttack.performed -= ChangeCurrentAttack;
-        ChangeAttack.Disable();
     }
 
     void Start()
@@ -112,30 +104,20 @@ public class MeleeWeapon : Weapon
 
     private void _weaponAttackHandler()
     {
-
-        //if (isUsingSwingAttack)
-        //{
-        //    _getSwingAngle();
-        //    _calculateWeaponSwingTrajectory();
-        //} else
-        //{
-        //    _calculateWeaponThrustTrajectory();
-        //}
-
         _determineAttack();
         _comboTimer();
-
-
     }
 
     #region Weapon Combo Handler
+
+    // THIS GOES TO INTO THE INPUT SYSTEM ATTACK 
     private void _attackHandler()
     {
         if (_swinging || _thrusting) return;
 
         if (currentCombo < 3)
         {
-            attackComboTime = attackComboGraceTime;
+            _attackComboTime = attackComboGraceTime;
             currentCombo += 1;
         }
 
@@ -158,7 +140,7 @@ public class MeleeWeapon : Weapon
 
 
 
-    // DETERMINS WHAT ATTACK
+    // DETERMINES WHAT ATTACK DEPENDING ON THE CURRENT COMBO
     private void _determineAttack()
     {
         switch (currentCombo)
@@ -178,8 +160,12 @@ public class MeleeWeapon : Weapon
         }
     }
 
+
+
     private void _doReturnToDefaultPosition()
     {
+        _resetCombo();
+        _returnToSwingAngle();
         if (isLookingLeft)
         {
             _swing = -1;
@@ -189,8 +175,13 @@ public class MeleeWeapon : Weapon
         {
             _swing = 1;
         }
-        _doWeaponSwing();
-        _resetCombo();
+    }
+
+    private void _returnToSwingAngle()
+    {
+        _setSwingingPosition();
+        _getSwingAngle();
+        _calculateWeaponSwingTrajectory();
     }
 
     private void _doWeaponThrust()
@@ -206,11 +197,14 @@ public class MeleeWeapon : Weapon
 
     private void _comboTimer()
     {
-        if (attackComboTime > 0 && (!_swinging || !_thrusting))
+        if (_attackComboTime > 0)
         {
-            attackComboTime -= Time.deltaTime;
+            if (!_swinging && !_thrusting)
+            {
+                _attackComboTime -= Time.deltaTime;
+            }
         }
-        if (attackComboTime <= 0)
+        if (_attackComboTime <= 0)
         {
             _doReturnToDefaultPosition();
         }
@@ -237,6 +231,7 @@ public class MeleeWeapon : Weapon
 
         // Attack
         _swing *= -1;
+        playRandomMeleeSwing();
         _swinging = true;
     }
 
@@ -245,7 +240,7 @@ public class MeleeWeapon : Weapon
         // Weapon Swing
         float t = _swing == 1 ? 0 : -225;
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
-        if (Mathf.Abs(t - target.z) < 5 && _swinging)
+        if (Mathf.Abs(t - target.z) < 1 && _swinging)
         {
             //_swing *= -1; // Double Swing
             _swinging = false;
@@ -256,14 +251,21 @@ public class MeleeWeapon : Weapon
 
     private void _getSwingAngle()
     {
-        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * totalAtkSpeed);
+        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * (currentCombo == 0 ? totalAtkSpeed * 0.1f : totalAtkSpeed));
     }
 
     #endregion
 
     #region Weapon Thrust Functions
+
+    private void _setThrustSpeed()
+    {
+        thrustSpeed = totalAtkSpeed / 2;
+    }
+
     private void _setThrustingPosition()
     {
+        _setThrustSpeed();
         _swingAngle = 0;
         transform.localPosition = new Vector2(0, 0.3f);
         Sprite.transform.localPosition = new Vector2(0, 0.3f);
@@ -271,10 +273,10 @@ public class MeleeWeapon : Weapon
 
     private void _calculateWeaponThrustTrajectory()
     {
-        targetThrustPosition = new Vector2(0, thrustDistance);
+        _targetThrustPosition = new Vector2(0, thrustDistance);
         Vector2 defaultThrustPosition = new Vector2(0, 0.3f);
-        currentThrustPosition = Mathf.MoveTowards(currentThrustPosition, thrust, thrustSpeed * Time.deltaTime);
-        Sprite.gameObject.transform.localPosition = Vector2.Lerp(defaultThrustPosition, targetThrustPosition, currentThrustPosition);
+        _currentThrustPosition = Mathf.MoveTowards(_currentThrustPosition, _thrust, thrustSpeed * Time.deltaTime);
+        Sprite.gameObject.transform.localPosition = Vector2.Lerp(defaultThrustPosition, _targetThrustPosition, _currentThrustPosition);
         Vector2 weaponPosition = Sprite.gameObject.transform.localPosition;
 
         _retractThrustWeapon(weaponPosition);
@@ -288,9 +290,9 @@ public class MeleeWeapon : Weapon
 
     private void _retractThrustWeapon(Vector2 weaponPosition)
     {
-        if (weaponPosition == targetThrustPosition && _thrusting)
+        if (weaponPosition == _targetThrustPosition && _thrusting)
         {
-            thrust = 0;
+            _thrust = 0;
         }
     }
 
@@ -298,7 +300,8 @@ public class MeleeWeapon : Weapon
     {
         if (_thrusting) return;
 
-        thrust = thrust == 0f ? 1 : 0f;
+        _thrust = _thrust == 0f ? 1 : 0f;
+        playRandomMeleeSwing();
         _thrusting = true;
     }
 
@@ -384,38 +387,20 @@ public class MeleeWeapon : Weapon
     }
     #endregion
 
+    #region Audio Functions
+    private void playRandomMeleeSwing()
+    {
+        audioSource.clip = WeaponSwingAudio[Random.Range(0, WeaponSwingAudio.Length)];
+        audioSource.volume = Random.Range(1 - volumeChangeMultiplier, 1);
+        audioSource.pitch = Random.Range(1 - pitchChangeMultiplier, 1 + pitchChangeMultiplier);
+        audioSource.Play();
+    }
+
+    #endregion
     private void Attack(InputAction.CallbackContext context)
     {
-
         _attackHandler();
-
-        //if (isUsingSwingAttack)
-        //{
-        //    _swingWeapon();
-        //} else
-        //{
-        //    _thrustWeapon();
-        //}
     }
 
-    private void ChangeCurrentAttack(InputAction.CallbackContext context)
-    {
-        if (!_swinging)
-        {
-            _currentWeapon *= -1;
-
-            switch (_currentWeapon)
-            {
-                case 1:
-                    IsUsingSwingAttack = true;
-                    break;
-                case -1:
-                    IsUsingSwingAttack = false;
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 
 }
