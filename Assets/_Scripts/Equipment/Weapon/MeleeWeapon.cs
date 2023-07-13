@@ -15,10 +15,10 @@ public class MeleeWeapon : Weapon
     private GameObject _anchor;
     private Vector2 _mousePos;
     private Vector3 target;
+    private float _angle;
 
     // Melee Swing Variables
     private float _swingAngle;
-    private float _angle;
     private float _swing = 1;
 
     // Melee Thrust Variables
@@ -71,9 +71,7 @@ public class MeleeWeapon : Weapon
         audioSource = GetComponent<AudioSource>();
 
         // Input System Variables
-        playerControls = new PlayerInputActions();
-        Fire = playerControls.Player.Fire;
-        ChangeAttack = playerControls.Player.ChangeAttack;
+        SetInputVariables();
     }
 
     private void OnEnable()
@@ -111,7 +109,7 @@ public class MeleeWeapon : Weapon
     #region Weapon Combo Handler
 
     // THIS GOES TO INTO THE INPUT SYSTEM ATTACK 
-    private void _attackHandler()
+    private void _attackComboHandler()
     {
         if (_swinging || _thrusting) return;
 
@@ -140,7 +138,8 @@ public class MeleeWeapon : Weapon
 
 
 
-    // DETERMINES WHAT ATTACK DEPENDING ON THE CURRENT COMBO
+    // DETERMINES WHAT ATTACK DEPENDING ON THE CURRENT COMBO 
+    // ALSO BE PLACED IN UPDATE METHOD
     private void _determineAttack()
     {
         switch (currentCombo)
@@ -345,7 +344,7 @@ public class MeleeWeapon : Weapon
     }
 
 
-
+    // In case there would be different weapons that would need this
     private void _flipSpriteLookingRight()
     {
         if (_swing == 1 && !_swinging)
@@ -399,7 +398,7 @@ public class MeleeWeapon : Weapon
     #endregion
     private void Attack(InputAction.CallbackContext context)
     {
-        _attackHandler();
+        _attackComboHandler();
     }
 
 

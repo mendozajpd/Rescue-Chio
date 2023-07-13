@@ -17,6 +17,7 @@ public abstract class Weapon : MonoBehaviour
 
     // Weapon Sprite
     public SpriteRenderer Sprite;
+    public Animator Anim;
 
 
     public void UseTimer()
@@ -25,6 +26,19 @@ public abstract class Weapon : MonoBehaviour
         {
             UseTime -= Time.deltaTime;
         }
+    }
+
+    public void SetInputVariables()
+    {
+        playerControls = new PlayerInputActions();
+        Fire = playerControls.Player.Fire;
+        ChangeAttack = playerControls.Player.ChangeAttack;
+    }
+
+    public void SetSpriteVariables()
+    {
+        Sprite = GetComponentInChildren<SpriteRenderer>();
+        Anim = GetComponentInChildren<Animator>();
     }
 
 
