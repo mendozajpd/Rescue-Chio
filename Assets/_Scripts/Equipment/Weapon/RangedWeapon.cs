@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +24,17 @@ public class RangedWeapon : Weapon
     private bool isLookingLeft;
 
     // Weapon Event
-    public Action shootTrigger;
+    public System.Action shootTrigger;
+
+    // Audio Variables
+    public AudioClip[] weaponAudio;
+    private AudioSource audioSource;
+    [Range(0.1f, 0.5f)]
+    public float volumeChangeMultiplier;
+    [Range(0.1f, 0.5f)] 
+    public float pitchChangeMultiplier;
+    [Range(0,1)]
+    public float gunShootVolume;
 
     public bool IsLookingLeft { get => isLookingLeft; }
 
@@ -33,6 +42,9 @@ public class RangedWeapon : Weapon
     {
         // Weapon Rotation Variable
         _anchor = transform.gameObject;
+
+        // Audio Variables
+        audioSource = GetComponent<AudioSource>();
 
         // Weapon Sprite
         SetSpriteVariables();
@@ -68,7 +80,8 @@ public class RangedWeapon : Weapon
 
     private void _attackHandler()
     {
-
+        _shootWeapon();
+        // this is where to code the bullet and ammo logic
     }
 
     private void _shootAnimationHandler()
@@ -102,6 +115,8 @@ public class RangedWeapon : Weapon
 
         shoot = shoot == 0 ? 1 : 0;
         shootTrigger.Invoke();
+        weaponAudioHandler(1); // Reload clip will be at 0
+        playAudio();
         shooting = true;
 
     }
@@ -168,10 +183,25 @@ public class RangedWeapon : Weapon
 
     }
 
+    private void weaponAudioHandler(int clipNumber)
+    {
+        audioSource.clip = weaponAudio[clipNumber];
+        audioSource.volume = Random.Range(gunShootVolume - volumeChangeMultiplier, gunShootVolume);
+        audioSource.pitch = Random.Range(1 - pitchChangeMultiplier, 1 + pitchChangeMultiplier);
+        playAudio();
+    }
+
+    private void playAudio()
+    {
+        audioSource.PlayOneShot(audioSource.clip);
+    }
+
     private void Attack(InputAction.CallbackContext context)
     {
         Debug.Log("Pewpew");
-        _shootWeapon();
+        _attackHandler();
     }
+
+
 
 }

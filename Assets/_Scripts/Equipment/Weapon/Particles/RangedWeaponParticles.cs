@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class RangedWeaponParticles : MonoBehaviour
 {
     private RangedWeapon weapon;
     private ParticleSystem particles;
+    private Light2D light2d;
+
+    // Light variables
+    [SerializeField] private float desiredIntensity;
+    [SerializeField] private float currentIntensity;
+    [SerializeField] private float decreaseLightSpeed;
+
+    // Checks
+    [SerializeField] private bool flipSpriteOnMousePos;
+    [SerializeField] private bool usingLights;
 
     private void Awake()
     {
         weapon = GetComponentInParent<RangedWeapon>();
         particles = GetComponent<ParticleSystem>();
-      
+
+        if (usingLights) light2d = GetComponent<Light2D>();
         
     }
 
@@ -19,6 +31,8 @@ public class RangedWeaponParticles : MonoBehaviour
     {
         // Subscribes to the weapon shot
         weapon.shootTrigger += playParticleSystem;
+
+        if (usingLights) weapon.shootTrigger += turnOnLights;
     }
 
     private void OnDisable()
@@ -34,7 +48,13 @@ public class RangedWeaponParticles : MonoBehaviour
 
     void Update()
     {
-        flipParticleSystem();
+        if (flipSpriteOnMousePos) flipParticleSystem();
+
+        if (usingLights)
+        {
+            intensityDecreaser();
+        }
+        
     }
 
     private void flipParticleSystem()
@@ -56,5 +76,27 @@ public class RangedWeaponParticles : MonoBehaviour
         particles.Play();
     }
 
+
+    // Event invokes intensity to become 1, then it will slowly go down
+
+    private void turnOnLights()
+    {
+        currentIntensity = desiredIntensity;
+    }
+
+    private void intensityDecreaser()
+    {
+        if (currentIntensity > 0 )
+        {
+            light2d.enabled = true;
+            currentIntensity -= Time.deltaTime * decreaseLightSpeed;
+            light2d.intensity = currentIntensity;
+        } else
+        {
+            light2d.enabled = false;
+        }
+
+
+    }
     
 }
