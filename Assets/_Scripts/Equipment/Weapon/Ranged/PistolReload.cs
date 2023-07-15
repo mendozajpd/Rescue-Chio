@@ -5,14 +5,13 @@ using UnityEngine;
 public class PistolReload : MonoBehaviour
 {
     private RangedWeapon _pistol;
-    private SpriteRenderer _sprite;
 
     // Magazine Animation Variables
     [SerializeField] private AnimationCurve curve;
     [SerializeField] private float targetEjectDistance = 0.5f;
     [SerializeField] private float ejectSpeed;
-    private float _defaultPosX = 0.1f;
-    private float _defaultPosY = 0.39f;
+    [SerializeField] private float _defaultPosX = 0.1f;
+    [SerializeField] private float _defaultPosY = 0.39f;
     private Vector2 _targetEjectPosition;
     private float _currentEjectPosition;
     private float _eject;
@@ -39,7 +38,6 @@ public class PistolReload : MonoBehaviour
     private void Awake()
     {
         _pistol = GetComponentInParent<RangedWeapon>();
-        _sprite = GetComponent<SpriteRenderer>();
 
         // Setting Audio
         audioSource = GetComponent<AudioSource>();

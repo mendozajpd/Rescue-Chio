@@ -122,6 +122,7 @@ public class MeleeWeapon : Weapon
         switch (currentCombo)
         {
             case 1:
+                _swingAngle = angleOfTheWeapon;
                 _setSwingingPosition();
                 _swingWeapon();
                 break;

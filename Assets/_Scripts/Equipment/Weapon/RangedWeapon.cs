@@ -30,6 +30,7 @@ public class RangedWeapon : Weapon
     [SerializeField] private bool canPull;
     [SerializeField] private bool canRelease;
     [SerializeField] private bool isReloading;
+    [SerializeField] private float reload;
 
     // Magazine Variables
     [SerializeField] private PistolReload magazine;
@@ -140,11 +141,11 @@ public class RangedWeapon : Weapon
     {
         targetRecoilPosition = Quaternion.Euler(0, 0, recoilAmount);
         Quaternion defaultGunPosition = Quaternion.Euler(Vector3.zero);
-        currentGunPosition = Mathf.MoveTowards(currentGunPosition, shoot, recoilRecoverySpeed < 3 ? 3 : recoilRecoverySpeed * Time.deltaTime);
+        if (!isReloading) currentGunPosition = Mathf.MoveTowards(currentGunPosition, shoot, recoilRecoverySpeed < 3 ? 3 : recoilRecoverySpeed * Time.deltaTime);
         Sprite.gameObject.transform.localRotation = Quaternion.Lerp(defaultGunPosition, targetRecoilPosition, currentGunPosition);
         Quaternion gunPositon = Sprite.gameObject.transform.localRotation;
 
-        _recoverFromRecoil(gunPositon);
+        if (!isReloading) _recoverFromRecoil(gunPositon);
 
         if (gunPositon == defaultGunPosition)
         {
@@ -170,7 +171,10 @@ public class RangedWeapon : Weapon
         rangedWeaponAudioHandler(1,true); // Reload clip will be at 0
         shooting = true;
         currentAmmo -= 1;
-
+        if (currentAmmo == 0)
+        {
+            Anim.SetTrigger("isEmpty");
+        }
     }
 
     #endregion
@@ -180,18 +184,22 @@ public class RangedWeapon : Weapon
     private void _reloadHandler()
     {
         if (isReloading) return;
+
+        if (currentAmmo == maxAmmo) return;
+
         // Reloads weapon
         reloadTrigger.Invoke();
+        reload = 1;
         isReloading = true;
         rangedWeaponAudioHandler(0,false);
         reloadTime = ReloadSpeed;
-        currentAmmo = maxAmmo;
     }
 
     private void _reloadTimer()
     {
         if (isReloading)
         {
+            currentGunPosition = Mathf.MoveTowards(currentGunPosition, reload, 30 * Time.deltaTime);
             _reloadAnimatorHandler();
             if (reloadTime > 0)
             {
@@ -238,6 +246,7 @@ public class RangedWeapon : Weapon
     {
         Anim.SetTrigger("reloadPull");
         rangedWeaponAudioHandler(2, true);
+        reload = 0;
     }
 
     private void _releaseReloadAnim()
@@ -248,6 +257,7 @@ public class RangedWeapon : Weapon
 
     private void _pullReloadHandler()
     {
+        currentAmmo = maxAmmo;
         canPull = true;
     }
     #endregion
