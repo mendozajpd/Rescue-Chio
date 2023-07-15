@@ -23,11 +23,16 @@ public class RangedWeapon : Weapon
     // Ranged Weapon Variables
     [SerializeField] private float currentAmmo;
     [SerializeField] private float maxAmmo;
-    [SerializeField] private bool isEmpty;
 
     // Reload Variables
+    public float ReloadSpeed;
     [SerializeField] private float reloadTime;
+    [SerializeField] private bool canPull;
+    [SerializeField] private bool canRelease;
     [SerializeField] private bool isReloading;
+
+    // Magazine Variables
+    [SerializeField] private PistolReload magazine;
 
     // Weapon Sprite Flipping Variables
     private bool isLookingLeft;
@@ -35,6 +40,8 @@ public class RangedWeapon : Weapon
     // Weapon Event
     public System.Action shootTrigger;
     public System.Action reloadTrigger;
+    //private System.Action pullReload;
+    //private System.Action releaseReload;
 
     // Input System Variables
     public InputAction Reload;
@@ -47,9 +54,10 @@ public class RangedWeapon : Weapon
     [Range(0f, 0.5f)] 
     public float pitchChangeMultiplier;
     [Range(0,1)]
-    public float gunShootVolume;
+    public float AudioVolume;
 
     public bool IsLookingLeft { get => isLookingLeft; }
+    public float ReloadTime { get => reloadTime; }
 
     private void Awake()
     {
@@ -58,6 +66,9 @@ public class RangedWeapon : Weapon
 
         // Weapon Variables
         currentAmmo = maxAmmo;
+
+        // Magazine Variable
+        magazine = GetComponentInChildren<PistolReload>();
 
         // Audio Variables
         audioSource = GetComponent<AudioSource>();
@@ -77,6 +88,11 @@ public class RangedWeapon : Weapon
 
         Reload.Enable();
         Reload.performed += ReloadWeapon;
+
+        magazine.magazineInserted += _pullReloadHandler;
+
+
+
     }
 
     private void OnDisable()
@@ -86,6 +102,8 @@ public class RangedWeapon : Weapon
 
         Reload.performed -= ReloadWeapon;
         Reload.Disable();
+
+        magazine.magazineInserted -= _pullReloadHandler;
     }
 
     void Start()
@@ -104,6 +122,14 @@ public class RangedWeapon : Weapon
 
     private void _attackHandler()
     {
+        if (isReloading) return;
+
+        if (currentAmmo == 0)
+        {
+            _reloadHandler();
+            return;
+        }
+
         _shootWeapon();
         // this is where to code the bullet and ammo logic
     }
@@ -119,7 +145,6 @@ public class RangedWeapon : Weapon
         Quaternion gunPositon = Sprite.gameObject.transform.localRotation;
 
         _recoverFromRecoil(gunPositon);
-        _shootAnimationHandler(shooting);
 
         if (gunPositon == defaultGunPosition)
         {
@@ -141,7 +166,8 @@ public class RangedWeapon : Weapon
 
         shoot = shoot == 0 ? 1 : 0;
         shootTrigger.Invoke();
-        weaponAudioHandler(1,true); // Reload clip will be at 0
+        _triggerShootAnim();
+        rangedWeaponAudioHandler(1,true); // Reload clip will be at 0
         shooting = true;
         currentAmmo -= 1;
 
@@ -153,34 +179,83 @@ public class RangedWeapon : Weapon
 
     private void _reloadHandler()
     {
+        if (isReloading) return;
         // Reloads weapon
         reloadTrigger.Invoke();
-        weaponAudioHandler(0,false);
+        isReloading = true;
+        rangedWeaponAudioHandler(0,false);
+        reloadTime = ReloadSpeed;
         currentAmmo = maxAmmo;
     }
 
     private void _reloadTimer()
     {
-        if (reloadTime > 0)
+        if (isReloading)
         {
-            reloadTime -= Time.deltaTime;
+            _reloadAnimatorHandler();
+            if (reloadTime > 0)
+            {
+                reloadTime -= Time.deltaTime;
+            }
+
+            if (reloadTime <= 0)
+            {
+                reloadTime = 0;
+                isReloading = false;
+            }
         }
     }
 
+
+    private void _reloadAnimatorHandler()
+    {
+        if(canPull)
+        {
+            if (reloadTime < ReloadSpeed * 0.4f)
+            {
+                _pullReloadAnim();
+                canPull = false;
+                canRelease = true;
+            }
+
+        }
+        
+        if (canRelease)
+        {
+            if (reloadTime < ReloadSpeed * 0.2f)
+            {
+                Debug.Log("gun released");
+                _releaseReloadAnim();
+                canRelease = false;
+            }
+        }
+
+
+
+    }
+
+    private void _pullReloadAnim()
+    {
+        Anim.SetTrigger("reloadPull");
+        rangedWeaponAudioHandler(2, true);
+    }
+
+    private void _releaseReloadAnim()
+    {
+        Anim.SetTrigger("reloadRelease");
+        rangedWeaponAudioHandler(3, true);
+    }
+
+    private void _pullReloadHandler()
+    {
+        canPull = true;
+    }
     #endregion
 
     #region Weapon Sprite Handler
-    private void _shootAnimationHandler(bool isShoot)
+    private void _triggerShootAnim()
     {
-        switch (isShoot)
-        {
-            case true:
-                Anim.SetBool("isShooting", true);
-                break;
-            case false:
-                Anim.SetBool("isShooting", false);
-                break;
-        }
+        Anim.SetTrigger("hasShot");
 
     }
     #endregion
@@ -231,10 +306,10 @@ public class RangedWeapon : Weapon
     }
     #endregion
 
-    private void weaponAudioHandler(int clipNumber, bool isOneShot)
+    private void rangedWeaponAudioHandler(int clipNumber, bool isOneShot)
     {
         audioSource.clip = weaponAudio[clipNumber];
-        audioSource.volume = Random.Range(gunShootVolume - volumeChangeMultiplier, gunShootVolume);
+        audioSource.volume = Random.Range(AudioVolume - volumeChangeMultiplier, AudioVolume);
         audioSource.pitch = Random.Range(1 - pitchChangeMultiplier, 1 + pitchChangeMultiplier);
         playAudio(isOneShot);
     }
@@ -244,11 +319,9 @@ public class RangedWeapon : Weapon
         if (isOneShot)
         {
             audioSource.PlayOneShot(audioSource.clip);
-            Debug.Log("The Length is:" + audioSource.clip.length);
             return;
         }
         audioSource.Play();
-        Debug.Log("The Length is:" + audioSource.clip.length);
     }
 
     private void Attack(InputAction.CallbackContext context)
