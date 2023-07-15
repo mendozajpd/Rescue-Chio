@@ -9,8 +9,8 @@ public class RangedWeapon : Weapon
     // Weapon Rotation Variables
     [SerializeField] private float weaponAngle;
     private GameObject _anchor;
-    private Vector2 _mousePos;
     private float _angle;
+    private Vector2 _mousePos;
 
     // Shoot Animation
     [SerializeField] private Quaternion targetRecoilPosition;
