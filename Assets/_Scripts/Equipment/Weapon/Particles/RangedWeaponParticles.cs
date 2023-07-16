@@ -17,6 +17,7 @@ public class RangedWeaponParticles : MonoBehaviour
     // Checks
     [SerializeField] private bool flipSpriteOnMousePos;
     [SerializeField] private bool usingLights;
+    [SerializeField] private bool isEjectCase;
 
     private void Awake()
     {
@@ -39,6 +40,9 @@ public class RangedWeaponParticles : MonoBehaviour
     {
         // Unsubscribes to the weapon shot
         weapon.shootTrigger -= playParticleSystem;
+
+        if (usingLights) weapon.shootTrigger -= turnOnLights;
+
     }
 
     void Start()

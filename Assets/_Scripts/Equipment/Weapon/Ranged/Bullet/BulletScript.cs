@@ -5,42 +5,68 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     [SerializeField] private ShootingScript muzzle;
-    [SerializeField] private Vector3 direction;
-    [SerializeField] private Vector3 mousePos;
+
     [SerializeField] private Vector3 rotation;
     [SerializeField] private float speed;
     [SerializeField] private RangedWeapon pistol;
-    [SerializeField] private Camera mainCamera;
     private Rigidbody2D _rb;
+
+    // Checks
+    [SerializeField] private bool hasAlreadyInstantiated;
+    // Spawner stuff
+    private System.Action<BulletScript> _sendToPool;
+
+    public void Init(System.Action<BulletScript> releaseToPool, ShootingScript bulletSpawner)
+    {
+        _sendToPool = releaseToPool;
+        muzzle = bulletSpawner;
+    }
+
+    private void OnEnable()
+    {
+        if (hasAlreadyInstantiated)
+        {
+            transform.position = muzzle.transform.position;
+            _rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
+            StartCoroutine(despawnSelf(1));
+        }
+    }
+
+    private void OnDisable()
+    {
+        _rb.velocity = Vector2.zero;
+    }
 
     private void Awake()
     {
         Debug.Log("Bullet spawned:" + transform.position);
         _rb = GetComponent<Rigidbody2D>();
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        getBulletDirection();
     }
 
     void Start()
     {
-        _rb.velocity = new Vector2(direction.x, direction.y).normalized * speed;
-        StartCoroutine(despawnSelf(3));
+        transform.position = muzzle.transform.position;
+        _rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
+        StartCoroutine(despawnSelf(1));
+        hasAlreadyInstantiated = true;
     }
 
     void Update()
     {
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if (collision.tag != "Player") 
+            _sendToPool(this);
+
+    }
 
     IEnumerator despawnSelf(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Destroy(gameObject);
+        _sendToPool(this);
     }
 
-    private void getBulletDirection()
-    {
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        direction = mousePos - transform.position;
-    }
+
 }

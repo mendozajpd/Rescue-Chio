@@ -41,7 +41,7 @@ public class RangedWeapon : Weapon
     // Weapon Event
     public System.Action shootTrigger;
     public System.Action reloadTrigger;
-    //private System.Action pullReload;
+    //public System.Action pullReloadNotEmpty;
     //private System.Action releaseReload;
 
     // Input System Variables
@@ -185,6 +185,8 @@ public class RangedWeapon : Weapon
     {
         if (isReloading) return;
 
+        if (shooting) return;
+
         if (currentAmmo == maxAmmo) return;
 
         // Reloads weapon
@@ -244,6 +246,7 @@ public class RangedWeapon : Weapon
 
     private void _pullReloadAnim()
     {
+        
         Anim.SetTrigger("reloadPull");
         rangedWeaponAudioHandler(2, true);
         reload = 0;
