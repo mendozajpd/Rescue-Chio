@@ -35,6 +35,8 @@ public class BulletScript : MonoBehaviour
     private void OnDisable()
     {
         _rb.velocity = Vector2.zero;
+
+        if (muzzle == null) Destroy(gameObject);
     }
 
     private void Awake()

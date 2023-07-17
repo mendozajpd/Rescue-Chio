@@ -107,6 +107,11 @@ public class RangedWeapon : Weapon
         magazine.magazineInserted -= _pullReloadHandler;
     }
 
+    private void OnDestroy()
+    {
+        audioSource.Stop();
+    }
+
     void Start()
     {
         
