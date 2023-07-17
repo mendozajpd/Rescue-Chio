@@ -39,6 +39,11 @@ public class ShootingScript : MonoBehaviour
         Pistol.shootTrigger -= _shootBullet;
     }
 
+    private void OnDestroy()
+    {
+        _pool.Clear();
+    }
+
     private void Awake()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
