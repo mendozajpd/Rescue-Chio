@@ -16,24 +16,66 @@ public class MagicMissileScript : MonoBehaviour
 
     [SerializeField] private Vector2 mousePos;
 
+
+    [Header("Destination Offset")]
+    [Range(0f,1f)]
+    [SerializeField] private float offsetX;
+    [Range(0f,1f)]
+    [SerializeField] private float offsetY;
+
+    [Header("Magic Missile Parts")]    
+    // Missile Parts
+    [SerializeField] private ParticleSystem sparkles;
+    [SerializeField] private ParticleSystem.EmissionModule sparklesEmission;
+    [SerializeField] private ParticleSystem trail;
+    [SerializeField] private SpriteRenderer core;
+
     public void Init(Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
     {
         mousePos = mousePosition;
         startPos = startPosition;
         underhand = isUnderhand;
     }
+    private void Awake()
+    {
+        sparkles = GetComponent<ParticleSystem>();
+        sparklesEmission = sparkles.emission;
+        trail = GetComponentInChildren<ParticleSystem>();
+        core = GetComponentInChildren<SpriteRenderer>();
+    }
 
     void Start()
     {
         getTrajectory();
         getHeight(underhand);
-        StartCoroutine(destroySelf(3));
     }
 
     void Update()
     {
-        travelTrajectory();
+        if (timePassed < 1)
+        {
+            travelTrajectory();
+        }
 
+        if (timePassed > 1)
+        {
+            despawnMissile();
+        }
+    }
+
+    private void despawnMissile()
+    {
+        var isAlive = sparkles.IsAlive();
+        if (core != null)
+        {
+            Destroy(core.gameObject);
+            sparklesEmission.rateOverTime = 0;
+        }
+
+        if (sparkles.particleCount == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void travelTrajectory()
@@ -50,12 +92,9 @@ public class MagicMissileScript : MonoBehaviour
 
     private void getTrajectory()
     {
-        destinationPos = new Vector2(mousePos.x, mousePos.y);
+
+        destinationPos = new Vector2(mousePos.x - Random.Range(0,offsetX), mousePos.y - Random.Range(0,offsetY));
     }
 
-    IEnumerator destroySelf(float timeUntilDestruction)
-    {
-        yield return new WaitForSeconds(timeUntilDestruction);
-        Destroy(gameObject);
-    }
+
 }
