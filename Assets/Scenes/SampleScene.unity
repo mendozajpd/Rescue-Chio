@@ -396,10 +396,14 @@ MonoBehaviour:
     m_Flags: 0
   Sprite: {fileID: 0}
   Anim: {fileID: 0}
+  magicMissile: {fileID: 8657818885060223835, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+  isOverhand: 0
+  missileSpawnLocation: {fileID: 0}
   totalAtkSpeed: 30
   weaponAngle: 90
   angleOfTheWeapon: 90
   isLookingLeft: 0
+  mousePos: {x: 0, y: 0}
 --- !u!1 &224999126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,6 +1387,71 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 49280023}
+--- !u!1001 &1789605973
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251032, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754130088355251037, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_Name
+      value: Magic Missile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657818885060223835, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: destinationPos.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657818885060223835, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: destinationPos.y
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
 --- !u!1 &1823507529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,6 +1654,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2107300705}
+  - component: {fileID: 2107300706}
   m_Layer: 0
   m_Name: Missile Spawner
   m_TagString: Untagged
@@ -1607,60 +1677,15 @@ Transform:
   m_Father: {fileID: 180912878}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &6949384501278044087
-PrefabInstance:
+--- !u!114 &2107300706
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680449, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949384500024680452, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
-      propertyPath: m_Name
-      value: Magic Missile
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107300704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d0173e4b9ed114c948d8ed6bf3b0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

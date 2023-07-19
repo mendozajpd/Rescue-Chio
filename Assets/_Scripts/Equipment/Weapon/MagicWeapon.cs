@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 
 public class MagicWeapon : Weapon
 {
+    // Magic Missile Variables
+    [SerializeField] private MagicMissileScript magicMissile;
+    [SerializeField] private bool isOverhand;
+    [SerializeField] private MagicMissileSpawner missileSpawnLocation;
+
 
     // Weapon Rotation Variables
     [SerializeField] private float totalAtkSpeed;
@@ -23,6 +28,10 @@ public class MagicWeapon : Weapon
     // Weapon Sprite Flip Functions
     [SerializeField] private bool isLookingLeft;
 
+    // Mouse Position Variables
+    [SerializeField] private Vector2 mousePos;
+
+
     private void OnEnable()
     {
         Fire.Enable();
@@ -37,6 +46,9 @@ public class MagicWeapon : Weapon
     private void Awake()
     {
         _anchor = gameObject;
+
+        // Missile Variables
+        missileSpawnLocation = GetComponentInChildren<MagicMissileSpawner>();
 
         SetInputVariables();
         SetSpriteVariables();
@@ -74,6 +86,41 @@ public class MagicWeapon : Weapon
     }
     #endregion
 
+    #region Magic Missile 
+
+    private Vector2 _getMagicMissileMousePos()
+    {
+        var mainCamera = Camera.main;
+        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        return mousePos;
+    }
+
+    private void _castMagicMissile(MagicMissileScript missilePrefab)
+    {
+        var currentSpawnLocation = missileSpawnLocation.transform.position;
+        var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
+        castMagicMissile.Init(_getMagicMissileMousePos(), currentSpawnLocation , _determineTrajectorySide()); ;
+    }
+
+    private bool _determineTrajectorySide()
+    {
+        switch (_swing)
+        {
+            case 1:
+                isOverhand = !isLookingLeft;
+                break;
+            case -1:
+                isOverhand = isLookingLeft;
+                break;
+        }
+        return isOverhand;
+    }
+
+    // if looking right
+    //if swing 1 == underhand
+    //if swing -1 == overhand
+    #endregion
+
     #region Weapon Swing Functions
     private void _setSwingingPosition()
     {
@@ -86,6 +133,7 @@ public class MagicWeapon : Weapon
         if (_swinging) return;
 
         // Attack
+        _castMagicMissile(magicMissile);
         _swing *= -1;
         _swinging = true;
     }
