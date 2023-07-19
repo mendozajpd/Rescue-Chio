@@ -13,12 +13,15 @@ public class MagicWeapon : Weapon
     private Vector2 _mousePos;
     private float _angle;
 
-    // Melee Swing Variables
+    // Swing Variables
+    [SerializeField] private float angleOfTheWeapon;
     private float _swingAngle;
     private float _swing = 1;
     private bool _swinging;
-    private float angleOfTheWeapon = 90;
     private Vector3 target;
+
+    // Weapon Sprite Flip Functions
+    [SerializeField] private bool isLookingLeft;
 
     private void OnEnable()
     {
@@ -36,6 +39,7 @@ public class MagicWeapon : Weapon
         _anchor = gameObject;
 
         SetInputVariables();
+        SetSpriteVariables();
     }
 
     void Start()
@@ -45,6 +49,7 @@ public class MagicWeapon : Weapon
 
     void Update()
     {
+        _weaponSpriteFlipper();
         _getSwingAngle();
         _calculateWeaponSwingTrajectory();
         _rotateWeaponAroundAnchor();
@@ -70,7 +75,6 @@ public class MagicWeapon : Weapon
     #endregion
 
     #region Weapon Swing Functions
-
     private void _setSwingingPosition()
     {
         transform.localPosition = new Vector2(0, 0.5f);
@@ -102,8 +106,72 @@ public class MagicWeapon : Weapon
 
     private void _getSwingAngle()
     {
-        _swingAngle = Mathf.Lerp(_swingAngle, _swing * 90 , Time.deltaTime * totalAtkSpeed);
+        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * totalAtkSpeed);
     }
+
+    #endregion
+
+    #region Sprite Flipper
+    private void _weaponSpriteFlipper()
+    {
+        // Looking Left
+        if (_mousePos.x < 0)
+        {
+            //_flipSpriteLookingLeft();
+
+            if (!isLookingLeft && !_swinging)
+            {
+                _swing = -1;
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                isLookingLeft = true;
+            }
+
+
+        }
+
+
+        // Looking Right
+        if (_mousePos.x > 0)
+        {
+            //_flipSpriteLookingRight();
+
+            if (isLookingLeft && !_swinging)
+            {
+                _swing = 1;
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                isLookingLeft = false;
+            }
+
+        }
+
+    }
+
+    #region Not Used
+    // In case there would be different weapons that would need this
+    private void _flipSpriteLookingRight()
+    {
+        if (_swing == 1 && !_swinging)
+        {
+            Sprite.flipX = true;
+        }
+        else if (_swing == -1 && !_swinging)
+        {
+            Sprite.flipX = false;
+        }
+    }
+
+    private void _flipSpriteLookingLeft()
+    {
+        if (_swing == 1 && !_swinging)
+        {
+            Sprite.flipX = false;
+        }
+        else if (_swing == -1 && !_swinging)
+        {
+            Sprite.flipX = true;
+        }
+    }
+    #endregion
 
     #endregion
 
