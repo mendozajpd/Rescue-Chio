@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1754130088355251035}
   - component: {fileID: 1754130088355251034}
   - component: {fileID: 8657818885060223835}
-  m_Layer: 0
+  - component: {fileID: 3273523227093936323}
+  m_Layer: 7
   m_Name: Magic Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4831,7 +4832,7 @@ MonoBehaviour:
   speed: 0
   speedMultiplier: 0
   height: 0
-  heightDividend: 4
+  heightDividend: 8
   timePassed: 0
   underhand: 0
   mousePos: {x: 0, y: 0}
@@ -4840,6 +4841,22 @@ MonoBehaviour:
   sparkles: {fileID: 0}
   trail: {fileID: 0}
   core: {fileID: 0}
+--- !u!58 &3273523227093936323
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754130088355251037}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &1754130089189305680
 GameObject:
   m_ObjectHideFlags: 0
@@ -4850,7 +4867,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1754130089189305681}
   - component: {fileID: 1754130089189305644}
-  m_Layer: 0
+  - component: {fileID: 4867800750223454228}
+  - component: {fileID: 7651175295046355937}
+  m_Layer: 7
   m_Name: Missile Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4924,6 +4943,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &4867800750223454228
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754130089189305680}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &7651175295046355937
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754130089189305680}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &7606822578854266600
 GameObject:
   m_ObjectHideFlags: 0
@@ -4935,7 +4991,7 @@ GameObject:
   - component: {fileID: 4195121409660782434}
   - component: {fileID: 1473921829428964235}
   - component: {fileID: 2916839207489999370}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

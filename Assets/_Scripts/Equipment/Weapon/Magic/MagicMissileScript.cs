@@ -30,6 +30,11 @@ public class MagicMissileScript : MonoBehaviour
     [SerializeField] private ParticleSystem trail;
     [SerializeField] private SpriteRenderer core;
 
+    [Header("Raycast Variables")]
+    private Ray2D _ray;
+    private RaycastHit2D _raycastHit;
+    private ContactFilter2D _contactFilter2D;
+
     public void Init(Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
     {
         mousePos = mousePosition;
@@ -42,6 +47,8 @@ public class MagicMissileScript : MonoBehaviour
         sparklesEmission = sparkles.emission;
         trail = GetComponentInChildren<ParticleSystem>();
         core = GetComponentInChildren<SpriteRenderer>();
+
+        _createContactFilter();
     }
 
     void Start()
@@ -54,7 +61,7 @@ public class MagicMissileScript : MonoBehaviour
     {
         if (timePassed < 1)
         {
-            travelTrajectory();
+            _travelTrajectory();
         }
 
         if (timePassed > 1)
@@ -65,7 +72,6 @@ public class MagicMissileScript : MonoBehaviour
 
     private void despawnMissile()
     {
-        var isAlive = sparkles.IsAlive();
         if (core != null)
         {
             Destroy(core.gameObject);
@@ -78,7 +84,7 @@ public class MagicMissileScript : MonoBehaviour
         }
     }
 
-    private void travelTrajectory()
+    private void _travelTrajectory()
     {
         timePassed += Time.deltaTime + speedMultiplier;
         transform.position = MathParabola.Parabola(startPos, destinationPos, height, timePassed);
@@ -97,4 +103,39 @@ public class MagicMissileScript : MonoBehaviour
     }
 
 
+    #region Homing Variables
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+
+        if (enemy != null)
+        {
+            _ray = new Ray2D(transform.position, enemy.transform.position);
+            _raycastHit = Physics2D.Raycast(transform.position, enemy.transform.position);
+            if (_raycastHit.collider)
+            {
+                Debug.DrawRay(transform.position, _raycastHit.point, Color.white);
+                Debug.Log("enemy in vicinity");
+            } else
+            {
+                Debug.Log("vision obstructed");
+            }
+        }
+    }
+
+
+    private void _checkForObstruction()
+    {
+
+    }
+
+    private void _createContactFilter()
+    {
+        _contactFilter2D = new ContactFilter2D();
+        _contactFilter2D.useTriggers = false;
+        _contactFilter2D.useLayerMask = false;
+    }
+
+    #endregion
 }
