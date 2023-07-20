@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1754130088355251034}
   - component: {fileID: 8657818885060223835}
   - component: {fileID: 3273523227093936323}
+  - component: {fileID: 7547898458907899070}
+  - component: {fileID: 8297435215188578328}
   m_Layer: 7
   m_Name: Magic Missile
   m_TagString: Untagged
@@ -33,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4195121409660782434}
+  - {fileID: 1573125344676520275}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4841,6 +4844,10 @@ MonoBehaviour:
   sparkles: {fileID: 0}
   trail: {fileID: 0}
   core: {fileID: 0}
+  aggro: {fileID: 0}
+  target: {fileID: 0}
+  enemyDetected: 0
+  rb: {fileID: 0}
 --- !u!58 &3273523227093936323
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4857,6 +4864,43 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3
+--- !u!50 &7547898458907899070
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754130088355251037}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &8297435215188578328
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754130088355251037}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1754130089189305680
 GameObject:
   m_ObjectHideFlags: 0
@@ -4867,8 +4911,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1754130089189305681}
   - component: {fileID: 1754130089189305644}
-  - component: {fileID: 4867800750223454228}
-  - component: {fileID: 7651175295046355937}
   m_Layer: 7
   m_Name: Missile Core
   m_TagString: Untagged
@@ -4943,43 +4985,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &4867800750223454228
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!1 &2165686511811744494
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754130089189305680}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &7651175295046355937
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1573125344676520275}
+  - component: {fileID: 2501218409859645767}
+  - component: {fileID: 5632849705828347135}
+  m_Layer: 7
+  m_Name: Target Detection Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1573125344676520275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165686511811744494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1754130088355251032}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2501218409859645767
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754130089189305680}
+  m_GameObject: {fileID: 2165686511811744494}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 3
+--- !u!114 &5632849705828347135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165686511811744494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3447c3ec55d02774b996d35441e1ff78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  triggerStay: 0
+  triggerEnterOnce: 1
 --- !u!1 &7606822578854266600
 GameObject:
   m_ObjectHideFlags: 0
