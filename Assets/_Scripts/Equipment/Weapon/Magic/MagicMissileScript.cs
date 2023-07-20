@@ -42,6 +42,10 @@ public class MagicMissileScript : MonoBehaviour
     private float rotateAmount;
 
 
+    //temporary
+    [SerializeField] private ParticleSystem deathPrefab;
+
+
 
 
     public void Init(Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
@@ -71,27 +75,32 @@ public class MagicMissileScript : MonoBehaviour
 
     void Start()
     {
+        sparklesEmission.rateOverTime = 50;
         getTrajectory();
         getHeight(underhand);
     }
 
     void Update()
     {
-        _travelToDestination();
+        _despawnMissile();
     }
 
     private void FixedUpdate()
     {
+        _travelToDestination();
         if (enemyDetected)
         {
             _getTargetDirection();
+            missileSpeed -= 0.3f;
 
             rotateAmount = Vector3.Cross(targetDirection, transform.up).z;
 
             rb.angularVelocity = -rotateAmount * rotationSpeed;
 
-            rb.velocity = transform.up * missileSpeed;
+            rb.velocity = transform.up * (missileSpeed - Vector2.Distance(transform.position, target.transform.position));
         }
+
+
     }
 
     private void _getTargetDirection()
@@ -110,22 +119,25 @@ public class MagicMissileScript : MonoBehaviour
 
             if (timePassed > 1)
             {
-                despawnMissile();
+                _despawnMissile();
             }
         }
     }
 
-    private void despawnMissile()
+    private void _despawnMissile()
+    {
+        if (sparkles.particleCount == 0 && core == null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void _destroyCore()
     {
         if (core != null)
         {
             Destroy(core.gameObject);
-            sparklesEmission.rateOverTime = 0;
-        }
-
-        if (sparkles.particleCount == 0)
-        {
-            Destroy(gameObject);
+            Instantiate(deathPrefab, transform.position, Quaternion.identity);
         }
     }
 
@@ -157,33 +169,32 @@ public class MagicMissileScript : MonoBehaviour
         aggro.gameObject.SetActive(false);
         //gameObject.transform.rotation = new Quaternion(0,0,targetDirection.z);
         _rotateClockwiseToTarget();
+        sparklesEmission.rateOverTime = 0;
+        sparklesEmission.rateOverDistance = 1;
         enemyDetected = true;
     }
 
     private void _rotateClockwiseToTarget()
     {
-        // Find the direction vector from the 2D object to the target.
         Vector3 directionToTarget = target.transform.position - transform.position;
-
-        // Calculate the angle in radians using Atan2.
         float angleRadians = Mathf.Atan2(directionToTarget.y, directionToTarget.x);
-
-        // Convert the angle to degrees using Rad2Deg.
         float angleDegrees = (angleRadians * Mathf.Rad2Deg) - angleOffset;
-
-        // Take the negative value of the angle to rotate clockwise.
 
         if (angleDegrees < 0f)
         {
             angleDegrees += 360f;
         }
 
-
         Debug.Log("ROTATED TO " + angleDegrees);
-        // Apply the rotation to the 2D object.
-        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees );
+
+        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees);
     }
 
 
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _destroyCore();
+    }
 }

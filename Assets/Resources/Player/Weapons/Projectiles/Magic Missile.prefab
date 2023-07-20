@@ -873,7 +873,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -926,7 +926,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4833,7 +4833,7 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   destinationPos: {x: 0, y: 0}
   speed: 0
-  speedMultiplier: 0
+  speedMultiplier: 0.1
   height: 0
   heightDividend: 8
   timePassed: 0
@@ -4848,9 +4848,10 @@ MonoBehaviour:
   target: {fileID: 0}
   rb: {fileID: 0}
   enemyDetected: 0
-  rotationSpeed: 500
-  missileSpeed: 30
+  rotationSpeed: 900
+  missileSpeed: 50
   angleOffset: 70
+  deathPrefab: {fileID: 133050497600427187, guid: 81524a2a8494b3445b609437d2370a70, type: 3}
 --- !u!50 &7547898458907899070
 Rigidbody2D:
   serializedVersion: 4
@@ -5051,7 +5052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1218409952627153047
 Transform:
   m_ObjectHideFlags: 0
