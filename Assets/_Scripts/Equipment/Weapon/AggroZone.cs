@@ -9,8 +9,6 @@ public class AggroZone : MonoBehaviour
     
     [Header("AggroZone Settings")]
     [SerializeField] private bool triggerStay;
-    [SerializeField] private bool triggerEnterOnce;
-    private bool triggered = false;
 
     private void Start()
     {
@@ -20,7 +18,7 @@ public class AggroZone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // For single targets
-        if (!triggerStay && triggerEnterOnce && !triggered)
+        if (!triggerStay)
         {
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
 
@@ -28,23 +26,9 @@ public class AggroZone : MonoBehaviour
             {
                 target = enemy;
                 aggroTrigger.Invoke();
-                triggered = true;
                 Debug.Log("triggered once");
             }
         }        
-        
-        // This changes the target enemy every time an enemy enters trigger
-        if (!triggerStay && !triggerEnterOnce)
-        {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
-
-            if (enemy != null)
-            {
-                target = enemy;
-                aggroTrigger.Invoke();
-                Debug.Log("triggered once multiple times");
-            }
-        }
 
        
     }

@@ -37,6 +37,9 @@ public class MagicMissileScript : MonoBehaviour
     [SerializeField] private bool enemyDetected;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float missileSpeed;
+    [SerializeField] private float angleOffset = 90;
+    private Vector2 targetDirection;
+    private float rotateAmount;
 
 
 
@@ -54,7 +57,6 @@ public class MagicMissileScript : MonoBehaviour
 
     private void OnDisable()
     {
-        aggro.aggroTrigger -= _activateHoming;
     }
 
     private void Awake()
@@ -82,14 +84,19 @@ public class MagicMissileScript : MonoBehaviour
     {
         if (enemyDetected)
         {
-            Vector2 direction = ((Vector2)target.transform.position - rb.position).normalized;
+            _getTargetDirection();
 
-            float rotateAmount = Vector3.Cross(direction, transform.up).z;
+            rotateAmount = Vector3.Cross(targetDirection, transform.up).z;
 
             rb.angularVelocity = -rotateAmount * rotationSpeed;
 
             rb.velocity = transform.up * missileSpeed;
         }
+    }
+
+    private void _getTargetDirection()
+    {
+        targetDirection = ((Vector2)target.transform.position - rb.position).normalized;
     }
 
     private void _travelToDestination()
@@ -145,8 +152,36 @@ public class MagicMissileScript : MonoBehaviour
 
     private void _activateHoming()
     {
-        enemyDetected = true;
         target = aggro.target;
+        aggro.aggroTrigger -= _activateHoming;
+        aggro.gameObject.SetActive(false);
+        //gameObject.transform.rotation = new Quaternion(0,0,targetDirection.z);
+        _rotateClockwiseToTarget();
+        enemyDetected = true;
+    }
+
+    private void _rotateClockwiseToTarget()
+    {
+        // Find the direction vector from the 2D object to the target.
+        Vector3 directionToTarget = target.transform.position - transform.position;
+
+        // Calculate the angle in radians using Atan2.
+        float angleRadians = Mathf.Atan2(directionToTarget.y, directionToTarget.x);
+
+        // Convert the angle to degrees using Rad2Deg.
+        float angleDegrees = (angleRadians * Mathf.Rad2Deg) - angleOffset;
+
+        // Take the negative value of the angle to rotate clockwise.
+
+        if (angleDegrees < 0f)
+        {
+            angleDegrees += 360f;
+        }
+
+
+        Debug.Log("ROTATED TO " + angleDegrees);
+        // Apply the rotation to the 2D object.
+        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees );
     }
 
 
