@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class MagicMissileScript : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class MagicMissileScript : MonoBehaviour
     private Vector2 targetDirection;
     private float rotateAmount;
 
+    // Lights
+    private Light2D light2d;
+
 
     //temporary
     [SerializeField] private ParticleSystem deathPrefab;
@@ -71,13 +75,16 @@ public class MagicMissileScript : MonoBehaviour
         core = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         aggro = GetComponentInChildren<AggroZone>();
+        light2d = GetComponent<Light2D>();
     }
 
     void Start()
     {
         sparklesEmission.rateOverTime = 50;
-        getTrajectory();
-        getHeight(underhand);
+        _getTrajectory();
+        _getHeight(underhand);
+        _rotateTowardsTarget();
+        StartCoroutine(despawn(5));
     }
 
     void Update()
@@ -88,14 +95,19 @@ public class MagicMissileScript : MonoBehaviour
     private void FixedUpdate()
     {
         _travelToDestination();
-        if (enemyDetected)
+        if (enemyDetected && core != null)
         {
             _getTargetDirection();
-            missileSpeed -= 0.3f;
+            missileSpeed -= 0.1f;
+            rotationSpeed += 20f;
 
             rotateAmount = Vector3.Cross(targetDirection, transform.up).z;
 
             rb.angularVelocity = -rotateAmount * rotationSpeed;
+
+            // Avoids target, looks pretty cool as a deflect skill
+            //rb.angularVelocity = +rotateAmount * rotationSpeed;
+
 
             rb.velocity = transform.up * (missileSpeed - Vector2.Distance(transform.position, target.transform.position));
         }
@@ -116,19 +128,18 @@ public class MagicMissileScript : MonoBehaviour
             {
                 _travelTrajectory();
             }
-
-            if (timePassed > 1)
-            {
-                _despawnMissile();
-            }
         }
     }
 
     private void _despawnMissile()
     {
-        if (sparkles.particleCount == 0 && core == null)
+        if (core == null)
         {
-            Destroy(gameObject);
+            if (light2d.intensity > 0) light2d.intensity -= 0.01f;
+            if (sparkles.particleCount == 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -136,6 +147,7 @@ public class MagicMissileScript : MonoBehaviour
     {
         if (core != null)
         {
+            rb.velocity = Vector2.zero;
             Destroy(core.gameObject);
             Instantiate(deathPrefab, transform.position, Quaternion.identity);
         }
@@ -143,17 +155,19 @@ public class MagicMissileScript : MonoBehaviour
 
     private void _travelTrajectory()
     {
+        _rotateTowardsTarget();
         timePassed += Time.deltaTime + speedMultiplier;
         transform.position = MathParabola.Parabola(startPos, destinationPos, height, timePassed);
+        
     }
 
-    private void getHeight(bool isUnderhand)
+    private void _getHeight(bool isUnderhand)
     {
         height = Vector2.Distance(startPos, destinationPos) / (isUnderhand ? heightDividend : -heightDividend);
     }
 
 
-    private void getTrajectory()
+    private void _getTrajectory()
     {
 
         destinationPos = new Vector2(mousePos.x - Random.Range(0, offsetX), mousePos.y - Random.Range(0, offsetY));
@@ -168,15 +182,16 @@ public class MagicMissileScript : MonoBehaviour
         aggro.aggroTrigger -= _activateHoming;
         aggro.gameObject.SetActive(false);
         //gameObject.transform.rotation = new Quaternion(0,0,targetDirection.z);
-        _rotateClockwiseToTarget();
+        //_rotateTowardsTarget();
         sparklesEmission.rateOverTime = 0;
         sparklesEmission.rateOverDistance = 1;
         enemyDetected = true;
     }
 
-    private void _rotateClockwiseToTarget()
+    private void _rotateTowardsTarget()
     {
-        Vector3 directionToTarget = target.transform.position - transform.position;
+        //Vector3 directionToTarget = target.transform.position - transform.position;
+        Vector3 directionToTarget = (Vector3)destinationPos - transform.position;
         float angleRadians = Mathf.Atan2(directionToTarget.y, directionToTarget.x);
         float angleDegrees = (angleRadians * Mathf.Rad2Deg) - angleOffset;
 
@@ -196,5 +211,12 @@ public class MagicMissileScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _destroyCore();
+    }
+
+    IEnumerator despawn(float secondsUntilDeath)
+    {
+        yield return new WaitForSeconds(secondsUntilDeath);
+        _destroyCore();
+        Destroy(gameObject);
     }
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8657818885060223835}
   - component: {fileID: 7547898458907899070}
   - component: {fileID: 8297435215188578328}
+  - component: {fileID: 6938082395277313668}
   m_Layer: 7
   m_Name: Magic Missile
   m_TagString: Untagged
@@ -3818,7 +3819,7 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
+    enabled: 1
     ratio: 0
     light: {fileID: 0}
     randomDistribution: 1
@@ -4833,14 +4834,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   destinationPos: {x: 0, y: 0}
   speed: 0
-  speedMultiplier: 0.1
+  speedMultiplier: 0.05
   height: 0
   heightDividend: 8
   timePassed: 0
   underhand: 0
   mousePos: {x: 0, y: 0}
-  offsetX: 1
-  offsetY: 1
+  offsetX: 0.5
+  offsetY: 0.5
   sparkles: {fileID: 0}
   trail: {fileID: 0}
   core: {fileID: 0}
@@ -4848,9 +4849,9 @@ MonoBehaviour:
   target: {fileID: 0}
   rb: {fileID: 0}
   enemyDetected: 0
-  rotationSpeed: 900
+  rotationSpeed: 200
   missileSpeed: 50
-  angleOffset: 70
+  angleOffset: 90
   deathPrefab: {fileID: 133050497600427187, guid: 81524a2a8494b3445b609437d2370a70, type: 3}
 --- !u!50 &7547898458907899070
 Rigidbody2D:
@@ -4889,6 +4890,57 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &6938082395277313668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754130088355251037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.20705767, g: 0.55026454, b: 0.9339623, a: 1}
+  m_Intensity: 0.5
+  m_LightVolumeIntensity: 0.16
+  m_LightVolumeIntensityEnabled: 1
+  m_ApplyToSortingLayers: 0000000021047afd
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_Vertices:
+  - position: {x: 0, y: 0, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  m_Triangles: 0000
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath: []
 --- !u!1 &1754130089189305680
 GameObject:
   m_ObjectHideFlags: 0
@@ -5790,7 +5842,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 0}
+    m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -5988,7 +6040,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2

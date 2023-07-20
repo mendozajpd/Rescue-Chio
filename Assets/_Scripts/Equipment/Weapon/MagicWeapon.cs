@@ -116,9 +116,6 @@ public class MagicWeapon : Weapon
         return isOverhand;
     }
 
-    // if looking right
-    //if swing 1 == underhand
-    //if swing -1 == overhand
     #endregion
 
     #region Weapon Swing Functions
