@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6733208528328669340}
   - component: {fileID: -4274370750523979841}
   m_Layer: 0
-  m_Name: Missile Death
+  m_Name: MagicMissile_Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

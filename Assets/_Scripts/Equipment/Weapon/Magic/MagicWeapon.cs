@@ -5,10 +5,13 @@ using UnityEngine.InputSystem;
 
 public class MagicWeapon : Weapon
 {
+    [Header("Spells")]
+    public List<Spell> Spells = new List<Spell>(2);
+
     // Magic Missile Variables
-    [SerializeField] private MagicMissileScript magicMissile;
+    [SerializeField] private MagicMissileBehavior magicMissile;
     [SerializeField] private bool isOverhand;
-    [SerializeField] private MagicMissileSpawner missileSpawnLocation;
+    [SerializeField] private SpellHandler missileSpawnLocation;
 
 
     // Weapon Rotation Variables
@@ -26,11 +29,16 @@ public class MagicWeapon : Weapon
     private Vector3 target;
 
     // Weapon Sprite Flip Functions
-    [SerializeField] private bool isLookingLeft;
+    public bool isLookingLeft;
 
     // Mouse Position Variables
-    [SerializeField] private Vector2 mousePos;
+    public Vector2 MouseAttackPosition;
 
+    private int currentSpellIndex = 0;
+
+
+
+    public float Swing { get => _swing; }
 
     private void OnEnable()
     {
@@ -48,7 +56,7 @@ public class MagicWeapon : Weapon
         _anchor = gameObject;
 
         // Missile Variables
-        missileSpawnLocation = GetComponentInChildren<MagicMissileSpawner>();
+        missileSpawnLocation = GetComponentInChildren<SpellHandler>();
 
         SetInputVariables();
         SetSpriteVariables();
@@ -61,6 +69,7 @@ public class MagicWeapon : Weapon
 
     void Update()
     {
+        GetMouseAttackPosition();
         _weaponSpriteFlipper();
         _getSwingAngle();
         _calculateWeaponSwingTrajectory();
@@ -84,36 +93,12 @@ public class MagicWeapon : Weapon
     {
         _mousePos = Input.mousePosition - Camera.main.WorldToScreenPoint(_anchor.transform.position);
     }
-    #endregion
 
-    #region Magic Missile 
-
-    private Vector2 _getMagicMissileMousePos()
+    public Vector2 GetMouseAttackPosition()
     {
         var mainCamera = Camera.main;
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        return mousePos;
-    }
-
-    private void _castMagicMissile(MagicMissileScript missilePrefab)
-    {
-        var currentSpawnLocation = missileSpawnLocation.transform.position;
-        var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
-        castMagicMissile.Init(_getMagicMissileMousePos(), currentSpawnLocation , _determineTrajectorySide()); ;
-    }
-
-    private bool _determineTrajectorySide()
-    {
-        switch (_swing)
-        {
-            case 1:
-                isOverhand = !isLookingLeft;
-                break;
-            case -1:
-                isOverhand = isLookingLeft;
-                break;
-        }
-        return isOverhand;
+        MouseAttackPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        return MouseAttackPosition;
     }
 
     #endregion
@@ -125,12 +110,12 @@ public class MagicWeapon : Weapon
         Sprite.transform.localPosition = new Vector2(0.5f, 0.15f);
     }
 
-    private void _swingWeapon()
+    private void _swingWand()
     {
         if (_swinging) return;
 
         // Attack
-        _castMagicMissile(magicMissile);
+        Spells[currentSpellIndex].CastSpell();
         _swing *= -1;
         _swinging = true;
     }
@@ -223,7 +208,7 @@ public class MagicWeapon : Weapon
 
     private void CastMagic(InputAction.CallbackContext context)
     {
-        _swingWeapon();
+        _swingWand();
     }
 
 }

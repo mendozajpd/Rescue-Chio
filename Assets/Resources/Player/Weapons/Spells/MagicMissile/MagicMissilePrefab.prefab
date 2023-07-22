@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8297435215188578328}
   - component: {fileID: 6938082395277313668}
   m_Layer: 7
-  m_Name: Magic Missile
+  m_Name: MagicMissilePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

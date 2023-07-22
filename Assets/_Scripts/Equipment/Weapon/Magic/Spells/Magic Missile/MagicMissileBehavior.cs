@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MagicMissileScript : MonoBehaviour
+public class MagicMissileBehavior : MonoBehaviour
 {
 
     [Header("Missile Settings")]
@@ -47,7 +47,6 @@ public class MagicMissileScript : MonoBehaviour
 
     //temporary
     [SerializeField] private ParticleSystem deathPrefab;
-
 
 
 
