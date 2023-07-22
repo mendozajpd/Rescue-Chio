@@ -6,17 +6,15 @@ using UnityEngine.Rendering.Universal;
 public class MagicMissileScript : MonoBehaviour
 {
 
-    [SerializeField] private Vector2 startPos;
-    [SerializeField] private Vector2 destinationPos;
-    [SerializeField] private float speed;
-    [SerializeField] private float speedMultiplier;
-    [SerializeField] private float height;
+    [Header("Missile Settings")]
+    [SerializeField] private float missileTravelSpeed;
     [SerializeField] private float heightDividend = 4;
-    [SerializeField] private float timePassed;
-    [SerializeField] private bool underhand;
-
-    [SerializeField] private Vector2 mousePos;
-
+    private Vector2 _mousePos;
+    private Vector2 _startPos;
+    private Vector2 _destinationPos;
+    private float _height;
+    private float _timePassed;
+    private bool _underhand;
 
     [Header("Destination Offset")]
     [Range(0f, 1f)]
@@ -24,23 +22,24 @@ public class MagicMissileScript : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float offsetY;
 
-    [Header("Magic Missile Parts")]
     // Missile Parts
-    [SerializeField] private ParticleSystem sparkles;
-    [SerializeField] private ParticleSystem.EmissionModule sparklesEmission;
-    [SerializeField] private ParticleSystem trail;
-    [SerializeField] private SpriteRenderer core;
+    private ParticleSystem _sparkles;
+    private ParticleSystem.EmissionModule _sparklesEmission;
+    private ParticleSystem trail;
+    private SpriteRenderer _core;
 
     [Header("Homing Variables")]
-    [SerializeField] private AggroZone aggro;
-    [SerializeField] private Enemy target;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private bool enemyDetected;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private float missileSpeed;
-    [SerializeField] private float angleOffset = 90;
-    private Vector2 targetDirection;
-    private float rotateAmount;
+    [SerializeField] private float defaultRotationSpeed;
+    [SerializeField] private float defaultMissileSpeed;
+    [SerializeField] private float defaultAngleOffset = 90;
+    [SerializeField] private float missileSpeedDecreaseOvertime = 0.1f;
+    [SerializeField] private float missileRotateSpeedIncreaseOvertime = 20f;
+    private AggroZone _aggro;
+    private Enemy _target;
+    private Rigidbody2D _rb;
+    private bool _enemyDetected;
+    private Vector2 _targetDirection;
+    private float _rotateAmount;
 
     // Lights
     private Light2D light2d;
@@ -54,13 +53,13 @@ public class MagicMissileScript : MonoBehaviour
 
     public void Init(Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
     {
-        mousePos = mousePosition;
-        startPos = startPosition;
-        underhand = isUnderhand;
+        _mousePos = mousePosition;
+        _startPos = startPosition;
+        _underhand = isUnderhand;
     }
     private void OnEnable()
     {
-        aggro.aggroTrigger += _activateHoming;
+        _aggro.aggroTrigger += _activateHoming;
     }
 
     private void OnDisable()
@@ -69,20 +68,20 @@ public class MagicMissileScript : MonoBehaviour
 
     private void Awake()
     {
-        sparkles = GetComponent<ParticleSystem>();
-        sparklesEmission = sparkles.emission;
+        _sparkles = GetComponent<ParticleSystem>();
+        _sparklesEmission = _sparkles.emission;
         trail = GetComponentInChildren<ParticleSystem>();
-        core = GetComponentInChildren<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        aggro = GetComponentInChildren<AggroZone>();
+        _core = GetComponentInChildren<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
+        _aggro = GetComponentInChildren<AggroZone>();
         light2d = GetComponent<Light2D>();
     }
 
     void Start()
     {
-        sparklesEmission.rateOverTime = 50;
+        _sparklesEmission.rateOverTime = 50;
         _getTrajectory();
-        _getHeight(underhand);
+        _getHeight(_underhand);
         _rotateTowardsTarget();
         StartCoroutine(despawn(5));
     }
@@ -95,21 +94,20 @@ public class MagicMissileScript : MonoBehaviour
     private void FixedUpdate()
     {
         _travelToDestination();
-        if (enemyDetected && core != null)
+        if (_enemyDetected && _core != null)
         {
             _getTargetDirection();
-            missileSpeed -= 0.1f;
-            rotationSpeed += 20f;
+            defaultMissileSpeed -= missileSpeedDecreaseOvertime;
+            defaultRotationSpeed += missileRotateSpeedIncreaseOvertime;
 
-            rotateAmount = Vector3.Cross(targetDirection, transform.up).z;
+            _rotateAmount = Vector3.Cross(_targetDirection, transform.up).z;
 
-            rb.angularVelocity = -rotateAmount * rotationSpeed;
+            _rb.angularVelocity = -_rotateAmount * defaultRotationSpeed;
 
             // Avoids target, looks pretty cool as a deflect skill
             //rb.angularVelocity = +rotateAmount * rotationSpeed;
 
-
-            rb.velocity = transform.up * (missileSpeed - Vector2.Distance(transform.position, target.transform.position));
+            _rb.velocity = transform.up * (defaultMissileSpeed - Vector2.Distance(transform.position, _target.transform.position));
         }
 
 
@@ -117,26 +115,33 @@ public class MagicMissileScript : MonoBehaviour
 
     private void _getTargetDirection()
     {
-        targetDirection = ((Vector2)target.transform.position - rb.position).normalized;
+        _targetDirection = ((Vector2)_target.transform.position - _rb.position).normalized;
     }
 
     private void _travelToDestination()
     {
-        if (!enemyDetected)
+        if (!_enemyDetected)
         {
-            if (timePassed < 1)
+            if (_timePassed < 1)
             {
                 _travelTrajectory();
             }
+
+            if (_timePassed > 1)
+            {
+                _destroyCore();
+                _despawnMissile();
+            }
+
         }
     }
 
     private void _despawnMissile()
     {
-        if (core == null)
+        if (_core == null)
         {
             if (light2d.intensity > 0) light2d.intensity -= 0.01f;
-            if (sparkles.particleCount == 0)
+            if (_sparkles.particleCount == 0)
             {
                 Destroy(gameObject);
             }
@@ -145,32 +150,33 @@ public class MagicMissileScript : MonoBehaviour
 
     private void _destroyCore()
     {
-        if (core != null)
+        if (_core != null)
         {
-            rb.velocity = Vector2.zero;
-            Destroy(core.gameObject);
+            _rb.velocity = Vector2.zero;
+            Destroy(_core.gameObject);
             Instantiate(deathPrefab, transform.position, Quaternion.identity);
+            _sparklesEmission.rateOverTime = 0;
         }
     }
 
     private void _travelTrajectory()
     {
         _rotateTowardsTarget();
-        timePassed += Time.deltaTime + speedMultiplier;
-        transform.position = MathParabola.Parabola(startPos, destinationPos, height, timePassed);
+        _timePassed += Time.deltaTime + (missileTravelSpeed * 0.001f);
+        transform.position = MathParabola.Parabola(_startPos, _destinationPos, _height, _timePassed);
         
     }
 
     private void _getHeight(bool isUnderhand)
     {
-        height = Vector2.Distance(startPos, destinationPos) / (isUnderhand ? heightDividend : -heightDividend);
+        _height = Vector2.Distance(_startPos, _destinationPos) / (isUnderhand ? heightDividend : -heightDividend);
     }
 
 
     private void _getTrajectory()
     {
 
-        destinationPos = new Vector2(mousePos.x - Random.Range(0, offsetX), mousePos.y - Random.Range(0, offsetY));
+        _destinationPos = new Vector2(_mousePos.x - Random.Range(0, offsetX), _mousePos.y - Random.Range(0, offsetY));
     }
 
 
@@ -178,29 +184,24 @@ public class MagicMissileScript : MonoBehaviour
 
     private void _activateHoming()
     {
-        target = aggro.target;
-        aggro.aggroTrigger -= _activateHoming;
-        aggro.gameObject.SetActive(false);
-        //gameObject.transform.rotation = new Quaternion(0,0,targetDirection.z);
-        //_rotateTowardsTarget();
-        sparklesEmission.rateOverTime = 0;
-        sparklesEmission.rateOverDistance = 1;
-        enemyDetected = true;
+        _target = _aggro.target;
+        _aggro.aggroTrigger -= _activateHoming;
+        _aggro.gameObject.SetActive(false);
+        _sparklesEmission.rateOverTime = 0;
+        _sparklesEmission.rateOverDistance = 1;
+        _enemyDetected = true;
     }
 
     private void _rotateTowardsTarget()
     {
-        //Vector3 directionToTarget = target.transform.position - transform.position;
-        Vector3 directionToTarget = (Vector3)destinationPos - transform.position;
+        Vector3 directionToTarget = (Vector3)_destinationPos - transform.position;
         float angleRadians = Mathf.Atan2(directionToTarget.y, directionToTarget.x);
-        float angleDegrees = (angleRadians * Mathf.Rad2Deg) - angleOffset;
+        float angleDegrees = (angleRadians * Mathf.Rad2Deg) - defaultAngleOffset;
 
         if (angleDegrees < 0f)
         {
             angleDegrees += 360f;
         }
-
-        Debug.Log("ROTATED TO " + angleDegrees);
 
         transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees);
     }

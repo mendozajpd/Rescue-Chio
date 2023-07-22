@@ -1860,6 +1860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic Missile
       objectReference: {fileID: 0}
+    - target: {fileID: 1754130089189305644, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8657818885060223835, guid: 33a1a7efe456b4b488ec0b4e46aead52, type: 3}
       propertyPath: m_Enabled
       value: 1
