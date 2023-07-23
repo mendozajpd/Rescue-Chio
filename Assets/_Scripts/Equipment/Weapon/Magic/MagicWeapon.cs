@@ -8,11 +8,9 @@ public class MagicWeapon : Weapon
     [Header("Spells")]
     public List<Spell> Spells = new List<Spell>(2);
 
-    // Magic Missile Variables
-    [SerializeField] private MagicMissileBehavior magicMissile;
-    [SerializeField] private bool isOverhand;
-    [SerializeField] private SpellHandler missileSpawnLocation;
 
+    // Casts
+    [SerializeField] private int numberOfCasts;
 
     // Weapon Rotation Variables
     [SerializeField] private float totalAtkSpeed;
@@ -54,9 +52,6 @@ public class MagicWeapon : Weapon
     private void Awake()
     {
         _anchor = gameObject;
-
-        // Missile Variables
-        missileSpawnLocation = GetComponentInChildren<SpellHandler>();
 
         SetInputVariables();
         SetSpriteVariables();
@@ -115,7 +110,10 @@ public class MagicWeapon : Weapon
         if (_swinging) return;
 
         // Attack
-        Spells[currentSpellIndex].CastSpell();
+        for (int i = 0; i < numberOfCasts; i++)
+        {
+            Spells[currentSpellIndex].CastSpell();
+        }
         _swing *= -1;
         _swinging = true;
     }

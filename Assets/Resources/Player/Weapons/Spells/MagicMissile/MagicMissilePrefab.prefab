@@ -4786,8 +4786,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -42335199
-  m_SortingLayer: 2
+  m_SortingLayerID: -1881375163
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4833,13 +4833,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missileTravelSpeed: 30
   heightDividend: 8
-  offsetX: 0.5
-  offsetY: 0.5
+  offsetX: 1
+  offsetY: 1
   defaultRotationSpeed: 800
   defaultMissileSpeed: 45
   defaultAngleOffset: 90
   missileSpeedDecreaseOvertime: 0.1
   missileRotateSpeedIncreaseOvertime: 50
+  lightIntensityOnDeath: 10
   deathPrefab: {fileID: 133050497600427187, guid: 81524a2a8494b3445b609437d2370a70, type: 3}
 --- !u!50 &7547898458907899070
 Rigidbody2D:
@@ -4893,9 +4894,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.7
   m_Color: {r: 0.20705767, g: 0.55026454, b: 0.9339623, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.8
   m_LightVolumeIntensity: 0.16
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 0000000021047afd

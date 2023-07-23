@@ -42,6 +42,7 @@ public class MagicMissileBehavior : MonoBehaviour
     private float _rotateAmount;
 
     // Lights
+    [SerializeField] private float lightIntensityOnDeath;
     private Light2D light2d;
 
 
@@ -121,7 +122,7 @@ public class MagicMissileBehavior : MonoBehaviour
     {
         if (!_enemyDetected)
         {
-            if (_timePassed < 1)
+            if (_timePassed < 1 && _core != null)
             {
                 _travelTrajectory();
             }
@@ -139,7 +140,7 @@ public class MagicMissileBehavior : MonoBehaviour
     {
         if (_core == null)
         {
-            if (light2d.intensity > 0) light2d.intensity -= 0.01f;
+            if (light2d.intensity > 0) light2d.intensity -=  lightIntensityOnDeath * 0.01f;
             if (_sparkles.particleCount == 0)
             {
                 Destroy(gameObject);
@@ -155,6 +156,7 @@ public class MagicMissileBehavior : MonoBehaviour
             Destroy(_core.gameObject);
             Instantiate(deathPrefab, transform.position, Quaternion.identity);
             _sparklesEmission.rateOverTime = 0;
+            light2d.intensity = lightIntensityOnDeath;
         }
     }
 
