@@ -26,7 +26,6 @@ public class AggroZone : MonoBehaviour
             {
                 target = enemy;
                 aggroTrigger.Invoke();
-                Debug.Log("triggered once");
             }
         }        
 

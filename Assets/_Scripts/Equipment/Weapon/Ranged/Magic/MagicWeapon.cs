@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class MagicWeapon : Weapon
 {
     [Header("Spells")]
+    private SpellHandler spellHandler;
     public List<Spell> Spells = new List<Spell>(2);
 
 
@@ -35,23 +36,29 @@ public class MagicWeapon : Weapon
     private int currentSpellIndex = 0;
 
 
-
     public float Swing { get => _swing; }
 
     private void OnEnable()
     {
         Fire.Enable();
         Fire.performed += CastMagic;
+
+        spellHandler.UpdateCurrentSpells += _handleSpells;
     }
 
     private void OnDisable()
     {
+        spellHandler.UpdateCurrentSpells -= _handleSpells;
+
         Fire.performed -= CastMagic;
         Fire.Disable();
     }
     private void Awake()
     {
         _anchor = gameObject;
+
+        // Spell Handler
+        spellHandler = GetComponentInChildren<SpellHandler>();
 
         SetInputVariables();
         SetSpriteVariables();
@@ -71,7 +78,20 @@ public class MagicWeapon : Weapon
         _rotateWeaponAroundAnchor();
     }
 
+    #region Spell Handling Functions
+    private void _handleSpells()
+    {
+        Spells.Clear();
+        for(int i = 0; i < spellHandler.CurrentNumberOfSpells; i++)
+        {
+            Spell spell = spellHandler.transform.GetChild(i).GetComponent<Spell>();
+            Spells.Add(spell);
+        }
 
+        Debug.Log("Updated current spells!");
+    }
+
+    #endregion
 
     #region Weapon Rotation and Position
 
@@ -110,9 +130,12 @@ public class MagicWeapon : Weapon
         if (_swinging) return;
 
         // Attack
-        for (int i = 0; i < numberOfCasts; i++)
+        if (Spells.Count > 0)
         {
-            Spells[currentSpellIndex].CastSpell();
+            for (int i = 0; i < numberOfCasts; i++)
+            {
+                Spells[currentSpellIndex]?.CastSpell();
+            }
         }
         _swing *= -1;
         _swinging = true;
@@ -208,6 +231,8 @@ public class MagicWeapon : Weapon
     {
         _swingWand();
     }
+
+    
 
 }
 
