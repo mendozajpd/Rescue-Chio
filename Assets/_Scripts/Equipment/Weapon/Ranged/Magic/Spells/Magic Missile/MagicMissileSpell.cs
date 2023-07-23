@@ -8,6 +8,27 @@ public class MagicMissileSpell : Spell
     [SerializeField] private SpellHandler missileSpawnLocation;
     [SerializeField] private bool isOverhand;
 
+
+    [Header("Spell Settings")]
+    [SerializeField] private float missileTravelSpeed = 30;
+    [SerializeField] private float heightDividend = 8;
+
+    [Header("Accuracy Offset")]
+    [Range(0f, 5f)]
+    [SerializeField] private float offsetX = 1;
+    [Range(0f, 5f)]
+    [SerializeField] private float offsetY = 1;
+
+    [Header("Homing Variables")]
+    [SerializeField] private float homingRotationSpeed = 800;
+    [SerializeField] private float homingMissileSpeed = 45;
+    [SerializeField] private float angleOfObject = 90;
+    [SerializeField] private float missileSpeedDecreaseOvertime = 0.1f;
+    [SerializeField] private float missileRotateSpeedIncreaseOvertime = 50f;
+
+    [Header("Light Variables")]
+    [SerializeField] private float lightIntensityOnDeath = 10;
+
     private MagicWeapon wand;
 
     private void Awake()
@@ -26,6 +47,7 @@ public class MagicMissileSpell : Spell
     {
         var currentSpawnLocation = missileSpawnLocation.transform.position;
         var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
+        castMagicMissile.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
         castMagicMissile.Init(wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
     }
 

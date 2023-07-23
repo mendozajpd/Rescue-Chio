@@ -7,8 +7,8 @@ public class MagicMissileBehavior : MonoBehaviour
 {
 
     [Header("Missile Settings")]
-    [SerializeField] private float missileTravelSpeed;
-    [SerializeField] private float heightDividend = 4;
+    private float _missileTravelSpeed;
+    private float _heightDividend;
     private Vector2 _mousePos;
     private Vector2 _startPos;
     private Vector2 _destinationPos;
@@ -17,10 +17,10 @@ public class MagicMissileBehavior : MonoBehaviour
     private bool _underhand;
 
     [Header("Destination Offset")]
-    [Range(0f, 1f)]
-    [SerializeField] private float offsetX;
-    [Range(0f, 1f)]
-    [SerializeField] private float offsetY;
+    [Range(0f, 5f)]
+    private float _offsetX;
+    [Range(0f, 5f)]
+    private float _offsetY;
 
     // Missile Parts
     private ParticleSystem _sparkles;
@@ -29,11 +29,11 @@ public class MagicMissileBehavior : MonoBehaviour
     private SpriteRenderer _core;
 
     [Header("Homing Variables")]
-    [SerializeField] private float defaultRotationSpeed;
-    [SerializeField] private float defaultMissileSpeed;
-    [SerializeField] private float defaultAngleOffset = 90;
-    [SerializeField] private float missileSpeedDecreaseOvertime = 0.1f;
-    [SerializeField] private float missileRotateSpeedIncreaseOvertime = 20f;
+    private float _defaultRotationSpeed;
+    private float _defaultMissileSpeed;
+    private float _defaultAngleOffset;
+    private float _missileSpeedDecreaseOvertime;
+    private float _missileRotateSpeedIncreaseOvertime;
     private AggroZone _aggro;
     private Enemy _target;
     private Rigidbody2D _rb;
@@ -42,7 +42,7 @@ public class MagicMissileBehavior : MonoBehaviour
     private float _rotateAmount;
 
     // Lights
-    [SerializeField] private float lightIntensityOnDeath;
+    private float _lightIntensityOnDeath;
     private Light2D light2d;
 
 
@@ -97,17 +97,17 @@ public class MagicMissileBehavior : MonoBehaviour
         if (_enemyDetected && _core != null)
         {
             _getTargetDirection();
-            defaultMissileSpeed -= missileSpeedDecreaseOvertime;
-            defaultRotationSpeed += missileRotateSpeedIncreaseOvertime;
+            _defaultMissileSpeed -= _missileSpeedDecreaseOvertime;
+            _defaultRotationSpeed += _missileRotateSpeedIncreaseOvertime;
 
             _rotateAmount = Vector3.Cross(_targetDirection, transform.up).z;
 
-            _rb.angularVelocity = -_rotateAmount * defaultRotationSpeed;
+            _rb.angularVelocity = -_rotateAmount * _defaultRotationSpeed;
 
             // Avoids target, looks pretty cool as a deflect skill
             //rb.angularVelocity = +rotateAmount * rotationSpeed;
 
-            _rb.velocity = transform.up * (defaultMissileSpeed - Vector2.Distance(transform.position, _target.transform.position));
+            _rb.velocity = transform.up * (_defaultMissileSpeed - Vector2.Distance(transform.position, _target.transform.position));
         }
 
 
@@ -140,7 +140,7 @@ public class MagicMissileBehavior : MonoBehaviour
     {
         if (_core == null)
         {
-            if (light2d.intensity > 0) light2d.intensity -=  lightIntensityOnDeath * 0.01f;
+            if (light2d.intensity > 0) light2d.intensity -=  _lightIntensityOnDeath * 0.01f;
             if (_sparkles.particleCount == 0)
             {
                 Destroy(gameObject);
@@ -156,28 +156,28 @@ public class MagicMissileBehavior : MonoBehaviour
             Destroy(_core.gameObject);
             Instantiate(deathPrefab, transform.position, Quaternion.identity);
             _sparklesEmission.rateOverTime = 0;
-            light2d.intensity = lightIntensityOnDeath;
+            light2d.intensity = _lightIntensityOnDeath;
         }
     }
 
     private void _travelTrajectory()
     {
         _rotateTowardsTarget();
-        _timePassed += Time.deltaTime + (missileTravelSpeed * 0.001f);
+        _timePassed += Time.deltaTime + (_missileTravelSpeed * 0.001f);
         transform.position = MathParabola.Parabola(_startPos, _destinationPos, _height, _timePassed);
         
     }
 
     private void _getHeight(bool isUnderhand)
     {
-        _height = Vector2.Distance(_startPos, _destinationPos) / (isUnderhand ? heightDividend : -heightDividend);
+        _height = Vector2.Distance(_startPos, _destinationPos) / (isUnderhand ? _heightDividend : -_heightDividend);
     }
 
 
     private void _getTrajectory()
     {
 
-        _destinationPos = new Vector2(_mousePos.x - Random.Range(0, offsetX), _mousePos.y - Random.Range(0, offsetY));
+        _destinationPos = new Vector2(_mousePos.x - Random.Range(0, _offsetX), _mousePos.y - Random.Range(0, _offsetY));
     }
 
 
@@ -197,7 +197,7 @@ public class MagicMissileBehavior : MonoBehaviour
     {
         Vector3 directionToTarget = (Vector3)_destinationPos - transform.position;
         float angleRadians = Mathf.Atan2(directionToTarget.y, directionToTarget.x);
-        float angleDegrees = (angleRadians * Mathf.Rad2Deg) - defaultAngleOffset;
+        float angleDegrees = (angleRadians * Mathf.Rad2Deg) - _defaultAngleOffset;
 
         if (angleDegrees < 0f)
         {
@@ -220,5 +220,19 @@ public class MagicMissileBehavior : MonoBehaviour
         yield return new WaitForSeconds(secondsUntilDeath);
         _destroyCore();
         Destroy(gameObject);
+    }
+
+    public void SetSpellSettings(float missileSpeed, float height, float offsx, float offsy, float rotSpeed, float homeSpeed, float angle, float speedDecrease, float rotSpeedIncrease, float lightIntensity)
+    {
+        _missileTravelSpeed = missileSpeed;
+        _heightDividend = height;
+        _offsetX = offsx;
+        _offsetY = offsy;
+        _defaultRotationSpeed = rotSpeed;
+        _defaultMissileSpeed = homeSpeed;
+        _defaultAngleOffset = angle;
+        _missileSpeedDecreaseOvertime = speedDecrease;
+        _missileRotateSpeedIncreaseOvertime = rotSpeedIncrease;
+        _lightIntensityOnDeath = lightIntensity;
     }
 }
