@@ -66,7 +66,7 @@ public class MagicMissileSpell : Spell
         }, magicMissileSpell =>
         {
             Destroy(magicMissileSpell.gameObject);
-        }, false, 800, 1000);
+        }, false, 400, 500);
     }
 
     private bool _determineTrajectorySide()

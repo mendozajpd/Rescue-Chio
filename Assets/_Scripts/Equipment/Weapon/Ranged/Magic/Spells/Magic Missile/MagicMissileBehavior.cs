@@ -45,19 +45,27 @@ public class MagicMissileBehavior : MonoBehaviour
     // Lights
     private float _defaultLightIntensity = 0.8f;
     private float _lightIntensityOnDeath;
-    private Light2D light2d;
+    private Light2D _light2d;
 
     // Particles
     private float _defaultEmissionRate = 50;
 
     // Death Particles
-    private MagicMissileDeathParticles deathParticles;
-    ParticleSystem deathExplosion;
-    ParticleSystem.EmissionModule deathEmission;
+    private MagicMissileDeathParticles _deathParticles;
+    private ParticleSystem _deathExplosion;
+    private ParticleSystem.EmissionModule _deathEmission;
+
+    // Destroy Game Object Timer Variables
+    [SerializeField] private float timeBeforeDestroy;
+    private float _countdownTime;
+    private bool _timerActive;
+
 
     // Object Pool
     private System.Action<MagicMissileBehavior> _sendToPool;
     private bool _sentToPool = false;
+    [SerializeField] private bool debug_UsingCoroutine;
+
 
     public bool DestinationReached 
     { 
@@ -97,10 +105,10 @@ public class MagicMissileBehavior : MonoBehaviour
         _core = GetComponentInChildren<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _aggro = GetComponentInChildren<AggroZone>();
-        light2d = GetComponent<Light2D>();
-        deathParticles = GetComponentInChildren<MagicMissileDeathParticles>();
-        deathExplosion = deathParticles.GetComponent<ParticleSystem>();
-        deathEmission = deathExplosion.emission;
+        _light2d = GetComponent<Light2D>();
+        _deathParticles = GetComponentInChildren<MagicMissileDeathParticles>();
+        _deathExplosion = _deathParticles.GetComponent<ParticleSystem>();
+        _deathEmission = _deathExplosion.emission;
     }
 
     void Start()
@@ -113,6 +121,7 @@ public class MagicMissileBehavior : MonoBehaviour
     void Update()
     {
         _lightFadeOutHandler();
+        _destroyGameObjectTimer();
     }
 
     private void FixedUpdate()
@@ -145,7 +154,7 @@ public class MagicMissileBehavior : MonoBehaviour
     {
         if (!_core.gameObject.activeSelf)
         {
-            if (light2d.intensity > 0) light2d.intensity -= _lightIntensityOnDeath * 0.01f;
+            if (_light2d.intensity > 0) _light2d.intensity -= _lightIntensityOnDeath * 0.01f;
 
         }
     }
@@ -164,20 +173,54 @@ public class MagicMissileBehavior : MonoBehaviour
         if (_core.gameObject.activeSelf)
         {
             _rb.velocity = Vector2.zero;
-            //Destroy(_core.gameObject);
             _core.gameObject.SetActive(false);
             _sparklesEmission.rateOverTime = 0;
-            light2d.intensity = _lightIntensityOnDeath;
+            _light2d.intensity = _lightIntensityOnDeath;
             _playDeathParticles();
-            StartCoroutine(_sendSpellToPool(1)); // Can be inconsistent
+
+
+            if (debug_UsingCoroutine)
+            {
+                StartCoroutine(_sendSpellToPool(1));
+                return;
+            }
+            _activateTimer(timeBeforeDestroy);
         }
     }
 
     private void _playDeathParticles()
     {
-        deathEmission.enabled = true;
-        deathExplosion.Play();
+        _deathEmission.enabled = true;
+        _deathExplosion.Play();
     }
+
+    #region Destroy Timer Functions
+
+    private void _activateTimer(float time)
+    {
+        _countdownTime = time;
+        _timerActive = true;
+    }
+
+    private void _destroyGameObjectTimer()
+    {
+        if (_timerActive)
+        {
+            if (_countdownTime > 0)
+            {
+                _countdownTime -= Time.deltaTime;
+            }
+            else
+            {
+                _deathEmission.enabled = false;
+                _sendToPool(this);
+                _timerActive = false;
+            }
+        }
+    }
+
+    #endregion
+
     #endregion
 
     #region Trajectory Functions
@@ -265,6 +308,8 @@ public class MagicMissileBehavior : MonoBehaviour
 
     #endregion
 
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _destroyCore();
@@ -273,8 +318,7 @@ public class MagicMissileBehavior : MonoBehaviour
     IEnumerator _sendSpellToPool(float secondsUntilDeath)
     {
         yield return new WaitForSeconds(secondsUntilDeath);
-        //Destroy(gameObject);
-        deathEmission.enabled = false;
+        _deathEmission.enabled = false;
         _sendToPool(this);
     }
 
@@ -294,13 +338,12 @@ public class MagicMissileBehavior : MonoBehaviour
 
     public void resetSpell(Vector2 targetDestination, Vector2 spawnLocation, bool trajectorySide)
     {
-        //Destroy(_core.gameObject);
         _deactivateHoming();
-        light2d.intensity = _defaultLightIntensity;
+        _light2d.intensity = _defaultLightIntensity;
         _mousePos = targetDestination;
         _startPos = spawnLocation;
         _getTrajectory();
-        _getHeight(trajectorySide); // _isUnderhand
+        _getHeight(trajectorySide);
         _destinationReached = false;
         _timePassed = 0;
         gameObject.transform.position = spawnLocation;
