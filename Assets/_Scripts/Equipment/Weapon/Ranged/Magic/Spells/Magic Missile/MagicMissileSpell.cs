@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class MagicMissileSpell : Spell
 {
@@ -29,26 +30,43 @@ public class MagicMissileSpell : Spell
     [Header("Light Variables")]
     [SerializeField] private float lightIntensityOnDeath = 10;
 
+    // Object Pool Variables
+    [SerializeField] private bool usePool;
+    private ObjectPool<MagicMissileBehavior> _pool;
+
+
     private MagicWeapon wand;
 
     private void Awake()
     {
-        magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Spells/MagicMissile/MagicMissilePrefab");
+        magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
         missileSpawnLocation = GetComponentInParent<SpellHandler>();
         wand = GetComponentInParent<MagicWeapon>();
     }
 
-    public override void CastSpell()
+    private void Start()
     {
-        _castMagicMissile(magicMissile);
-    }
+        _pool = new ObjectPool<MagicMissileBehavior>(() =>
+        {
+            var currentSpawnLocation = missileSpawnLocation.transform.position;
+            var magicMissileSpell = Instantiate(magicMissile, currentSpawnLocation, Quaternion.identity);
+            magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
+            magicMissileSpell.Init(_releaseToPool, wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
+            return magicMissileSpell;
+        }, magicMissileSpell =>
+        {
+            var currentSpawnLocation = missileSpawnLocation.transform.position;
+            magicMissileSpell.resetSpell(wand.MouseAttackPosition,currentSpawnLocation,_determineTrajectorySide());
+            magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
+            magicMissileSpell.gameObject.SetActive(true);
 
-    private void _castMagicMissile(MagicMissileBehavior missilePrefab)
-    {
-        var currentSpawnLocation = missileSpawnLocation.transform.position;
-        var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
-        castMagicMissile.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
-        castMagicMissile.Init(wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
+        }, magicMissileSpell =>
+        {
+            magicMissileSpell.gameObject.SetActive(false);
+        }, magicMissileSpell =>
+        {
+            Destroy(magicMissileSpell.gameObject);
+        }, false, 800, 1000);
     }
 
     private bool _determineTrajectorySide()
@@ -64,4 +82,38 @@ public class MagicMissileSpell : Spell
         }
         return isOverhand;
     }
+
+    #region Cast Functions
+    public override void CastSpell()
+    {
+        if (usePool)
+        {
+            _pool.Get();
+            return;
+        }
+        _castMagicMissile(magicMissile);
+    }
+
+    private void _castMagicMissile(MagicMissileBehavior missilePrefab)
+    {
+        var currentSpawnLocation = missileSpawnLocation.transform.position;
+        var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
+        castMagicMissile.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
+        castMagicMissile.Init(_releaseToPool,wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
+    }
+    #endregion
+
+    #region Object Pool Functions
+    private void _releaseToPool (MagicMissileBehavior magicSpell)
+    {
+        if (usePool)
+        {
+            _pool.Release(magicSpell);
+            return;
+        }
+        Destroy(magicSpell.gameObject);
+
+    }
+
+    #endregion
 }

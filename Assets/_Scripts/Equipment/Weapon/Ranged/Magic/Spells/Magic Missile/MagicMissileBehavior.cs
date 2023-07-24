@@ -15,6 +15,7 @@ public class MagicMissileBehavior : MonoBehaviour
     private float _height;
     private float _timePassed;
     private bool _underhand;
+    private bool _destinationReached = false;
 
     [Header("Destination Offset")]
     [Range(0f, 5f)]
@@ -42,20 +43,42 @@ public class MagicMissileBehavior : MonoBehaviour
     private float _rotateAmount;
 
     // Lights
+    private float _defaultLightIntensity = 0.8f;
     private float _lightIntensityOnDeath;
     private Light2D light2d;
 
+    // Particles
+    private float _defaultEmissionRate = 50;
 
-    //temporary
-    [SerializeField] private ParticleSystem deathPrefab;
+    // Death Particles
+    private MagicMissileDeathParticles deathParticles;
+    ParticleSystem deathExplosion;
+    ParticleSystem.EmissionModule deathEmission;
 
+    // Object Pool
+    private System.Action<MagicMissileBehavior> _sendToPool;
+    private bool _sentToPool = false;
 
+    public bool DestinationReached 
+    { 
+        get => _destinationReached; 
+        set
+        {
+            _destinationReached = value;
+            if (_destinationReached)
+            {
+                _destroyCore();
+            }
+        }
+    
+    }
 
-    public void Init(Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
+    public void Init(System.Action<MagicMissileBehavior> releaseToPool, Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
     {
         _mousePos = mousePosition;
         _startPos = startPosition;
         _underhand = isUnderhand;
+        _sendToPool = releaseToPool;
     }
     private void OnEnable()
     {
@@ -75,26 +98,27 @@ public class MagicMissileBehavior : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _aggro = GetComponentInChildren<AggroZone>();
         light2d = GetComponent<Light2D>();
+        deathParticles = GetComponentInChildren<MagicMissileDeathParticles>();
+        deathExplosion = deathParticles.GetComponent<ParticleSystem>();
+        deathEmission = deathExplosion.emission;
     }
 
     void Start()
     {
-        _sparklesEmission.rateOverTime = 50;
+        _sparklesEmission.rateOverTime = _defaultEmissionRate;
         _getTrajectory();
         _getHeight(_underhand);
-        _rotateTowardsTarget();
-        StartCoroutine(despawn(5));
     }
 
     void Update()
     {
-        _despawnMissile();
+        _lightFadeOutHandler();
     }
 
     private void FixedUpdate()
     {
         _travelToDestination();
-        if (_enemyDetected && _core != null)
+        if (_enemyDetected && _core.gameObject.activeSelf)
         {
             _getTargetDirection();
             _defaultMissileSpeed -= _missileSpeedDecreaseOvertime;
@@ -113,6 +137,50 @@ public class MagicMissileBehavior : MonoBehaviour
 
     }
 
+
+
+    #region Despawn Missile Functions
+
+    private void _lightFadeOutHandler()
+    {
+        if (!_core.gameObject.activeSelf)
+        {
+            if (light2d.intensity > 0) light2d.intensity -= _lightIntensityOnDeath * 0.01f;
+
+        }
+    }
+
+    private void _releaseToPool()
+    {
+        if (_sparkles.particleCount == 0 && !_sentToPool)
+        {
+            _sendToPool(this);
+            _sentToPool = true;
+        }
+    }
+
+    private void _destroyCore()
+    {
+        if (_core.gameObject.activeSelf)
+        {
+            _rb.velocity = Vector2.zero;
+            //Destroy(_core.gameObject);
+            _core.gameObject.SetActive(false);
+            _sparklesEmission.rateOverTime = 0;
+            light2d.intensity = _lightIntensityOnDeath;
+            _playDeathParticles();
+            StartCoroutine(_sendSpellToPool(1)); // Can be inconsistent
+        }
+    }
+
+    private void _playDeathParticles()
+    {
+        deathEmission.enabled = true;
+        deathExplosion.Play();
+    }
+    #endregion
+
+    #region Trajectory Functions
     private void _getTargetDirection()
     {
         _targetDirection = ((Vector2)_target.transform.position - _rb.position).normalized;
@@ -122,41 +190,17 @@ public class MagicMissileBehavior : MonoBehaviour
     {
         if (!_enemyDetected)
         {
-            if (_timePassed < 1 && _core != null)
+            if (_timePassed < 1 && _core.gameObject.activeSelf)
             {
                 _travelTrajectory();
             }
 
+            // Destination Reached
             if (_timePassed > 1)
             {
-                _destroyCore();
-                _despawnMissile();
+                DestinationReached = true;
             }
 
-        }
-    }
-
-    private void _despawnMissile()
-    {
-        if (_core == null)
-        {
-            if (light2d.intensity > 0) light2d.intensity -=  _lightIntensityOnDeath * 0.01f;
-            if (_sparkles.particleCount == 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
-    private void _destroyCore()
-    {
-        if (_core != null)
-        {
-            _rb.velocity = Vector2.zero;
-            Destroy(_core.gameObject);
-            Instantiate(deathPrefab, transform.position, Quaternion.identity);
-            _sparklesEmission.rateOverTime = 0;
-            light2d.intensity = _lightIntensityOnDeath;
         }
     }
 
@@ -165,7 +209,7 @@ public class MagicMissileBehavior : MonoBehaviour
         _rotateTowardsTarget();
         _timePassed += Time.deltaTime + (_missileTravelSpeed * 0.001f);
         transform.position = MathParabola.Parabola(_startPos, _destinationPos, _height, _timePassed);
-        
+
     }
 
     private void _getHeight(bool isUnderhand)
@@ -180,6 +224,7 @@ public class MagicMissileBehavior : MonoBehaviour
         _destinationPos = new Vector2(_mousePos.x - Random.Range(0, _offsetX), _mousePos.y - Random.Range(0, _offsetY));
     }
 
+    #endregion
 
     #region Homing Variables
 
@@ -191,6 +236,16 @@ public class MagicMissileBehavior : MonoBehaviour
         _sparklesEmission.rateOverTime = 0;
         _sparklesEmission.rateOverDistance = 1;
         _enemyDetected = true;
+    }
+
+    private void _deactivateHoming()
+    {
+        _target = null;
+        _aggro.aggroTrigger += _activateHoming;
+        _aggro.gameObject.SetActive(true);
+        _sparklesEmission.rateOverTime = _defaultEmissionRate;
+        _sparklesEmission.rateOverDistance = 0;
+        _enemyDetected = false;
     }
 
     private void _rotateTowardsTarget()
@@ -215,11 +270,12 @@ public class MagicMissileBehavior : MonoBehaviour
         _destroyCore();
     }
 
-    IEnumerator despawn(float secondsUntilDeath)
+    IEnumerator _sendSpellToPool(float secondsUntilDeath)
     {
         yield return new WaitForSeconds(secondsUntilDeath);
-        _destroyCore();
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        deathEmission.enabled = false;
+        _sendToPool(this);
     }
 
     public void SetSpellSettings(float missileSpeed, float height, float offsx, float offsy, float rotSpeed, float homeSpeed, float angle, float speedDecrease, float rotSpeedIncrease, float lightIntensity)
@@ -234,5 +290,21 @@ public class MagicMissileBehavior : MonoBehaviour
         _missileSpeedDecreaseOvertime = speedDecrease;
         _missileRotateSpeedIncreaseOvertime = rotSpeedIncrease;
         _lightIntensityOnDeath = lightIntensity;
+    }
+
+    public void resetSpell(Vector2 targetDestination, Vector2 spawnLocation, bool trajectorySide)
+    {
+        //Destroy(_core.gameObject);
+        _deactivateHoming();
+        light2d.intensity = _defaultLightIntensity;
+        _mousePos = targetDestination;
+        _startPos = spawnLocation;
+        _getTrajectory();
+        _getHeight(trajectorySide); // _isUnderhand
+        _destinationReached = false;
+        _timePassed = 0;
+        gameObject.transform.position = spawnLocation;
+        _core.gameObject.SetActive(true);
+
     }
 }

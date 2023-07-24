@@ -17,9 +17,6 @@ public class MagicMissileDeathParticles : MonoBehaviour
 
     void Update()
     {
-        if (!particles.IsAlive())
-        {
-            Destroy(gameObject);
-        }
+
     }
 }

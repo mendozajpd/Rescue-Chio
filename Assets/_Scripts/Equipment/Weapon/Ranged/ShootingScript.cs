@@ -19,8 +19,8 @@ public class ShootingScript : MonoBehaviour
 
 
     // Object Pool Variables
-    private ObjectPool<BulletScript> _pool;
     [SerializeField] private bool usePool;
+    private ObjectPool<BulletScript> _pool;
 
     // Direction Variables
     [SerializeField] private Vector3 bulletDirection;
@@ -56,7 +56,7 @@ public class ShootingScript : MonoBehaviour
         _pool = new ObjectPool<BulletScript>(() =>
         {
             var bullet = Instantiate(bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
-            bullet.Init(_ReleaseToPool, this);
+            bullet.Init(_releaseToPool, this);
             return bullet;
         }, bullet =>
         {
@@ -84,7 +84,7 @@ public class ShootingScript : MonoBehaviour
             return;
         }
         var objectthing = Instantiate(bullet, _bulletSpawnPoint.position, Quaternion.identity);
-        objectthing.Init(_ReleaseToPool, this);
+        objectthing.Init(_releaseToPool, this);
     }
 
     private void _shootBullet()
@@ -92,15 +92,15 @@ public class ShootingScript : MonoBehaviour
         _spawnBullet(bulletPrefab);
     }
 
-    private void _ReleaseToPool(BulletScript bullet)
+    private void _releaseToPool(BulletScript bullet)
     {
         if (usePool)
         {
             _pool.Release(bullet);
-        } else
-        {
-           Destroy(bullet.gameObject);
+            return;
         }
+        // changed this 
+        Destroy(bullet.gameObject);
     }
 
     private void getBulletDirection()

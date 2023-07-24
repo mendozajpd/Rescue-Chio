@@ -58,3 +58,4 @@ MonoBehaviour:
   missileSpeedDecreaseOvertime: 0.1
   missileRotateSpeedIncreaseOvertime: 50
   lightIntensityOnDeath: 10
+  usePool: 1

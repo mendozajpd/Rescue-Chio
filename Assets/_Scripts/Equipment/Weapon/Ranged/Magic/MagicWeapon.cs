@@ -148,7 +148,6 @@ public class MagicWeapon : Weapon
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
         if (Mathf.Abs(t - target.z) < 1 && _swinging)
         {
-            //_swing *= -1; // Double Swing
             _swinging = false;
         }
         transform.localRotation = Quaternion.Euler(target);
