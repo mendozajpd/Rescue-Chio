@@ -10,6 +10,12 @@ public class SpellHandler : MonoBehaviour
 
     public System.Action UpdateCurrentSpells;
 
+    public MagicWeapon Wand;
+
+    private void Awake()
+    {
+        Wand = GetComponentInParent<MagicWeapon>();
+    }
     public int CurrentNumberOfSpells 
     { 
         get => currentNumberOfSpells; 

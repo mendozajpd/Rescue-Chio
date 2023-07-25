@@ -35,13 +35,17 @@ public class MagicMissileSpell : Spell
     private ObjectPool<MagicMissileBehavior> _pool;
 
 
-    private MagicWeapon wand;
 
+
+    private void OnDestroy()
+    {
+        _pool.Clear();
+    }
     private void Awake()
     {
         magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
-        missileSpawnLocation = GetComponentInParent<SpellHandler>();
-        wand = GetComponentInParent<MagicWeapon>();
+        SetSpellVariables();
+        missileSpawnLocation = spellHandler;
     }
 
     private void Start()
@@ -67,6 +71,7 @@ public class MagicMissileSpell : Spell
         {
             Destroy(magicMissileSpell.gameObject);
         }, false, 400, 500);
+
     }
 
     private bool _determineTrajectorySide()

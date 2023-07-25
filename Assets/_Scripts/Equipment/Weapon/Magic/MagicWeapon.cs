@@ -37,6 +37,7 @@ public class MagicWeapon : Weapon
 
 
     public float Swing { get => _swing; }
+    public Vector2 MousePos { get => _mousePos; }
 
     private void OnEnable()
     {

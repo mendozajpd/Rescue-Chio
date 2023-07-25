@@ -137,9 +137,6 @@ public class MagicMissileBehavior : MonoBehaviour
 
             _rb.angularVelocity = -_rotateAmount * _defaultRotationSpeed;
 
-            // Avoids target, looks pretty cool as a deflect skill
-            //rb.angularVelocity = +rotateAmount * rotationSpeed;
-
             _rb.velocity = transform.up * (_defaultMissileSpeed - Vector2.Distance(transform.position, _target.transform.position));
         }
 
@@ -156,15 +153,6 @@ public class MagicMissileBehavior : MonoBehaviour
         {
             if (_light2d.intensity > 0) _light2d.intensity -= _lightIntensityOnDeath * 0.01f;
 
-        }
-    }
-
-    private void _releaseToPool()
-    {
-        if (_sparkles.particleCount == 0 && !_sentToPool)
-        {
-            _sendToPool(this);
-            _sentToPool = true;
         }
     }
 
