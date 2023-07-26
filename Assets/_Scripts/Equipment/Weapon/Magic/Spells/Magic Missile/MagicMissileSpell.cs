@@ -34,6 +34,8 @@ public class MagicMissileSpell : Spell
     [SerializeField] private bool usePool;
     private ObjectPool<MagicMissileBehavior> _pool;
 
+    // Wand Actions
+    [SerializeField] private bool canSwing = true;
 
 
 
@@ -46,6 +48,7 @@ public class MagicMissileSpell : Spell
         magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
         SetSpellVariables();
         missileSpawnLocation = spellHandler;
+        SetWandActions(canSwing);
     }
 
     private void Start()

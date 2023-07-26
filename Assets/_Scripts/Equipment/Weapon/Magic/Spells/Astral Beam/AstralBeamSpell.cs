@@ -8,10 +8,14 @@ public class AstralBeamSpell : Spell
     [SerializeField] private float laserTimeLength;
     private float _laserTime;
 
+    // Wand Actions
+    [SerializeField] private bool canSwing = false;
+
 
     private void Awake()
     {
         SetSpellVariables();
+        SetWandActions(canSwing);
     }
 
     void Start()

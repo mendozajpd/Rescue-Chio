@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpellName: Magic Missile
+  spellHandler: {fileID: 0}
+  wand: {fileID: 0}
+  CanSwing: 1
   magicMissile: {fileID: 0}
   missileSpawnLocation: {fileID: 0}
   isOverhand: 0
@@ -59,3 +62,4 @@ MonoBehaviour:
   missileRotateSpeedIncreaseOvertime: 50
   lightIntensityOnDeath: 10
   usePool: 1
+  canSwing: 1

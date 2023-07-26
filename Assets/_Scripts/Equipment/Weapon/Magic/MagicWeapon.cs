@@ -33,16 +33,45 @@ public class MagicWeapon : Weapon
     // Mouse Position Variables
     public Vector2 MouseAttackPosition;
 
-    private int currentSpellIndex = 0;
+    [SerializeField] private int currentSpellIndex = 0;
 
+    // Wand Mechanics
+    private bool _canSwing = false;
+    // Can Swing
+    // Is Point
 
     public float Swing { get => _swing; }
     public Vector2 MousePos { get => _mousePos; }
+    public int CurrentSpellIndex 
+    { 
+        get => currentSpellIndex; 
+        set
+        {
+            if (currentSpellIndex < Spells.Count - 1)
+            {
+                currentSpellIndex = value;
+            } else
+            {
+                currentSpellIndex = 0;
+            }
+
+            SetWandActions();
+        }
+    }
+
+    // Temp
+    private InputAction changeSpell;
 
     private void OnEnable()
     {
         Fire.Enable();
         Fire.performed += CastMagic;
+
+
+        // Cycle through spells TEMPORARY
+        changeSpell = playerControls.Player.Reload;
+        changeSpell.Enable();
+        changeSpell.performed += _cycleThroughSpells;
 
         spellHandler.UpdateCurrentSpells += _handleSpells;
     }
@@ -50,6 +79,11 @@ public class MagicWeapon : Weapon
     private void OnDisable()
     {
         spellHandler.UpdateCurrentSpells -= _handleSpells;
+
+
+        // Cycle through spells TEMPORARY
+        changeSpell.performed -= _cycleThroughSpells;
+        changeSpell.Disable();
 
         Fire.performed -= CastMagic;
         Fire.Disable();
@@ -79,6 +113,23 @@ public class MagicWeapon : Weapon
         _rotateWeaponAroundAnchor();
     }
 
+    private void _useWand()
+    {
+        // Attack
+        if (Spells.Count > 0)
+        {
+            for (int i = 0; i < numberOfCasts; i++)
+            {
+                Spells[currentSpellIndex]?.CastSpell();
+            }
+        }
+
+        if (_canSwing)
+        {
+            _swingWand();
+        }
+    }
+
     #region Spell Handling Functions
     private void _handleSpells()
     {
@@ -88,7 +139,7 @@ public class MagicWeapon : Weapon
             Spell spell = spellHandler.transform.GetChild(i).GetComponent<Spell>();
             Spells.Add(spell);
         }
-
+        SetWandActions();
         Debug.Log("Updated current spells!");
     }
 
@@ -130,14 +181,7 @@ public class MagicWeapon : Weapon
     {
         if (_swinging) return;
 
-        // Attack
-        if (Spells.Count > 0)
-        {
-            for (int i = 0; i < numberOfCasts; i++)
-            {
-                Spells[currentSpellIndex]?.CastSpell();
-            }
-        }
+
         _swing *= -1;
         _swinging = true;
     }
@@ -229,10 +273,18 @@ public class MagicWeapon : Weapon
 
     private void CastMagic(InputAction.CallbackContext context)
     {
-        _swingWand();
+        _useWand();
     }
 
-    
+    public void SetWandActions()
+    {
+        _canSwing = Spells[currentSpellIndex].CanSwing;
+    }
+
+    private void _cycleThroughSpells(InputAction.CallbackContext context)
+    {
+        CurrentSpellIndex += 1;
+    }
 
 }
 
