@@ -5,9 +5,9 @@ using UnityEngine.Pool;
 
 public class MagicMissileSpell : Spell
 {
-    [SerializeField] private MagicMissileBehavior magicMissile;
-    [SerializeField] private SpellHandler missileSpawnLocation;
-    [SerializeField] private bool isOverhand;
+    private MagicMissileBehavior _magicMissile;
+    private SpellHandler _missileSpawnLocation;
+    private bool _isOverhand;
 
 
     [Header("Spell Settings")]
@@ -46,9 +46,9 @@ public class MagicMissileSpell : Spell
     }
     private void Awake()
     {
-        magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
+        _magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
         SetSpellVariables();
-        missileSpawnLocation = spellHandler;
+        _missileSpawnLocation = spellHandler;
         SetMagicWeaponActions(canSwing, wandAngle);
     }
 
@@ -56,14 +56,14 @@ public class MagicMissileSpell : Spell
     {
         _pool = new ObjectPool<MagicMissileBehavior>(() =>
         {
-            var currentSpawnLocation = missileSpawnLocation.transform.position;
-            var magicMissileSpell = Instantiate(magicMissile, currentSpawnLocation, Quaternion.identity);
+            var currentSpawnLocation = _missileSpawnLocation.transform.position;
+            var magicMissileSpell = Instantiate(_magicMissile, currentSpawnLocation, Quaternion.identity);
             magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
             magicMissileSpell.Init(_releaseToPool, wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
             return magicMissileSpell;
         }, magicMissileSpell =>
         {
-            var currentSpawnLocation = missileSpawnLocation.transform.position;
+            var currentSpawnLocation = _missileSpawnLocation.transform.position;
             magicMissileSpell.resetSpell(wand.MouseAttackPosition,currentSpawnLocation,_determineTrajectorySide());
             magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
             magicMissileSpell.gameObject.SetActive(true);
@@ -83,13 +83,13 @@ public class MagicMissileSpell : Spell
         switch (wand.Swing)
         {
             case 1:
-                isOverhand = !wand.isLookingLeft;
+                _isOverhand = !wand.isLookingLeft;
                 break;
             case -1:
-                isOverhand = wand.isLookingLeft;
+                _isOverhand = wand.isLookingLeft;
                 break;
         }
-        return isOverhand;
+        return _isOverhand;
     }
 
     #region Cast Functions
@@ -100,12 +100,12 @@ public class MagicMissileSpell : Spell
             _pool.Get();
             return;
         }
-        _castMagicMissile(magicMissile);
+        _castMagicMissile(_magicMissile);
     }
 
     private void _castMagicMissile(MagicMissileBehavior missilePrefab)
     {
-        var currentSpawnLocation = missileSpawnLocation.transform.position;
+        var currentSpawnLocation = _missileSpawnLocation.transform.position;
         var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
         castMagicMissile.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
         castMagicMissile.Init(_releaseToPool,wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());

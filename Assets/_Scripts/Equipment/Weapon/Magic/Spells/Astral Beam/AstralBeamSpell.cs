@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class AstralBeamSpell : Spell
 {
-    private LineRenderer laser;
+    private AstralBeamBehavior _laser;
+    private Vector3 _laserStartPosition;
+    private Vector3 _laserEndPosition;
 
     [Header("Laser Settings")]
     [SerializeField] private bool isExplosive = true;
 
     // Length(Time) of Laser
-    [SerializeField] private float laserTimeLength = 1;
+    [SerializeField] private float laserDurationLength = 1;
     [SerializeField] private float laserCooldownLength = 0.5f;
-    private float _laserTime;
-    private float _laserCooldownTime;
 
-    // Wand Actions
+    [Header("Wand Actions Variables")]
     [SerializeField] private bool canSwing = false;
     [SerializeField] private float wandAngle = 90;
 
@@ -25,8 +25,7 @@ public class AstralBeamSpell : Spell
     {
         SetSpellVariables();
         SetMagicWeaponActions(canSwing, wandAngle);
-
-        laser = GetComponentInChildren<LineRenderer>();
+        _laser = Resources.Load<AstralBeamBehavior>("Player/Weapons/Magic/Spells/AstralBeam/AstralBeamPrefab");
     }
 
     void Start()
@@ -36,45 +35,34 @@ public class AstralBeamSpell : Spell
 
     void Update()
     {
-        _laserHandlers();
+        _getLaserPoints();
     }
 
     public override void CastSpell()
     {
-        _laserTime = laserTimeLength;
-
+        //_laserTime = laserTimeLength;
+        // Spawn laser
+        _castAstralBeam(_laser);
+        // Give laser settings to laser
     }
 
-    private void _laserHandlers()
+    private void _castAstralBeam(AstralBeamBehavior laserPrefab)
     {
-        _laserTimeHandler();
-
-        _laserWidthHandler(_laserTime) ;
-        // if laser countdown timer is less then 1 then change the width until it reaches 0
-
+        var castAstralBeam = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
+        castAstralBeam.Init(_laserStartPosition, _laserEndPosition,laserDurationLength);
+        castAstralBeam.gameObject.SetActive(true);
     }
 
-    private void _laserWidthHandler(float width)
+    private void _getLaserPoints()
     {
-        laser.startWidth = width;
-        laser.endWidth = width;
+        _laserStartPosition = spellHandler.transform.position;
+        _laserEndPosition = wand.MouseAttackPosition;
     }
 
-    private void _laserTimeHandler()
-    {
-        if (_laserCooldownTime > 0)
-        {
-            _laserCooldownTime -= Time.deltaTime;
-        }
 
-        
-        if (_laserTime > 0)
-        {
-            _laserTime -= Time.deltaTime;
-        } else
-        {
-            _laserTime = 0;
-        }
-    }
+
+
+
+
 
 }

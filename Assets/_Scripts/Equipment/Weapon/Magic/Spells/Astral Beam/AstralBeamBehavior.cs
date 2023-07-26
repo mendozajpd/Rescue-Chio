@@ -5,14 +5,87 @@ using UnityEngine;
 public class AstralBeamBehavior : MonoBehaviour
 {
     private LineRenderer laser;
+
+    //[Header("Laser Settings")]
+    //[SerializeField] private bool isExplosive = true;
+
+    // Length(Time) of Laser
+    private float _laserDurationTime;
+    private float _laserCooldownTime;
+
+    private Vector3 _startPoint;
+    private Vector3 _endPoint;
+
     
+
+
+    public void Init(Vector3 startpos, Vector3 endpos, float laserDuration)
+    {
+        _startPoint = startpos;
+        _endPoint = endpos;
+        _laserDurationTime = laserDuration;
+    }
+
+
+    private void Awake()
+    {
+        laser = GetComponent<LineRenderer>();
+    }
+
     void Start()
     {
-        
+        _setLaserPositions(_startPoint, _endPoint);
     }
 
     void Update()
     {
-        
+        // should only run when gameobject is active
+        _laserHandlers();
+    }
+
+
+    private void _laserHandlers()
+    {
+        if (!gameObject.activeSelf) return;
+            
+        _laserTimeHandler();
+        _laserWidthHandler(_laserDurationTime);
+        // if laser countdown timer is less then 1 then change the width until it reaches 0
+
+    }
+
+    private void _laserWidthHandler(float width)
+    {
+        laser.startWidth = width;
+        laser.endWidth = width;
+    }
+
+    private void _laserTimeHandler()
+    {
+        if (_laserCooldownTime > 0)
+        {
+            _laserCooldownTime -= Time.deltaTime;
+        }
+
+
+        if (_laserDurationTime > 0)
+        {
+            _laserDurationTime -= Time.deltaTime;
+        }
+        else
+        {
+            _laserDurationTime = 0;
+        }
+    }
+
+    private void _setLaserPositions(Vector3 startPoint, Vector3 endPoint)
+    {
+        Vector3[] positions = new Vector3[]
+        {
+            startPoint,
+            endPoint
+        };
+
+        laser.SetPositions(positions);
     }
 }
