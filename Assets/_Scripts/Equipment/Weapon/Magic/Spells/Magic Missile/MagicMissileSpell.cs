@@ -36,6 +36,7 @@ public class MagicMissileSpell : Spell
 
     // Wand Actions
     [SerializeField] private bool canSwing = true;
+    [SerializeField] private float wandAngle = 90;
 
 
 
@@ -48,7 +49,7 @@ public class MagicMissileSpell : Spell
         magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
         SetSpellVariables();
         missileSpawnLocation = spellHandler;
-        SetWandActions(canSwing);
+        SetMagicWeaponActions(canSwing, wandAngle);
     }
 
     private void Start()

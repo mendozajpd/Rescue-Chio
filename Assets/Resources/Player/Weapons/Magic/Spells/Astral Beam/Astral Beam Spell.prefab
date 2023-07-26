@@ -192,5 +192,10 @@ MonoBehaviour:
   SpellName: Astral Beam
   spellHandler: {fileID: 0}
   wand: {fileID: 0}
-  laserTimeLength: 0
-  mousePos: {x: 0, y: 0}
+  CanSwing: 0
+  WeaponAngle: 0
+  isExplosive: 1
+  laserTimeLength: 0.1
+  laserCooldownLength: 0.5
+  canSwing: 0
+  wandAngle: 90

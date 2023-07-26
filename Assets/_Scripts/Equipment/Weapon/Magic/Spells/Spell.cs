@@ -9,6 +9,7 @@ public abstract class Spell : MonoBehaviour
     public MagicWeapon wand;
 
     public bool CanSwing;
+    public float WeaponAngle;
 
     public virtual void CastSpell()
     {
@@ -21,9 +22,10 @@ public abstract class Spell : MonoBehaviour
         wand = spellHandler.Wand;
     }
 
-    public void SetWandActions(bool swingable)
+    public void SetMagicWeaponActions(bool swingable, float weaponAngle)
     {
         CanSwing = swingable;
+        WeaponAngle = weaponAngle;
     }
 
 }

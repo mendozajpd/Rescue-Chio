@@ -54,7 +54,6 @@ public class MagicWeapon : Weapon
             {
                 currentSpellIndex = 0;
             }
-
             SetWandActions();
         }
     }
@@ -116,19 +115,21 @@ public class MagicWeapon : Weapon
     private void _useWand()
     {
         // Attack
-        if (Spells.Count > 0)
-        {
-            for (int i = 0; i < numberOfCasts; i++)
-            {
-                Spells[currentSpellIndex]?.CastSpell();
-            }
-        }
-
         if (_canSwing)
         {
+            if (_swinging) return;
+            _castSpell();
             _swingWand();
         }
+        
+        if (!_canSwing)
+        {
+            _castSpell();
+            Debug.Log("Spell casted lmao");
+        }
     }
+
+
 
     #region Spell Handling Functions
     private void _handleSpells()
@@ -141,6 +142,17 @@ public class MagicWeapon : Weapon
         }
         SetWandActions();
         Debug.Log("Updated current spells!");
+    }
+
+    private void _castSpell()
+    {
+        if (Spells.Count > 0)
+        {
+            for (int i = 0; i < numberOfCasts; i++)
+            {
+                Spells[currentSpellIndex]?.CastSpell();
+            }
+        }
     }
 
     #endregion
@@ -180,7 +192,6 @@ public class MagicWeapon : Weapon
     private void _swingWand()
     {
         if (_swinging) return;
-
 
         _swing *= -1;
         _swinging = true;
@@ -278,7 +289,14 @@ public class MagicWeapon : Weapon
 
     public void SetWandActions()
     {
-        _canSwing = Spells[currentSpellIndex].CanSwing;
+        Spell currentSpell = Spells[currentSpellIndex];
+        _canSwing = currentSpell.CanSwing;
+        angleOfTheWeapon = currentSpell.WeaponAngle;
+
+        // Resets swing
+        _swing = 1;
+        // Can also set wand position
+
     }
 
     private void _cycleThroughSpells(InputAction.CallbackContext context)
