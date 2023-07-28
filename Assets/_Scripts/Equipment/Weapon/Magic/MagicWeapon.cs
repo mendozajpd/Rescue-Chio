@@ -31,7 +31,7 @@ public class MagicWeapon : Weapon
     public bool isLookingLeft;
 
     // Mouse Position Variables
-    public Vector2 MouseAttackPosition;
+    public Vector2 MouseWorldPosition;
 
     [SerializeField] private int currentSpellIndex = 0;
 
@@ -105,7 +105,7 @@ public class MagicWeapon : Weapon
 
     void Update()
     {
-        GetMouseAttackPosition();
+        GetMouseWorldPosition();
         _weaponSpriteFlipper();
         _getSwingAngle();
         _calculateWeaponSwingTrajectory();
@@ -173,11 +173,11 @@ public class MagicWeapon : Weapon
         _mousePos = Input.mousePosition - Camera.main.WorldToScreenPoint(_anchor.transform.position);
     }
 
-    public Vector2 GetMouseAttackPosition()
+    public Vector2 GetMouseWorldPosition()
     {
         var mainCamera = Camera.main;
-        MouseAttackPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        return MouseAttackPosition;
+        MouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        return MouseWorldPosition;
     }
 
     #endregion

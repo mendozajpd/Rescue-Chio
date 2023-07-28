@@ -59,12 +59,12 @@ public class MagicMissileSpell : Spell
             var currentSpawnLocation = _missileSpawnLocation.transform.position;
             var magicMissileSpell = Instantiate(_magicMissile, currentSpawnLocation, Quaternion.identity);
             magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
-            magicMissileSpell.Init(_releaseToPool, wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
+            magicMissileSpell.Init(_releaseToPool, wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide());
             return magicMissileSpell;
         }, magicMissileSpell =>
         {
             var currentSpawnLocation = _missileSpawnLocation.transform.position;
-            magicMissileSpell.resetSpell(wand.MouseAttackPosition,currentSpawnLocation,_determineTrajectorySide());
+            magicMissileSpell.resetSpell(wand.MouseWorldPosition,currentSpawnLocation,_determineTrajectorySide());
             magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
             magicMissileSpell.gameObject.SetActive(true);
 
@@ -108,7 +108,7 @@ public class MagicMissileSpell : Spell
         var currentSpawnLocation = _missileSpawnLocation.transform.position;
         var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
         castMagicMissile.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
-        castMagicMissile.Init(_releaseToPool,wand.MouseAttackPosition, currentSpawnLocation, _determineTrajectorySide());
+        castMagicMissile.Init(_releaseToPool,wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide());
     }
     #endregion
 

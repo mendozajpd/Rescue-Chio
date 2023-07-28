@@ -60,9 +60,13 @@ public class ShootingScript : MonoBehaviour
             return bullet;
         }, bullet =>
         {
+            bullet.transform.position = transform.position;
             bullet.gameObject.SetActive(true);
+            bullet.ShootBullet();
+
         }, bullet =>
         {
+            bullet.Rb2D.velocity = Vector2.zero;
             bullet.gameObject.SetActive(false);
         }, bullet =>
         {

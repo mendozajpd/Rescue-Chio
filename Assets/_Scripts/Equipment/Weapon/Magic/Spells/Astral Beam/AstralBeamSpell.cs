@@ -56,7 +56,7 @@ public class AstralBeamSpell : Spell
     private void _getLaserPoints()
     {
         _laserStartPosition = spellHandler.transform.position;
-        _laserEndPosition = wand.MouseAttackPosition;
+        _laserEndPosition = wand.MouseWorldPosition;
     }
 
 

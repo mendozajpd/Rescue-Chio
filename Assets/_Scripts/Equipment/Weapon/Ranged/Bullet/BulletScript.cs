@@ -9,7 +9,7 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private Vector3 rotation;
     [SerializeField] private float speed;
     [SerializeField] private RangedWeapon pistol;
-    private Rigidbody2D _rb;
+    public Rigidbody2D Rb2D;
 
     // Checks
     [SerializeField] private bool hasAlreadyInstantiated;
@@ -24,31 +24,24 @@ public class BulletScript : MonoBehaviour
 
     private void OnEnable()
     {
-        if (hasAlreadyInstantiated)
-        {
-            transform.position = muzzle.transform.position;
-            _rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
-            StartCoroutine(despawnSelf(1));
-        }
     }
 
-    private void OnDisable()
-    {
-        _rb.velocity = Vector2.zero;
-    }
 
     private void Awake()
     {
-        Debug.Log("Bullet spawned:" + transform.position);
-        _rb = GetComponent<Rigidbody2D>();
+        Rb2D = GetComponent<Rigidbody2D>();
     }
 
     void Start()
     {
-        transform.position = muzzle.transform.position;
-        _rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
+        ShootBullet();
+    }
+
+    public void ShootBullet()
+    {
+        Rb2D.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
         StartCoroutine(despawnSelf(1));
-        hasAlreadyInstantiated = true;
+
     }
 
     void Update()
