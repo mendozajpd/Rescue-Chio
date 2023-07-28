@@ -53,6 +53,7 @@ public class AstralBeamSpell : Spell
         var castAstralBeam = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
         castAstralBeam.Init(_laserStartPosition, _laserEndPosition, isExplosive ? 0.15f : laserDurationLength, isExplosive ? 0.1f : laserSize);
         castAstralBeam.gameObject.SetActive(true);
+        castAstralBeam.explodeTarget();
     }
 
     private void _getLaserPoints()

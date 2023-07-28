@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Explosion : MonoBehaviour
+public interface IExplode 
 {
-    public System.Action triggerExplosion;
+    public void Explode();
 }

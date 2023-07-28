@@ -19,8 +19,9 @@ public class AstralBeamBehavior : MonoBehaviour
     private Vector3 _startPoint;
     private Vector3 _endPoint;
 
-    
 
+    // Explosion
+    private Explosion_Default explosion;
 
     public void Init(Vector3 startpos, Vector3 endpos, float laserDuration, float laserSize)
     {
@@ -35,6 +36,7 @@ public class AstralBeamBehavior : MonoBehaviour
     private void Awake()
     {
         laser = GetComponent<LineRenderer>();
+        explosion = Resources.Load<Explosion_Default>("Explosion_Astral");
     }
 
     void Start()
@@ -97,5 +99,11 @@ public class AstralBeamBehavior : MonoBehaviour
 
         laser.SetPositions(positions);
     }    
+
+    public void explodeTarget()
+    {
+        var explod = Instantiate(explosion, _endPoint, Quaternion.identity);
+        explod.Explode();
+    }
     
 }
