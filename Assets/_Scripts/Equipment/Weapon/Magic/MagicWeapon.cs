@@ -297,7 +297,7 @@ public class MagicWeapon : Weapon
         angleOfTheWeapon = currentSpell.WeaponAngle;
 
         // Resets swing
-        _swing = 1;
+        _swing = isLookingLeft ? -1 : 1;
         // Can also set wand position
 
     }

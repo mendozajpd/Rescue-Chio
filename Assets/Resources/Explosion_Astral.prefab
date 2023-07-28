@@ -9700,7 +9700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6694eb2344cd0649aab948e2a5a8769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensityFadeSpeed: 0.1
+  intensityFadeSpeed: 0.3
   volumentricIntensityFadeSpeed: 0
 --- !u!114 &8304985291066034078
 MonoBehaviour:
@@ -9720,7 +9720,7 @@ MonoBehaviour:
   m_FalloffIntensity: 1
   m_Color: {r: 0, g: 0.707417, b: 1, a: 1}
   m_Intensity: 3
-  m_LightVolumeIntensity: 30
+  m_LightVolumeIntensity: 2
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 21047afd
   m_LightCookieSprite: {fileID: 0}
@@ -9770,7 +9770,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightOuterRadius: 1.5
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
