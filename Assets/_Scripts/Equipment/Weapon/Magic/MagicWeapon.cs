@@ -40,6 +40,8 @@ public class MagicWeapon : Weapon
     // Can Swing
     // Is Point
 
+    public System.Action castTrigger;
+
     public float Swing { get => _swing; }
     public Vector2 MousePos { get => _mousePos; }
     public int CurrentSpellIndex 
@@ -151,6 +153,7 @@ public class MagicWeapon : Weapon
             for (int i = 0; i < numberOfCasts; i++)
             {
                 Spells[currentSpellIndex]?.CastSpell();
+                castTrigger.Invoke();
             }
         }
     }

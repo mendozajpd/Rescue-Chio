@@ -10,6 +10,7 @@ public class AstralBeamSpell : Spell
 
     [Header("Laser Settings")]
     [SerializeField] private bool isExplosive = true;
+    [SerializeField] private float laserSize = 1;
 
     // Length(Time) of Laser
     [SerializeField] private float laserDurationLength = 1;
@@ -19,7 +20,7 @@ public class AstralBeamSpell : Spell
     [SerializeField] private bool canSwing = false;
     [SerializeField] private float wandAngle = 90;
 
-
+    public System.Action castTrigger;
 
     private void Awake()
     {
@@ -44,12 +45,13 @@ public class AstralBeamSpell : Spell
         // Spawn laser
         _castAstralBeam(_laser);
         // Give laser settings to laser
+        //castTrigger.Invoke();
     }
 
     private void _castAstralBeam(AstralBeamBehavior laserPrefab)
     {
         var castAstralBeam = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
-        castAstralBeam.Init(_laserStartPosition, _laserEndPosition,laserDurationLength);
+        castAstralBeam.Init(_laserStartPosition, _laserEndPosition, isExplosive ? 0.15f : laserDurationLength, isExplosive ? 0.1f : laserSize);
         castAstralBeam.gameObject.SetActive(true);
     }
 

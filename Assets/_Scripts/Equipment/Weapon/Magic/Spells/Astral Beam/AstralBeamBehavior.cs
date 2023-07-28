@@ -6,24 +6,29 @@ public class AstralBeamBehavior : MonoBehaviour
 {
     private LineRenderer laser;
 
-    //[Header("Laser Settings")]
-    //[SerializeField] private bool isExplosive = true;
+    [Header("Laser Settings")]
+    [SerializeField] private bool isExplosive = true;
+    private float _laserSize;
 
     // Length(Time) of Laser
+    private float _laserDurationLength;
     private float _laserDurationTime;
     private float _laserCooldownTime;
 
+    [SerializeField] private float laserLengthSpeed;
     private Vector3 _startPoint;
     private Vector3 _endPoint;
 
     
 
 
-    public void Init(Vector3 startpos, Vector3 endpos, float laserDuration)
+    public void Init(Vector3 startpos, Vector3 endpos, float laserDuration, float laserSize)
     {
         _startPoint = startpos;
         _endPoint = endpos;
         _laserDurationTime = laserDuration;
+        _laserDurationLength = laserDuration;
+        _laserSize = laserSize;
     }
 
 
@@ -56,30 +61,34 @@ public class AstralBeamBehavior : MonoBehaviour
 
     private void _laserWidthHandler(float width)
     {
-        laser.startWidth = width;
-        laser.endWidth = width;
+            laser.startWidth = width;
+            laser.endWidth = width;
+
     }
 
     private void _laserTimeHandler()
     {
         if (_laserCooldownTime > 0)
         {
-            _laserCooldownTime -= Time.deltaTime;
+            _laserCooldownTime -= (Time.deltaTime + (laserLengthSpeed));
         }
 
 
         if (_laserDurationTime > 0)
         {
-            _laserDurationTime -= Time.deltaTime;
+            _laserDurationTime -= (Time.deltaTime + (laserLengthSpeed));
         }
         else
         {
             _laserDurationTime = 0;
+
+            if (isExplosive) Destroy(gameObject);
         }
     }
 
     private void _setLaserPositions(Vector3 startPoint, Vector3 endPoint)
     {
+        
         Vector3[] positions = new Vector3[]
         {
             startPoint,
@@ -87,5 +96,6 @@ public class AstralBeamBehavior : MonoBehaviour
         };
 
         laser.SetPositions(positions);
-    }
+    }    
+    
 }
