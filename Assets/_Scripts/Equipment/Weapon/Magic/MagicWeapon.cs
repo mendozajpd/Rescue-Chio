@@ -44,7 +44,6 @@ public class MagicWeapon : Weapon
 
     // Charging Mechanics
     private bool isCharging;
-    private float charge;
 
     public System.Action castTrigger;
 
@@ -124,10 +123,6 @@ public class MagicWeapon : Weapon
         _calculateWeaponSwingTrajectory();
         _rotateWeaponAroundAnchor();
 
-        if (isCharging)
-        {
-            charge += Time.deltaTime;
-        }
     }
 
     private void _useWand()
