@@ -21,13 +21,14 @@ public class AstralBeamSpell : Spell
     [Header("Wand Actions Variables")]
     [SerializeField] private bool canSwing = false;
     [SerializeField] private float wandAngle = 90;
+    [SerializeField] private bool canRotate = true;
 
     public System.Action castTrigger;
 
     private void Awake()
     {
         SetSpellVariables();
-        SetMagicWeaponActions(canSwing, wandAngle);
+        SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _laser = Resources.Load<AstralBeamBehavior>("Player/Weapons/Magic/Spells/AstralBeam/AstralBeamPrefab");
     }
 

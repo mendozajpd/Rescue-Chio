@@ -14,6 +14,7 @@ public abstract class Weapon : MonoBehaviour
     public PlayerInputActions playerControls;
     public InputAction Fire;
     public InputAction ChangeAttack;
+    public InputAction HoldFire;
 
     // Weapon Sprite
     public SpriteRenderer Sprite;
@@ -33,6 +34,7 @@ public abstract class Weapon : MonoBehaviour
         playerControls = new PlayerInputActions();
         Fire = playerControls.Player.Fire;
         ChangeAttack = playerControls.Player.ChangeAttack;
+        HoldFire = playerControls.Player.HoldFire;
     }
 
     public void SetSpriteVariables()

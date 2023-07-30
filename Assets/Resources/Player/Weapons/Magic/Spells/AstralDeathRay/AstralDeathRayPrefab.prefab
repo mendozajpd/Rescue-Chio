@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4058190525630537992
+--- !u!1 &7763976310992850962
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4058190525630537993}
-  - component: {fileID: 4058190525630538006}
-  - component: {fileID: 3428223809413424321}
+  - component: {fileID: 7763976310992850989}
+  - component: {fileID: 7763976310992850991}
+  - component: {fileID: 7763976310992850988}
+  - component: {fileID: 7404752967443535742}
   m_Layer: 0
-  m_Name: Line
+  m_Name: AstralDeathRayPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4058190525630537993
+  m_IsActive: 0
+--- !u!4 &7763976310992850989
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058190525630537992}
+  m_GameObject: {fileID: 7763976310992850962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4058190526822122679}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &4058190525630538006
+--- !u!120 &7763976310992850991
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058190525630537992}
+  m_GameObject: {fileID: 7763976310992850962}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -71,12 +72,12 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1881375163
-  m_SortingLayer: 1
+  m_SortingLayerID: 742551607
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 5, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -132,70 +133,29 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &3428223809413424321
+--- !u!114 &7763976310992850988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058190525630537992}
+  m_GameObject: {fileID: 7763976310992850962}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 288639202f4e486448814415a92fce02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4058190526822122678
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4058190526822122679}
-  - component: {fileID: 6569607847503973174}
-  m_Layer: 0
-  m_Name: Astral Beam Spell OLD
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4058190526822122679
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058190526822122678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4058190525630537993}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6569607847503973174
+  isExplosive: 1
+  laserLengthSpeed: 0
+--- !u!114 &7404752967443535742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4058190526822122678}
+  m_GameObject: {fileID: 7763976310992850962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785b475e50a29404e945ecc421cba7bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 591b94f475aeace44a2e479366e11118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpellName: Astral Beam
-  spellHandler: {fileID: 0}
-  wand: {fileID: 0}
-  CanSwing: 0
-  WeaponAngle: 0
-  isExplosive: 1
-  laserTimeLength: 0.1
-  laserCooldownLength: 0.5
-  canSwing: 0
-  wandAngle: 90
