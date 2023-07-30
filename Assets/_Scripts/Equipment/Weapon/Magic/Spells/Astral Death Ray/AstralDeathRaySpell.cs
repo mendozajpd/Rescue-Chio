@@ -14,8 +14,9 @@ public class AstralDeathRaySpell : Spell
     private float defaultCharge = 0;
 
     [Header("Laser Variables")]
-    private AstralDeathRayBehavior laserPrefab;
-    private AstralDeathRayBehavior laser;
+    private AstralDeathRayBehavior _laserPrefab;
+    private AstralDeathRayBehavior _laser;
+    private ParticleSystem _exhaust;
     [SerializeField] private float laserSize;
     private Vector3 _startPoint;
     private Vector3 _endPoint;
@@ -63,6 +64,7 @@ public class AstralDeathRaySpell : Spell
     private void OnDisable()
     {
         _UnsubscribeFunctionsToCharge();
+        disableLaser();
     }
 
     private void OnDestroy()
@@ -90,6 +92,7 @@ public class AstralDeathRaySpell : Spell
         SetChargingInputActions(this);
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _spawnLaser();
+        _exhaust = GetComponentInChildren<ParticleSystem>();
     }
 
 
@@ -110,7 +113,7 @@ public class AstralDeathRaySpell : Spell
     {
         _startPoint = transform.position;
         _endPoint = wand.MouseWorldPosition;
-        if (laser != null && laser.gameObject.activeSelf) laser.SetLaserSettings(_startPoint, _endPoint, laserSize);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserSize);
     }
 
     private void _chargeHandler()
@@ -125,29 +128,37 @@ public class AstralDeathRaySpell : Spell
     {
         // Start charging
         isCharging = true;
+        spellCharge.EnableSpellCharge();
     }
 
     private void EndCharge(InputAction.CallbackContext context)
     {
         // Release Charging
+        disableLaser();
+    }
+
+    private void disableLaser()
+    {
         isCharging = false;
         CurrentCharge = defaultCharge;
+        spellCharge.DisableSpellCharge();
+        _exhaust.Play();
     }
 
     private void _activateLaser()
     {
-        laser.gameObject.SetActive(true);
+        _laser.gameObject.SetActive(true);
     }
 
     private void _deactivateLaser()
     {
-        laser.gameObject.SetActive(false);
+        _laser.gameObject.SetActive(false);
     }
 
     private void _spawnLaser()
     {
-        laserPrefab = Resources.Load<AstralDeathRayBehavior>("Player/Weapons/Magic/Spells/AstralDeathRay/AstralDeathRayPrefab");
-        var deathRay = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
-        laser = deathRay;
+        _laserPrefab = Resources.Load<AstralDeathRayBehavior>("Player/Weapons/Magic/Spells/AstralDeathRay/AstralDeathRayPrefab");
+        var deathRay = Instantiate(_laserPrefab, Vector3.zero, Quaternion.identity);
+        _laser = deathRay;
     }
 }

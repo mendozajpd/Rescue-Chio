@@ -39,7 +39,7 @@ public class SpellChargeHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _special.performed -= _resetParticleCharge;
+        _special.performed -= _resetSpellCharge;
     }
 
     public float CurrentCharge 
@@ -76,18 +76,30 @@ public class SpellChargeHandler : MonoBehaviour
         }
     }
 
-    private void _resetParticleCharge(InputAction.CallbackContext context)
+    public void EnableSpellCharge()
+    {
+        gameObject.SetActive(true);
+        _particles.Play();
+    }
+
+    public void DisableSpellCharge()
     {
         _emission.rateOverTime = 0;
-        Debug.Log("reset!");
+        //gameObject.SetActive(false);
     }
+
+    private void _resetSpellCharge(InputAction.CallbackContext context)
+    {
+        DisableSpellCharge();
+    }
+
 
     private void _setPlayerInput()
     {
         _playerControls = new PlayerInputActions();
         _special = _playerControls.Player.Reload;
         _special.Enable(); 
-        _special.performed += _resetParticleCharge;
+        _special.performed += _resetSpellCharge;
     }
 
 }
