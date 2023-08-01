@@ -12,6 +12,7 @@ public class AstralDeathRaySpell : Spell
     [SerializeField] private float maxCharge = 100;
     [SerializeField] private float chargeSpeed = 1;
     [SerializeField] private float laserDistance = 10;
+    [SerializeField] private float laserRotationSpeed = 30;
     private float defaultCharge = 0;
 
     [Header("Laser Variables")]
@@ -22,7 +23,7 @@ public class AstralDeathRaySpell : Spell
     private Vector3 _startPoint;
     private Vector3 _endPoint;
 
-    // Laser End Anim
+    [Header("Light Variables")]
     private Light2D light2D;
     [SerializeField] private float maxLightIntensity;
     [SerializeField] private float defaultLightIntensity = 0;
@@ -120,7 +121,7 @@ public class AstralDeathRaySpell : Spell
     {
         _startPoint = transform.position;
         _endPoint = wand.MouseWorldPosition;
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserDistance);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserDistance, laserRotationSpeed);
     }
     private void _spawnLaser()
     {

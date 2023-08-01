@@ -63,7 +63,6 @@ public class MagicMissileBehavior : MonoBehaviour
 
     // Object Pool
     private System.Action<MagicMissileBehavior> _sendToPool;
-    private bool _sentToPool = false;
     [SerializeField] private bool debug_UsingCoroutine;
 
 

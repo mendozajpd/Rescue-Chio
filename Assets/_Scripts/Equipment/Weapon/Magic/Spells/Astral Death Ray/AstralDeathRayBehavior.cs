@@ -7,28 +7,23 @@ public class AstralDeathRayBehavior : MonoBehaviour
     private LineRenderer _laser;
     private AstralDeathRaySpell _spell;
 
-    [Header("Laser Settings")]
+    private Rigidbody2D _rb;
+    private float _rotationSpeed;
+    private float _rotateAmount;
     private float _laserDistance;
 
-    [SerializeField] private float laserLengthSpeed;
-    private Vector3 _startPoint;
-    private Vector3 _endPoint;
 
-
-    [SerializeField] private Vector2 _MouseWorldPosition;
-    [SerializeField] private Vector2 _direction;
-
-    public void SetLaserSettings(Vector3 startpos, Vector3 endpos, float laserdistance)
+    public void SetLaserSettings(Vector3 startpos, Vector3 endpos, float laserdistance, float rotationSpeed)
     {
-        _startPoint = startpos;
-        _endPoint = endpos;
         _laserDistance = laserdistance;
+        _rotationSpeed = rotationSpeed;
     }
 
 
     private void Awake()
     {
         _laser = GetComponent<LineRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     void Start()
@@ -40,12 +35,17 @@ public class AstralDeathRayBehavior : MonoBehaviour
         LaserHandlers();
     }
 
+    private void _laserStartPointPositionHandler()
+    {
+        transform.position = _spell.transform.position;
+    }
 
     public void LaserHandlers()
     {
         if (!gameObject.activeSelf) return;
-
-        _setLaserPositions(_startPoint, _endPoint);
+        
+        _laserStartPointPositionHandler();
+        _setLaserPositions();
 
     }
 
@@ -62,20 +62,32 @@ public class AstralDeathRayBehavior : MonoBehaviour
     } 
 
 
-    private void _setLaserPositions(Vector3 startPoint, Vector3 endPoint)
+    private void _setLaserPositions()
     {
         int ignoreLayer = ~(1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Enemy"));
         Vector2 direction = _spell.wand.MouseWorldPosition - (Vector2)_spell.transform.position; // Direction to the target
+        
+        // Get the hit point and the start point, subtract the hit point and the end point
+        // Use the remainding for the total length
         RaycastHit2D hit = Physics2D.Raycast(_spell.transform.position, direction.normalized, _laserDistance, ignoreLayer);
+
 
 
         Vector3[] positions = new Vector3[]
         {
-            startPoint,
-            hit ? hit.point: _startPoint + ((Vector3)direction.normalized * _laserDistance)
+            Vector3.zero,
+            (Vector3.up * _laserDistance)
         };
 
         _laser.SetPositions(positions);
+        _rotateLaser(direction);
+    }
+
+    private void _rotateLaser(Vector2 direction)
+    {
+        _rotateAmount = Vector3.Cross(direction, transform.up).z;
+        _rb.angularVelocity = -_rotateAmount * _rotationSpeed;
+
     }
 
     public void _setSpell(AstralDeathRaySpell spell)
