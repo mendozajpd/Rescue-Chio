@@ -97,7 +97,7 @@ public class SpellChargeHandler : MonoBehaviour
     private void _setPlayerInput()
     {
         _playerControls = new PlayerInputActions();
-        _special = _playerControls.Player.Reload;
+        _special = _playerControls.Player.Special;
         _special.Enable(); 
         _special.performed += _resetSpellCharge;
     }

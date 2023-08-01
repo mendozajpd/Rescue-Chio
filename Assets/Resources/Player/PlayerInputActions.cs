@@ -73,7 +73,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Reload"",
+                    ""name"": ""Special"",
                     ""type"": ""Button"",
                     ""id"": ""58fc6d83-e051-46c1-b2e4-f294deeeb2db"",
                     ""expectedControlType"": ""Button"",
@@ -341,7 +341,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Reload"",
+                    ""action"": ""Special"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -945,7 +945,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_ChangeAttack = m_Player.FindAction("ChangeAttack", throwIfNotFound: true);
-        m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_Special = m_Player.FindAction("Special", throwIfNotFound: true);
         m_Player_HoldFire = m_Player.FindAction("HoldFire", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1023,7 +1023,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_ChangeAttack;
-    private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_Special;
     private readonly InputAction m_Player_HoldFire;
     public struct PlayerActions
     {
@@ -1034,7 +1034,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @ChangeAttack => m_Wrapper.m_Player_ChangeAttack;
-        public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @Special => m_Wrapper.m_Player_Special;
         public InputAction @HoldFire => m_Wrapper.m_Player_HoldFire;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1060,9 +1060,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ChangeAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAttack;
                 @ChangeAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAttack;
                 @ChangeAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeAttack;
-                @Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
-                @Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
-                @Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @Special.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecial;
+                @Special.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecial;
+                @Special.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecial;
                 @HoldFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldFire;
                 @HoldFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldFire;
                 @HoldFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldFire;
@@ -1085,9 +1085,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ChangeAttack.started += instance.OnChangeAttack;
                 @ChangeAttack.performed += instance.OnChangeAttack;
                 @ChangeAttack.canceled += instance.OnChangeAttack;
-                @Reload.started += instance.OnReload;
-                @Reload.performed += instance.OnReload;
-                @Reload.canceled += instance.OnReload;
+                @Special.started += instance.OnSpecial;
+                @Special.performed += instance.OnSpecial;
+                @Special.canceled += instance.OnSpecial;
                 @HoldFire.started += instance.OnHoldFire;
                 @HoldFire.performed += instance.OnHoldFire;
                 @HoldFire.canceled += instance.OnHoldFire;
@@ -1252,7 +1252,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnChangeAttack(InputAction.CallbackContext context);
-        void OnReload(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
         void OnHoldFire(InputAction.CallbackContext context);
     }
     public interface IUIActions

@@ -84,10 +84,10 @@ public class MagicMissileSpell : Spell
         switch (wand.Swing)
         {
             case 1:
-                _isOverhand = !wand.isLookingLeft;
+                _isOverhand = !wand.IsLookingLeft;
                 break;
             case -1:
-                _isOverhand = wand.isLookingLeft;
+                _isOverhand = wand.IsLookingLeft;
                 break;
         }
         return _isOverhand;

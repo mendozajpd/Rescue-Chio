@@ -9,7 +9,7 @@ public class MagicWeapon : Weapon
     private SpellHandler spellHandler;
     public List<Spell> Spells = new List<Spell>();
     public SpellChargeHandler SpellCharge;
-
+    public Vector3 PlayerPos;
 
     // Casts
     [SerializeField] private int numberOfCasts;
@@ -29,7 +29,7 @@ public class MagicWeapon : Weapon
     private Vector3 target;
 
     // Weapon Sprite Flip Functions
-    public bool isLookingLeft;
+    public bool IsLookingLeft;
 
     // Mouse Position Variables
     public Vector2 MouseWorldPosition;
@@ -77,8 +77,8 @@ public class MagicWeapon : Weapon
 
 
 
-        // Cycle through spells TEMPORARY
-        _changeSpell = playerControls.Player.Reload;
+        // Cycle through spells
+        _changeSpell = playerControls.Player.Special;
         _changeSpell.Enable();
         _changeSpell.performed += _cycleThroughSpells;
 
@@ -105,6 +105,7 @@ public class MagicWeapon : Weapon
         // Spell Handler
         spellHandler = GetComponentInChildren<SpellHandler>();
         SpellCharge = GetComponentInChildren<SpellChargeHandler>();
+        PlayerPos = GetComponentInParent<PlayerController>().transform.position;
 
         SetInputVariables();
         SetSpriteVariables();
@@ -254,11 +255,11 @@ public class MagicWeapon : Weapon
         {
             //_flipSpriteLookingLeft();
 
-            if (!isLookingLeft && !_swinging)
+            if (!IsLookingLeft && !_swinging)
             {
                 _swing = -1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-                isLookingLeft = true;
+                IsLookingLeft = true;
             }
 
 
@@ -270,11 +271,11 @@ public class MagicWeapon : Weapon
         {
             //_flipSpriteLookingRight();
 
-            if (isLookingLeft && !_swinging)
+            if (IsLookingLeft && !_swinging)
             {
                 _swing = 1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-                isLookingLeft = false;
+                IsLookingLeft = false;
             }
 
         }
@@ -326,7 +327,7 @@ public class MagicWeapon : Weapon
         _canRotateWeapon = currentSpell.CanRotate;
 
         // Resets swing
-        _swing = isLookingLeft ? -1 : 1;
+        _swing = IsLookingLeft ? -1 : 1;
         // Can also set wand position
 
     }

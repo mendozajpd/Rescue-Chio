@@ -79,7 +79,7 @@ public class RangedWeapon : Weapon
 
         // Input Variables
         SetInputVariables();
-        Reload = playerControls.Player.Reload;
+        Reload = playerControls.Player.Special;
     }
 
     private void OnEnable()

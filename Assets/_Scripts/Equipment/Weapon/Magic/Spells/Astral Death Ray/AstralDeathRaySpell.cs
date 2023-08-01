@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class AstralDeathRaySpell : Spell
 {
     [Header("Charging Settings/Variables")]
     [SerializeField] private bool isCharging;
-    [SerializeField] private bool activateLaser;
     [SerializeField] private float currentCharge;
     [SerializeField] private float maxCharge = 100;
     [SerializeField] private float chargeSpeed = 1;
+    [SerializeField] private float laserDistance = 10;
     private float defaultCharge = 0;
 
     [Header("Laser Variables")]
@@ -21,6 +22,10 @@ public class AstralDeathRaySpell : Spell
     private Vector3 _startPoint;
     private Vector3 _endPoint;
 
+    // Laser End Anim
+    private Light2D light2D;
+    [SerializeField] private float maxLightIntensity;
+    [SerializeField] private float defaultLightIntensity = 0;
 
     [Header("Wand Actions")]
     [SerializeField] private bool canSwing = false;
@@ -47,8 +52,6 @@ public class AstralDeathRaySpell : Spell
         }
 
     }
-
-
 
 
     private void SetChargeAmount(float charge, float maxcharge)
@@ -93,6 +96,8 @@ public class AstralDeathRaySpell : Spell
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _spawnLaser();
         _exhaust = GetComponentInChildren<ParticleSystem>();
+        light2D = GetComponent<Light2D>();
+        
     }
 
 
@@ -105,17 +110,29 @@ public class AstralDeathRaySpell : Spell
     void Update()
     {
         _chargeHandler();
-
         _setLaserSettings();
+        _lightTimeHandler();
+
+
     }
 
+    #region Laser Settings/Laser Spawn
     private void _setLaserSettings()
     {
         _startPoint = transform.position;
         _endPoint = wand.MouseWorldPosition;
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserSize);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserSize, laserDistance);
     }
+    private void _spawnLaser()
+    {
+        _laserPrefab = Resources.Load<AstralDeathRayBehavior>("Player/Weapons/Magic/Spells/AstralDeathRay/AstralDeathRayPrefab");
+        var deathRay = Instantiate(_laserPrefab, Vector3.zero, Quaternion.identity);
+        _laser = deathRay;
+        _laser._setSpell(this);
+    } 
+    #endregion
 
+    #region Charge Functions
     private void _chargeHandler()
     {
         if (isCharging)
@@ -135,8 +152,10 @@ public class AstralDeathRaySpell : Spell
     {
         // Release Charging
         disableLaser();
-    }
+    } 
+    #endregion
 
+    #region Activate/Deactivate Laser Functions
     private void disableLaser()
     {
         isCharging = false;
@@ -154,11 +173,30 @@ public class AstralDeathRaySpell : Spell
     {
         _laser.gameObject.SetActive(false);
     }
+    #endregion
 
-    private void _spawnLaser()
+    #region Light Handlers
+
+    private void _lightTimeHandler()
     {
-        _laserPrefab = Resources.Load<AstralDeathRayBehavior>("Player/Weapons/Magic/Spells/AstralDeathRay/AstralDeathRayPrefab");
-        var deathRay = Instantiate(_laserPrefab, Vector3.zero, Quaternion.identity);
-        _laser = deathRay;
+        // Turn on light when charging from 0 - 100%
+        if (isCharging)
+        {
+            light2D.intensity = (currentCharge / maxCharge) * maxLightIntensity;
+        }
+
+        if (!isCharging && light2D.intensity > 0)
+        {
+            light2D.intensity -= Time.deltaTime * (maxLightIntensity * 2);
+        }
+        
+        if (light2D.intensity < 0)
+        {
+            light2D.intensity = defaultLightIntensity;
+        }
+
+        // when laser is not active, light fades out
     }
+
+    #endregion
 }

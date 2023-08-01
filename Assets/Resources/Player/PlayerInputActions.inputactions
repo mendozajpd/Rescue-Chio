@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reload",
+                    "name": "Special",
                     "type": "Button",
                     "id": "58fc6d83-e051-46c1-b2e4-f294deeeb2db",
                     "expectedControlType": "Button",
@@ -319,7 +319,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Reload",
+                    "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
