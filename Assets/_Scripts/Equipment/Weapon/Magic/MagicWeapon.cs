@@ -42,9 +42,6 @@ public class MagicWeapon : Weapon
     // Can Swing
     // Is Point
 
-    // Charging Mechanics
-    private bool isCharging;
-
     public System.Action castTrigger;
 
     public float Swing { get => _swing; }

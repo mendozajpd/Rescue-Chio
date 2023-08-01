@@ -113,7 +113,6 @@ public class AstralDeathRaySpell : Spell
         _setLaserSettings();
         _lightTimeHandler();
 
-
     }
 
     #region Laser Settings/Laser Spawn
@@ -121,7 +120,7 @@ public class AstralDeathRaySpell : Spell
     {
         _startPoint = transform.position;
         _endPoint = wand.MouseWorldPosition;
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserSize, laserDistance);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserDistance);
     }
     private void _spawnLaser()
     {
@@ -166,12 +165,12 @@ public class AstralDeathRaySpell : Spell
 
     private void _activateLaser()
     {
-        _laser.gameObject.SetActive(true);
+        _laser?.ActivateLaser(laserSize);
     }
 
     private void _deactivateLaser()
     {
-        _laser.gameObject.SetActive(false);
+        _laser?.DeactivateLaser();
     }
     #endregion
 

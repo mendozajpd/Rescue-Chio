@@ -21,7 +21,7 @@ public abstract class Spell : MonoBehaviour
 
     public virtual void CastSpell()
     {
-        Debug.Log("Spell casted");
+
     }
 
     public void SetSpellVariables()

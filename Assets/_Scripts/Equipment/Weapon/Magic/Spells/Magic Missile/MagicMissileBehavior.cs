@@ -139,8 +139,6 @@ public class MagicMissileBehavior : MonoBehaviour
 
             _rb.velocity = transform.up * (_defaultMissileSpeed - Vector2.Distance(transform.position, _target.transform.position));
         }
-
-
     }
 
 
