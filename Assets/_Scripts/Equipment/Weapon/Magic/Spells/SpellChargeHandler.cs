@@ -48,7 +48,13 @@ public class SpellChargeHandler : MonoBehaviour
         set
         {
             currentCharge = value;
-            _emission.rateOverTime = currentCharge * chargeParticlesMultiplier;
+            if (currentCharge < .5f)
+            {
+                _emission.rateOverTime = currentCharge * chargeParticlesMultiplier;
+            } else
+            {
+                _emission.rateOverTime = 0;
+            }
         }
     }
 

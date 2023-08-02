@@ -10219,7 +10219,7 @@ MonoBehaviour:
   currentCharge: 0
   maxCharge: 100
   chargeSpeed: 100
-  laserDistance: 10
+  laserDistance: 30
   laserRotationSpeed: 30
   laserSize: 0.3
   maxLightIntensity: 5

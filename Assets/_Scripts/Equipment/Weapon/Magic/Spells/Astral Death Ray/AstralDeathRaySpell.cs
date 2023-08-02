@@ -20,8 +20,8 @@ public class AstralDeathRaySpell : Spell
     private AstralDeathRayBehavior _laser;
     private ParticleSystem _exhaust;
     [SerializeField] private float laserSize;
-    private Vector3 _startPoint;
-    private Vector3 _endPoint;
+    //private Vector3 _startPoint;
+    //private Vector3 _endPoint;
 
     [Header("Light Variables")]
     private Light2D light2D;
@@ -119,9 +119,9 @@ public class AstralDeathRaySpell : Spell
     #region Laser Settings/Laser Spawn
     private void _setLaserSettings()
     {
-        _startPoint = transform.position;
-        _endPoint = wand.MouseWorldPosition;
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(_startPoint, _endPoint, laserDistance, laserRotationSpeed);
+        //_startPoint = transform.position;
+        //_endPoint = wand.MouseWorldPosition;
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(laserDistance, laserRotationSpeed);
     }
     private void _spawnLaser()
     {
