@@ -121,7 +121,7 @@ public class AstralDeathRaySpell : Spell
     {
         //_startPoint = transform.position;
         //_endPoint = wand.MouseWorldPosition;
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(laserDistance, laserRotationSpeed);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(laserDistance, laserRotationSpeed, laserSize);
     }
     private void _spawnLaser()
     {
