@@ -19,12 +19,12 @@ public class AstralDeathRayBehavior : MonoBehaviour
     private Light2D _light2D;
     private float _fadeMultiplier = 7;
 
-    //Collider
+
     private EdgeCollider2D _laserHitbox;
 
-    // Laser End
-    //private AstralDeathRayEnd _tipPrefab;
-    //public AstralDeathRayEnd LaserTip;
+    //Laser Tip
+    private AstralDeathRayEnd _tipPrefab;
+    public AstralDeathRayEnd LaserTip;
 
     public float LaserDistance 
     { 
@@ -32,9 +32,9 @@ public class AstralDeathRayBehavior : MonoBehaviour
         set
         {
             _laserDistance = value;
-            //Vector3 newPos = new Vector3(transform.position.x, _laserDistance);
-            //LaserTip.SetLaserTipPosition(newPos, LaserTip);
-            //Debug.Log("new position set");
+            Vector3 newPos = new Vector3(transform.position.x, _laserDistance);
+            LaserTip.SetLaserTipPosition(newPos, LaserTip);
+            Debug.Log("new position set");
         }
     }
 
@@ -46,19 +46,15 @@ public class AstralDeathRayBehavior : MonoBehaviour
         _particles = new List<AstralDeathRayParticles>(GetComponentsInChildren<AstralDeathRayParticles>());
         _light2D = GetComponent<Light2D>();
         _laserHitbox = GetComponent<EdgeCollider2D>();
-        //_tipPrefab = Resources.Load<AstralDeathRayEnd>("Player/Weapons/Magic/Spells/AstralDeathRay/LaserEnd");
-        //_spawnLaserTip();
+        _tipPrefab = Resources.Load<AstralDeathRayEnd>("Player/Weapons/Magic/Spells/AstralDeathRay/LaserEnd");
+        _spawnLaserTip();
     }
 
-
-    // Only do this when laser distance, rotationspeed, and or size has changed
     public void SetLaserSettings(float laserdistance, float rotationSpeed, float size)
     {
         LaserDistance = laserdistance;
         _rotationSpeed = rotationSpeed;
         _laserSize = size;
-        //_laserHitbox.size = new Vector2(size, laserdistance);
-        //_laserHitbox.offset = new Vector2(0, laserdistance / 2);
     }
 
     void Start()
@@ -69,11 +65,6 @@ public class AstralDeathRayBehavior : MonoBehaviour
     {
         LaserHandlers();
 
-    }
-
-    private void _laserStartPointPositionHandler()
-    {
-        transform.position = _spell.transform.position;
     }
 
     public void LaserHandlers()
@@ -102,11 +93,12 @@ public class AstralDeathRayBehavior : MonoBehaviour
         }
     }
 
+    #region Collision Related Variables
     private void _setEdgeCollider(LineRenderer laser)
     {
         List<Vector2> edges = new List<Vector2>();
 
-        for(int point = 0; point < laser.positionCount; point++)
+        for (int point = 0; point < laser.positionCount; point++)
         {
             Vector3 laserPoint = laser.GetPosition(point);
             edges.Add(new Vector2(laserPoint.x, laserPoint.y));
@@ -115,7 +107,20 @@ public class AstralDeathRayBehavior : MonoBehaviour
         _laserHitbox.SetPoints(edges);
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        var Enemy = collision.GetComponent<Enemy>();
 
+        if (Enemy != null)
+        {
+            Debug.Log("Damaged " + Enemy.name);
+        }
+    }
+
+
+    #endregion
+
+    #region Enable/Disable Laser
     public void ActivateLaser(float width)
     {
         _laser.startWidth = width;
@@ -126,7 +131,7 @@ public class AstralDeathRayBehavior : MonoBehaviour
             particle.EnableParticles();
         }
     }
-    
+
     public void DeactivateLaser()
     {
         _laser.startWidth = 0;
@@ -136,43 +141,32 @@ public class AstralDeathRayBehavior : MonoBehaviour
         {
             particle.DisableParticles();
         }
-    } 
+    }
+    #endregion
 
-    
+    #region Laser Position/Rotation
+    private void _laserStartPointPositionHandler()
+    {
+        transform.position = _spell.transform.position;
+    }
 
     private void _setLaserPositions()
     {
-        //int ignoreLayer = GetIgnoreLayerMask();
-        Vector2 direction = _spell.wand.MouseWorldPosition - (Vector2)_spell.transform.position; // Direction to the target
-
-        // Get the hit point and the start point, subtract the hit point and the end point
-        // Use the remainding for the total length
-        //RaycastHit2D hit = Physics2D.Raycast(_spell.transform.position, transform.position + Vector3.up, _laserDistance);
-
-        //if (hit)
-        //{
-        //    Debug.Log(hit.collider.name);
-        //    Debug.DrawLine(_spell.transform.position, transform.position + Vector3.up, Color.red);
-        //}
-
-        // minus the y position to the distance between to what was hit
+        Vector2 mousePosition = _spell.wand.MouseWorldPosition - (Vector2)_spell.transform.position; // Direction to the target
+        Vector2 laserDirection = LaserTip.transform.position - transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, laserDirection.normalized, LaserDistance, GetIgnoreLayerMask("Player", "AllyProjectiles", "Enemy"));
+        float distanceBetweenStartEnd = Vector3.Distance(transform.position, hit.point);
+        Vector3 newLaserLength = new Vector3(0, distanceBetweenStartEnd, 0);
 
         Vector3[] positions = new Vector3[]
         {
             Vector3.zero,
-            _laserHitbox.IsTouchingLayers(LayerMask.NameToLayer("Enemy")) ? new Vector3(0,_laserHitbox.ClosestPoint(_spell.transform.position).magnitude, 0) * 1.3f :(Vector3.up * LaserDistance)
+           hit ? newLaserLength : (Vector3.up * LaserDistance)
         };
 
         _laser.SetPositions(positions);
         _setEdgeCollider(_laser);
-        _rotateLaser(direction);
-    }
-
-    
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //ContactFilter2D contact = new ContactFilter2D();
-        //Debug.Log("distance between: " + _laserHitbox.GetContacts());
+        _rotateLaser(mousePosition);
     }
 
     private void _rotateLaser(Vector2 direction)
@@ -182,6 +176,9 @@ public class AstralDeathRayBehavior : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Raycast Functions
     private int GetIgnoreLayerMask(params string[] layerNamesToIgnore)
     {
         int layerMask = 0;
@@ -195,13 +192,16 @@ public class AstralDeathRayBehavior : MonoBehaviour
         return ~layerMask;
     }
 
+
+    #endregion
+
     #region LaserTip Functions
-    //private void _spawnLaserTip()
-    //{
-    //    var laserTip = Instantiate(_tipPrefab, transform);
-    //    laserTip.SetDeathRay(this);
-    //    LaserTip = laserTip;
-    //}
+    private void _spawnLaserTip()
+    {
+        var laserTip = Instantiate(_tipPrefab, transform);
+        laserTip.SetDeathRay(this);
+        LaserTip = laserTip;
+    }
 
 
     #endregion
@@ -212,6 +212,5 @@ public class AstralDeathRayBehavior : MonoBehaviour
     }
 
 
-    // FOR COLLIDERS, JUST ADD A COLLIDER AND THEN CHANGE ITS SIZE AND WIDTH TO THE LASER.
 
 }

@@ -15,6 +15,7 @@ public class SpellChargeHandler : MonoBehaviour
 
     // divide the current charge to the max charge and put it inside the charge below
     [Header("Charge Variables")]
+    [SerializeField] private float amountToStopCharge = 0.5f;
     [SerializeField] private float currentCharge;
     [SerializeField] private float chargeParticlesMultiplier = 100;
 
@@ -48,7 +49,7 @@ public class SpellChargeHandler : MonoBehaviour
         set
         {
             currentCharge = value;
-            if (currentCharge < .5f)
+            if (currentCharge < amountToStopCharge)
             {
                 _emission.rateOverTime = currentCharge * chargeParticlesMultiplier;
             } else
