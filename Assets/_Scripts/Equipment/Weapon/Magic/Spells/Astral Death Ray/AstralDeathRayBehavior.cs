@@ -22,7 +22,22 @@ public class AstralDeathRayBehavior : MonoBehaviour
     //Collider
     private EdgeCollider2D _laserHitbox;
 
-    public float LaserDistance { get => _laserDistance; }
+    // Laser End
+    //private AstralDeathRayEnd _tipPrefab;
+    //public AstralDeathRayEnd LaserTip;
+
+    public float LaserDistance 
+    { 
+        get => _laserDistance;
+        set
+        {
+            _laserDistance = value;
+            //Vector3 newPos = new Vector3(transform.position.x, _laserDistance);
+            //LaserTip.SetLaserTipPosition(newPos, LaserTip);
+            //Debug.Log("new position set");
+        }
+    }
+
 
     private void Awake()
     {
@@ -31,10 +46,15 @@ public class AstralDeathRayBehavior : MonoBehaviour
         _particles = new List<AstralDeathRayParticles>(GetComponentsInChildren<AstralDeathRayParticles>());
         _light2D = GetComponent<Light2D>();
         _laserHitbox = GetComponent<EdgeCollider2D>();
+        //_tipPrefab = Resources.Load<AstralDeathRayEnd>("Player/Weapons/Magic/Spells/AstralDeathRay/LaserEnd");
+        //_spawnLaserTip();
     }
+
+
+    // Only do this when laser distance, rotationspeed, and or size has changed
     public void SetLaserSettings(float laserdistance, float rotationSpeed, float size)
     {
-        _laserDistance = laserdistance;
+        LaserDistance = laserdistance;
         _rotationSpeed = rotationSpeed;
         _laserSize = size;
         //_laserHitbox.size = new Vector2(size, laserdistance);
@@ -140,7 +160,7 @@ public class AstralDeathRayBehavior : MonoBehaviour
         Vector3[] positions = new Vector3[]
         {
             Vector3.zero,
-            _laserHitbox.IsTouchingLayers(LayerMask.NameToLayer("Enemy")) ? new Vector3(0,_laserHitbox.ClosestPoint(_spell.transform.position).magnitude, 0) * 1.3f :(Vector3.up * _laserDistance)
+            _laserHitbox.IsTouchingLayers(LayerMask.NameToLayer("Enemy")) ? new Vector3(0,_laserHitbox.ClosestPoint(_spell.transform.position).magnitude, 0) * 1.3f :(Vector3.up * LaserDistance)
         };
 
         _laser.SetPositions(positions);
@@ -151,8 +171,8 @@ public class AstralDeathRayBehavior : MonoBehaviour
     
     private void OnTriggerStay2D(Collider2D collision)
     {
-
-        Debug.Log("distance between: " + _laserHitbox.ClosestPoint(_spell.transform.position).magnitude);
+        //ContactFilter2D contact = new ContactFilter2D();
+        //Debug.Log("distance between: " + _laserHitbox.GetContacts());
     }
 
     private void _rotateLaser(Vector2 direction)
@@ -174,6 +194,17 @@ public class AstralDeathRayBehavior : MonoBehaviour
 
         return ~layerMask;
     }
+
+    #region LaserTip Functions
+    //private void _spawnLaserTip()
+    //{
+    //    var laserTip = Instantiate(_tipPrefab, transform);
+    //    laserTip.SetDeathRay(this);
+    //    LaserTip = laserTip;
+    //}
+
+
+    #endregion
 
     public void _setSpell(AstralDeathRaySpell spell)
     {

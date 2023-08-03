@@ -5,12 +5,13 @@ using UnityEngine;
 public class AstralDeathRayCast : MonoBehaviour
 {
     private AstralDeathRayBehavior _deathRay;
-    private LineRenderer _line;
+
+    RaycastHit2D hit;
 
     private void Awake()
     {
         _deathRay = GetComponentInParent<AstralDeathRayBehavior>();
-        _line = GetComponent<LineRenderer>();
+        _createRaycast();
     }
     void Start()
     {
@@ -19,19 +20,29 @@ public class AstralDeathRayCast : MonoBehaviour
 
     void Update()
     {
-        _createRaycast();
+        if(hit) DebugHit(hit);
     }
 
     private void _createRaycast()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.up , _deathRay.LaserDistance);
-        transform.position = _deathRay.transform.position;
-        Vector3[] positions = new Vector3[]
-        {
-            transform.position,
-            transform.position + Vector3.up * _deathRay.LaserDistance
-        };
+        hit = Physics2D.Raycast(transform.position, Vector3.up, _deathRay.LaserDistance, GetIgnoreLayerMask("AllyProjectiles","Player"));
+    }
 
-        _line.SetPositions(positions);
+    private void DebugHit(RaycastHit2D hit)
+    {
+        Debug.Log("hit:" + hit.collider.name);
+    }
+
+    private int GetIgnoreLayerMask(params string[] layerNamesToIgnore)
+    {
+        int layerMask = 0;
+
+        foreach (string layerName in layerNamesToIgnore)
+        {
+            int layer = LayerMask.NameToLayer(layerName);
+            layerMask |= 1 << layer;
+        }
+
+        return ~layerMask;
     }
 }

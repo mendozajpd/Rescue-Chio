@@ -11,8 +11,6 @@ public class AstralDeathRaySpell : Spell
     [SerializeField] private float currentCharge;
     [SerializeField] private float maxCharge = 100;
     [SerializeField] private float chargeSpeed = 1;
-    [SerializeField] private float laserDistance = 10;
-    [SerializeField] private float laserRotationSpeed = 30;
     private float defaultCharge = 0;
 
     [Header("Laser Variables")]
@@ -20,6 +18,8 @@ public class AstralDeathRaySpell : Spell
     private AstralDeathRayBehavior _laser;
     private ParticleSystem _exhaust;
     [SerializeField] private float laserSize;
+    [SerializeField] private float laserDistance = 10;
+    [SerializeField] private float laserRotationSpeed = 30;
     //private Vector3 _startPoint;
     //private Vector3 _endPoint;
 
@@ -54,6 +54,34 @@ public class AstralDeathRaySpell : Spell
 
     }
 
+    public float LaserSize 
+    { 
+        get => laserSize; 
+        set
+        {
+            laserSize = value;
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, LaserSize);
+        } 
+    
+    }
+    public float LaserDistance 
+    { 
+        get => laserDistance;
+        set
+        {
+            laserDistance = value;
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, LaserSize);
+        }
+    }
+    public float LaserRotationSpeed 
+    { 
+        get => laserRotationSpeed;
+        set
+        {
+            laserRotationSpeed = value;
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, LaserSize);
+        }
+    }
 
     private void SetChargeAmount(float charge, float maxcharge)
     {
@@ -105,15 +133,13 @@ public class AstralDeathRaySpell : Spell
 
     void Start()
     {
-
+        _setLaserSettings();
     }
 
     void Update()
     {
         _chargeHandler();
-        _setLaserSettings();
         _lightTimeHandler();
-
     }
 
     #region Laser Settings/Laser Spawn
@@ -121,7 +147,7 @@ public class AstralDeathRaySpell : Spell
     {
         //_startPoint = transform.position;
         //_endPoint = wand.MouseWorldPosition;
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(laserDistance, laserRotationSpeed, laserSize);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, LaserSize);
     }
     private void _spawnLaser()
     {
@@ -166,7 +192,7 @@ public class AstralDeathRaySpell : Spell
 
     private void _activateLaser()
     {
-        _laser?.ActivateLaser(laserSize);
+        _laser?.ActivateLaser(LaserSize);
     }
 
     private void _deactivateLaser()
