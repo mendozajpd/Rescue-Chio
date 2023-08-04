@@ -29,7 +29,6 @@ public class SpellChargeHandler : MonoBehaviour
         set
         {
             _spells = value;
-            _giveSpellChargeHandlerToSpells();
         }
     }
 
@@ -67,7 +66,6 @@ public class SpellChargeHandler : MonoBehaviour
     }
     void Start()
     {
-        _giveSpellChargeHandlerToSpells();
     }
 
     void Update()
@@ -75,13 +73,6 @@ public class SpellChargeHandler : MonoBehaviour
         
     }
 
-    private void _giveSpellChargeHandlerToSpells()
-    {
-        for (int i = 0; i < _spells.Count; i++)
-        {
-            _spells[_spells.Count - 1].SetSpellChargeHandler(this);
-        }
-    }
 
     public void EnableSpellCharge()
     {
@@ -92,7 +83,6 @@ public class SpellChargeHandler : MonoBehaviour
     public void DisableSpellCharge()
     {
         _emission.rateOverTime = 0;
-        //gameObject.SetActive(false);
     }
 
     private void _resetSpellCharge(InputAction.CallbackContext context)

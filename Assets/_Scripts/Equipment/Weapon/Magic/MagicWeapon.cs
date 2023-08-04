@@ -318,15 +318,31 @@ public class MagicWeapon : Weapon
 
     public void SetWandActions()
     {
-        Spell currentSpell = Spells[currentSpellIndex];
-        _canSwingWeapon = currentSpell.CanSwing;
-        angleOfTheWeapon = currentSpell.WeaponAngle;
-        _canRotateWeapon = currentSpell.CanRotate;
+        if (currentSpellIndex > 0)
+        {
 
-        // Resets swing
-        _swing = IsLookingLeft ? -1 : 1;
-        // Can also set wand position
+            Spell currentSpell = Spells[currentSpellIndex];
+            _canSwingWeapon = currentSpell.CanSwing;
+            angleOfTheWeapon = currentSpell.WeaponAngle;
+            _canRotateWeapon = currentSpell.CanRotate;
 
+            // Resets swing
+            _swing = IsLookingLeft ? -1 : 1;
+            // Can also set wand position
+        }
+        else
+        {
+            _setDefaultWandActions();
+        }
+
+    }
+
+    private void _setDefaultWandActions()
+    {
+        currentSpellIndex = 0;
+        _canSwingWeapon = true;
+        angleOfTheWeapon = 90;
+        _canRotateWeapon = true;
     }
 
     private void _cycleThroughSpells(InputAction.CallbackContext context)

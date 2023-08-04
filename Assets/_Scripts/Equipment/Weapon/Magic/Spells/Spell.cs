@@ -43,6 +43,7 @@ public abstract class Spell : MonoBehaviour
         Charging = playerControls.Player.HoldFire;
         Charging.Enable();
         wand.SpellCharge.Spells.Add(spell);
+        SetSpellChargeHandler(wand.SpellCharge);
     }
 
     public void DisableChargingInputActions(Spell spell)

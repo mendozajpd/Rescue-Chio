@@ -41,7 +41,7 @@ public class ShootingScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pool.Clear();
+        _pool?.Clear();
     }
 
     private void Awake()

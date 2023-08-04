@@ -20,8 +20,6 @@ public class AstralDeathRaySpell : Spell
     [SerializeField] private float laserSize;
     [SerializeField] private float laserDistance = 10;
     [SerializeField] private float laserRotationSpeed = 30;
-    //private Vector3 _startPoint;
-    //private Vector3 _endPoint;
 
     [Header("Light Variables")]
     private Light2D light2D;
@@ -102,6 +100,7 @@ public class AstralDeathRaySpell : Spell
     private void OnDestroy()
     {
         DisableChargingInputActions(this);
+        Destroy(_laser.gameObject);
     }
 
     #region SubscribeFunctions
