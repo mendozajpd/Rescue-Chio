@@ -8,7 +8,7 @@ public class Health : Gauge, IDamageable, IHealable
     public event DeathHandler hasDied;
 
     private HealthBar _healthBarPrefab;
-
+    private Attack _causeOfDeath;
     private void Awake()
     {
         _spawnHealthBar();
@@ -19,6 +19,7 @@ public class Health : Gauge, IDamageable, IHealable
         if (CurrentValue - damageAmount <= 0)
         {
             hasDied?.Invoke();
+            _causeOfDeath.OnEnemyDeath(this);
             Destroy(gameObject);
             return;
         }
@@ -42,5 +43,10 @@ public class Health : Gauge, IDamageable, IHealable
         _healthBarPrefab = Resources.Load<HealthBar>("Gauge/HealthBarCanvasPrefab");
         var healthBar = Instantiate(_healthBarPrefab, transform);
         healthBar.AssignHealthGauge(this);
+    }
+
+    public void GetCauseOfDeath(Attack attack)
+    {
+        _causeOfDeath = attack;
     }
 }

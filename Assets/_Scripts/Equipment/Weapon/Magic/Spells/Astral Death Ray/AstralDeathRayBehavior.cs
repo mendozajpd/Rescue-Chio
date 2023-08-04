@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(EdgeCollider2D))]
-public class AstralDeathRayBehavior : MonoBehaviour
+public class AstralDeathRayBehavior : Attack
 {
     private LineRenderer _laser;
     private AstralDeathRaySpell _spell;
@@ -114,8 +114,9 @@ public class AstralDeathRayBehavior : MonoBehaviour
         if (Enemy != null)
         {
             var health = Enemy.GetComponent<Health>();
+            health.GetCauseOfDeath(this);
             // For balancing purposes, it would be great for the laser to only deal 1-5 damage, 5 being already OP
-            health?.Damage(5);
+            health?.Damage(1);
         }
     }
 
@@ -213,6 +214,12 @@ public class AstralDeathRayBehavior : MonoBehaviour
     public void _setSpell(AstralDeathRaySpell spell)
     {
         _spell = spell;
+    }
+
+    public override void OnEnemyDeath(Health health)
+    {
+        Debug.Log(health + " has died by laser.");
+        // play special laser death
     }
 
 
