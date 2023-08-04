@@ -8,18 +8,19 @@ public class Health : Gauge, IDamageable, IHealable
     public event DeathHandler hasDied;
 
     private HealthBar _healthBarPrefab;
-    private Attack _causeOfDeath;
+
     private void Awake()
     {
         _spawnHealthBar();
     }
 
-    public void Damage(float damageAmount)
+    // Can be used to inflict debuff if there is
+    public void Damage(float damageAmount, Attack attack)
     {
         if (CurrentValue - damageAmount <= 0)
         {
             hasDied?.Invoke();
-            _causeOfDeath.OnEnemyDeath(this);
+            attack.OnEnemyDeath(this);
             Destroy(gameObject);
             return;
         }
@@ -45,8 +46,4 @@ public class Health : Gauge, IDamageable, IHealable
         healthBar.AssignHealthGauge(this);
     }
 
-    public void GetCauseOfDeath(Attack attack)
-    {
-        _causeOfDeath = attack;
-    }
 }

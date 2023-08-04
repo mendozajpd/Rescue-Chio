@@ -114,9 +114,8 @@ public class AstralDeathRayBehavior : Attack
         if (Enemy != null)
         {
             var health = Enemy.GetComponent<Health>();
-            health.GetCauseOfDeath(this);
             // For balancing purposes, it would be great for the laser to only deal 1-5 damage, 5 being already OP
-            health?.Damage(1);
+            health?.Damage(1, this);
         }
     }
 
@@ -221,6 +220,9 @@ public class AstralDeathRayBehavior : Attack
         Debug.Log(health + " has died by laser.");
         // play special laser death
     }
+
+    // INFLICT DEBUFF
+    // public void Inflict Debuff
 
 
 
