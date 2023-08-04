@@ -34,7 +34,6 @@ public class AstralDeathRayBehavior : MonoBehaviour
             _laserDistance = value;
             Vector3 newPos = new Vector3(0, _laserDistance);
             LaserTip.SetLaserTipPosition(newPos, LaserTip);
-            Debug.Log("new position set");
         }
     }
 
@@ -114,7 +113,9 @@ public class AstralDeathRayBehavior : MonoBehaviour
 
         if (Enemy != null)
         {
-            Debug.Log("Damaged " + Enemy.name);
+            var health = Enemy.GetComponent<Health>();
+            // For balancing purposes, it would be great for the laser to only deal 1-5 damage, 5 being already OP
+            health?.Damage(5);
         }
     }
 
