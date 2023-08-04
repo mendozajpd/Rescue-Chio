@@ -318,9 +318,8 @@ public class MagicWeapon : Weapon
 
     public void SetWandActions()
     {
-        if (currentSpellIndex > 0)
+        if (Spells.Count > 0)
         {
-
             Spell currentSpell = Spells[currentSpellIndex];
             _canSwingWeapon = currentSpell.CanSwing;
             angleOfTheWeapon = currentSpell.WeaponAngle;

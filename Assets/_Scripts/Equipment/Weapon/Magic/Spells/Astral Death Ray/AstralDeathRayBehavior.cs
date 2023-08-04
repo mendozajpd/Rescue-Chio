@@ -59,6 +59,7 @@ public class AstralDeathRayBehavior : MonoBehaviour
 
     void Start()
     {
+        DeactivateLaser();
     }
 
     void Update()

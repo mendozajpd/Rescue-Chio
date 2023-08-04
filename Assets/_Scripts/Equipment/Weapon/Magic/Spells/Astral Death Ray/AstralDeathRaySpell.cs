@@ -89,6 +89,8 @@ public class AstralDeathRaySpell : Spell
     private void OnEnable()
     {
         _SubscribeFunctionsToCharge();
+        _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, LaserSize);
+        
     }
 
     private void OnDisable()
