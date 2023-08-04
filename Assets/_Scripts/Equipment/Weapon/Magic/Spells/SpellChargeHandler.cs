@@ -6,14 +6,12 @@ using UnityEngine.InputSystem;
 public class SpellChargeHandler : MonoBehaviour
 {
     private MagicWeapon _wand; 
-
-    // get particle
     private ParticleSystem _particles;
     private ParticleSystem.EmissionModule _emission;
+    private SpellChargeGlowHandler _spellChargeGlow;
 
     private List<Spell> _spells = new List<Spell>();
 
-    // divide the current charge to the max charge and put it inside the charge below
     [Header("Charge Variables")]
     [SerializeField] private float amountToStopCharge = 0.5f;
     [SerializeField] private float currentCharge;
@@ -23,12 +21,16 @@ public class SpellChargeHandler : MonoBehaviour
     private PlayerInputActions _playerControls;
     private InputAction _special;
 
+
+
+
     public List<Spell> Spells 
     { 
         get => _spells; 
         set
         {
             _spells = value;
+            // do something when spells are updated
         }
     }
 
@@ -48,6 +50,12 @@ public class SpellChargeHandler : MonoBehaviour
         set
         {
             currentCharge = value;
+            if (currentCharge == 0) _spellChargeGlow.DisableChargeGlow();
+            if (currentCharge > 0)
+            {
+                _spellChargeGlow.EnableChargeGlow(currentCharge);
+            }
+
             if (currentCharge < amountToStopCharge)
             {
                 _emission.rateOverTime = currentCharge * chargeParticlesMultiplier;
@@ -63,6 +71,7 @@ public class SpellChargeHandler : MonoBehaviour
         _particles = GetComponent<ParticleSystem>();
         _emission = _particles.emission;
         _wand = GetComponentInParent<MagicWeapon>();
+        _spellChargeGlow = GetComponentInChildren<SpellChargeGlowHandler>();
     }
     void Start()
     {
@@ -98,5 +107,6 @@ public class SpellChargeHandler : MonoBehaviour
         _special.Enable(); 
         _special.performed += _resetSpellCharge;
     }
+
 
 }

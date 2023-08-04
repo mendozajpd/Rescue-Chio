@@ -32,7 +32,7 @@ public class AstralDeathRayBehavior : MonoBehaviour
         set
         {
             _laserDistance = value;
-            Vector3 newPos = new Vector3(transform.position.x, _laserDistance);
+            Vector3 newPos = new Vector3(0, _laserDistance);
             LaserTip.SetLaserTipPosition(newPos, LaserTip);
             Debug.Log("new position set");
         }
@@ -126,6 +126,7 @@ public class AstralDeathRayBehavior : MonoBehaviour
     {
         _laser.startWidth = width;
         _laser.endWidth = width;
+        _laserHitbox.enabled = true;
 
         foreach (AstralDeathRayParticles particle in _particles)
         {
@@ -137,6 +138,7 @@ public class AstralDeathRayBehavior : MonoBehaviour
     {
         _laser.startWidth = 0;
         _laser.endWidth = 0;
+        _laserHitbox.enabled = false;
 
         foreach (AstralDeathRayParticles particle in _particles)
         {

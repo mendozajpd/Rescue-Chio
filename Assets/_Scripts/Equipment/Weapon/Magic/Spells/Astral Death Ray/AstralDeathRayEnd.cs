@@ -14,6 +14,6 @@ public class AstralDeathRayEnd : MonoBehaviour
 
     public void SetLaserTipPosition(Vector3 laserTipPos, AstralDeathRayEnd laserTip)
     {
-        laserTip.transform.position = laserTipPos;
+        laserTip.transform.localPosition = laserTipPos;
     }
 }
