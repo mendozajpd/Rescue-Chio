@@ -24,6 +24,11 @@ public abstract class Gauge : MonoBehaviour
     public System.Action valueChanged;
     public float RatioValue => currentValue / maxValue;
 
+    public void SetMaxHealth(float maxHealth)
+    {
+        maxValue = maxHealth;
+    }
+
 
 
 }

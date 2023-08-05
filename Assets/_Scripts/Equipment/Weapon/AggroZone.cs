@@ -25,7 +25,7 @@ public class AggroZone : MonoBehaviour
             if (enemy != null)
             {
                 target = enemy;
-                aggroTrigger.Invoke();
+                aggroTrigger?.Invoke();
             }
         }        
 

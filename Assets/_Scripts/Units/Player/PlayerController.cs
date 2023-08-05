@@ -22,8 +22,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 _mousePos;
     private Vector2 _mouseDir;
 
-    // Movespeed related
+    [Header("Move Speed Variables")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float defaultMoveSpeed = 5;
     // Direction
     private Vector2 moveDirection;
 
@@ -54,13 +55,9 @@ public class PlayerController : MonoBehaviour
     public Action hasDashed;
     public Action hasStoppedDashing;
 
-    // Changes DashStats Whenever it is changed
 
     // Dash Animation Variables - SCALE PLAYER
     private float _currentValue;
-
-    // Dash Particle System Variables
-
 
     // Audio
     [SerializeField] private AudioSource audioSource;
@@ -78,6 +75,7 @@ public class PlayerController : MonoBehaviour
         //afterimages = PS_afterimages.emission;
 
         if (dashStats != null) _setDashStats(dashStats);
+        moveSpeed = defaultMoveSpeed;
     }
     void Start()
     {
@@ -103,13 +101,17 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = move.ReadValue<Vector2>();
 
+
         if (moveDirection.magnitude > 0)
         {
+            anim.speed = moveSpeed <= defaultMoveSpeed ? moveSpeed/ defaultMoveSpeed : moveSpeed * (defaultMoveSpeed/moveSpeed) / defaultMoveSpeed;
             anim.SetBool("isRunning", true);
         }
         else
         {
+            anim.speed = moveSpeed / moveSpeed;
             anim.SetBool("isRunning", false);
+            
         }
     }
 

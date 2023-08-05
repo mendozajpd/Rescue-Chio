@@ -10341,6 +10341,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  HoldFire:
+    m_Name: Hold Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9a1e8ee3-8c48-4ef8-bfa7-f7ef596e3e7a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   Sprite: {fileID: 1780311147204230706}
   Anim: {fileID: 1780311147204230705}
   weaponAngle: 90

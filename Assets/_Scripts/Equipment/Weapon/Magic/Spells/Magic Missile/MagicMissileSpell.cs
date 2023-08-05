@@ -45,6 +45,8 @@ public class MagicMissileSpell : Spell
     {
         _pool?.Clear();
     }
+
+
     private void Awake()
     {
         _magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
