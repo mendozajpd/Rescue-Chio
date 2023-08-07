@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerDefaultStats
   m_EditorClassIdentifier: 
   UnitName: Player
-  UsesMana: 0
+  DebugOn: 1
   DefaultMaxHealth: 100
   DefaultMaxMana: 0
   DefaultAggro: 0

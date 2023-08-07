@@ -5,7 +5,7 @@ using UnityEngine;
 public class AggroZone : MonoBehaviour
 {
     public System.Action aggroTrigger;
-    public Enemy target;
+    public EnemyManager target;
     
     [Header("AggroZone Settings")]
     [SerializeField] private bool triggerStay;
@@ -20,7 +20,7 @@ public class AggroZone : MonoBehaviour
         // For single targets
         if (!triggerStay)
         {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
+            EnemyManager enemy = collider.gameObject.GetComponent<EnemyManager>();
 
             if (enemy != null)
             {
@@ -36,7 +36,7 @@ public class AggroZone : MonoBehaviour
     {
         if (triggerStay)
         {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
+            EnemyManager enemy = collider.gameObject.GetComponent<EnemyManager>();
 
             if (enemy != null)
             {

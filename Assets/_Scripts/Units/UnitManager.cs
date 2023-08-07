@@ -8,22 +8,40 @@ public abstract class UnitManager : MonoBehaviour
     public Health UnitHealth;
 
     // Mana
-    public bool UsesMana;
     public Mana UnitMana;
+    // UNIT WILL GET A MANA SCRIPT, BUT MANA WILL ONLY APPEAR IF THE MANA IS MORE THAN 0
 
     // Status Effects
     public StatusEffectsManager UnitStatusEffects;
 
+    // Stats
+    public StatsManager UnitStats;
 
-    public void SpawnRequiredComponents(bool usesMana)
+    public DefaultStatsSO UnitDefaultStats;
+
+
+
+    public void GetRequiredComponents()
     {
         UnitHealth = GetComponent<Health>();
         UnitStatusEffects = GetComponent<StatusEffectsManager>();
-        if (usesMana) UnitMana = gameObject.AddComponent<Mana>();
+        UnitStats = GetComponent<StatsManager>();
+        UnitMana = GetComponent<Mana>();
     }
 
-    public void DestroyRequiredComponents()
+    public void SetDefaultStats(string location)
     {
+        UnitDefaultStats = Resources.Load<DefaultStatsSO>(location);
 
+        if (UnitDefaultStats != null)
+        {
+            UnitStats.SetDefaultStats(UnitDefaultStats);
+            UnitHealth.SetMaxValue(UnitDefaultStats);
+
+            if(UnitDefaultStats.DebugOn) Debug.Log(gameObject.name + ": " + UnitDefaultStats.name + " : Default Stats Set!");
+        } else
+        {
+            Debug.Log("Default Stats for " + gameObject.name + " not found!");
+        }
     }
 }

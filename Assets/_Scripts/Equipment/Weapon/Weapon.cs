@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public abstract class Weapon : MonoBehaviour
 {
-
     // Common Weapon Variables
+    protected float TotalDamage;
     public float BaseDamage;
     public float UseTime;
 
@@ -20,6 +20,8 @@ public abstract class Weapon : MonoBehaviour
     public SpriteRenderer Sprite;
     public Animator Anim;
 
+    // Equipment
+    protected PlayerEquipment equipment;
 
     public void UseTimer()
     {
@@ -29,7 +31,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    public void SetInputVariables()
+    protected void SetInputVariables()
     {
         playerControls = new PlayerInputActions();
         Fire = playerControls.Player.Fire;
@@ -37,12 +39,16 @@ public abstract class Weapon : MonoBehaviour
         HoldFire = playerControls.Player.HoldFire;
     }
 
-    public void SetSpriteVariables()
+    protected void SetSpriteVariables()
     {
         Sprite = GetComponentInChildren<SpriteRenderer>();
         Anim = GetComponentInChildren<Animator>();
     }
 
 
+    protected void SetTotalWeaponDamage(PlayerEquipment equipment)
+    {
+        TotalDamage = equipment.playerStats.CalculateTotalDamage(BaseDamage);
+    }
 
 }

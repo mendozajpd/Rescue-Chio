@@ -63,7 +63,7 @@ public class MeleeWeapon : Weapon
     private void Awake()
     {
         // Player Variables
-        _rb = GetComponentInParent<Equipment>().player.GetComponent<Rigidbody2D>();
+        _rb = GetComponentInParent<PlayerEquipment>().player.GetComponent<Rigidbody2D>();
 
         // Weapon Variables
         _anchor = gameObject.transform.gameObject;

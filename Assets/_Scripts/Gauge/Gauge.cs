@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Gauge : MonoBehaviour
 {
-    [SerializeField] private float maxValue;
-    [SerializeField] private float currentValue;
+    [SerializeField] protected float maxValue;
+    [SerializeField] protected float currentValue;
 
     private void Start() => CurrentValue = MaxValue;
 
@@ -24,9 +24,9 @@ public abstract class Gauge : MonoBehaviour
     public System.Action valueChanged;
     public float RatioValue => currentValue / maxValue;
 
-    public void SetMaxHealth(float maxHealth)
+    public void SetMaxValue(DefaultStatsSO defaultStats)
     {
-        maxValue = maxHealth;
+        maxValue = defaultStats.DefaultMaxHealth;
     }
 
 

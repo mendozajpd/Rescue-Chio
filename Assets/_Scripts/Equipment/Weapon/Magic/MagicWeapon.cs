@@ -11,7 +11,7 @@ public class MagicWeapon : Weapon
     public SpellChargeHandler SpellCharge;
     public Vector3 PlayerPos;
 
-    // Casts
+    [Header("Casts")]
     [SerializeField] private int numberOfCasts;
 
     // Weapon Rotation Variables
@@ -21,7 +21,7 @@ public class MagicWeapon : Weapon
     private Vector2 _mousePos;
     private float _angle;
 
-    // Swing Variables
+    [Header("Swing Variables")]
     [SerializeField] private float angleOfTheWeapon;
     private float _swingAngle;
     private float _swing = 1;
@@ -30,17 +30,15 @@ public class MagicWeapon : Weapon
 
     // Weapon Sprite Flip Functions
     public bool IsLookingLeft;
-
     // Mouse Position Variables
     public Vector2 MouseWorldPosition;
 
     [SerializeField] private int currentSpellIndex = 0;
 
-    // Wand Mechanics
+    [Header("Wand Mechanics")]
     private bool _canSwingWeapon = false;
     [SerializeField] private bool _canRotateWeapon;
-    // Can Swing
-    // Is Point
+
 
     public System.Action castTrigger;
 
@@ -98,6 +96,7 @@ public class MagicWeapon : Weapon
     private void Awake()
     {
         _anchor = gameObject;
+        equipment = GetComponentInParent<PlayerEquipment>(); // This gets 
 
         // Spell Handler
         spellHandler = GetComponentInChildren<SpellHandler>();
@@ -106,6 +105,8 @@ public class MagicWeapon : Weapon
 
         SetInputVariables();
         SetSpriteVariables();
+
+        SetTotalWeaponDamage(equipment);
     }
 
     void Start()
@@ -153,6 +154,7 @@ public class MagicWeapon : Weapon
         SetWandActions();
         _enableCurrentSpell();
         Debug.Log("Updated current spells!");
+
     }
 
     private void _enableCurrentSpell()
@@ -166,8 +168,16 @@ public class MagicWeapon : Weapon
             else
             {
                 Spells[i].gameObject.SetActive(true);
+                SetSpellDamage(i);
             }
         }
+    }
+
+    private void SetSpellDamage(int i)
+    {
+        BaseDamage = Spells[i].SpellDamage;
+        SetTotalWeaponDamage(equipment);
+        Spells[i].TotalSpellDamage = TotalDamage;
     }
 
     private void _castSpell()

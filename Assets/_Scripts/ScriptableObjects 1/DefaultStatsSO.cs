@@ -5,7 +5,7 @@ public class DefaultStatsSO : ScriptableObject
 {
     [Header("General Variables")]
     public string UnitName;
-    public bool UsesMana;
+    public bool DebugOn;
 
     [Header("Unit Default Stats")]
     public float DefaultMaxHealth;

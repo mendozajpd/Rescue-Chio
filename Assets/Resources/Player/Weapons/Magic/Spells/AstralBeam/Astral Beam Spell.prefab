@@ -45,11 +45,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpellName: Astral Beam
+  SpellDamage: 0
   spellHandler: {fileID: 0}
+  spellCharge: {fileID: 0}
   wand: {fileID: 0}
   CanSwing: 0
   WeaponAngle: 0
-  isChargeable: 0
+  CanRotate: 0
+  Charging:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  defaultSpellDamage: 8
   isExplosive: 1
   laserSize: 0.1
   defaultExplosiveLaserDurationLength: 0.1
@@ -58,4 +70,4 @@ MonoBehaviour:
   laserCooldownLength: 0.5
   canSwing: 0
   wandAngle: 0
-  chargeable: 1
+  canRotate: 1

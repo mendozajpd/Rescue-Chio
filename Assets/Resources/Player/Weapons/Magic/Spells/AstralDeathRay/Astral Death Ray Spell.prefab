@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1c58840a6ba774c8e9d2054c12e6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpellName: 
+  SpellName: Astral Death Ray
+  SpellDamage: 0.5
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
@@ -62,6 +63,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  defaultSpellDamage: 0.5
   isCharging: 0
   currentCharge: 0
   maxCharge: 100

@@ -11,6 +11,7 @@ public class MagicMissileSpell : Spell
 
 
     [Header("Spell Settings")]
+    [SerializeField] private float defaultSpellDamage;
     [SerializeField] private float missileTravelSpeed = 30;
     [SerializeField] private float heightDividend = 8;
 
@@ -50,7 +51,7 @@ public class MagicMissileSpell : Spell
     private void Awake()
     {
         _magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
-        SetSpellVariables();
+        SetSpellVariables(defaultSpellDamage);
         _missileSpawnLocation = spellHandler;
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
     }

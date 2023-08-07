@@ -36,7 +36,7 @@ public class MagicMissileBehavior : MonoBehaviour
     private float _missileSpeedDecreaseOvertime;
     private float _missileRotateSpeedIncreaseOvertime;
     private AggroZone _aggro;
-    private Enemy _target;
+    private EnemyManager _target;
     private Rigidbody2D _rb;
     private bool _enemyDetected;
     private Vector2 _targetDirection;

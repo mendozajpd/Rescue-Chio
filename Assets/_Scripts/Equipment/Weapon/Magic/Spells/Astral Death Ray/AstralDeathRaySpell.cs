@@ -6,6 +6,9 @@ using UnityEngine.Rendering.Universal;
 
 public class AstralDeathRaySpell : Spell
 {
+    [Header("Spell Settings")]
+    [SerializeField] private float defaultSpellDamage = 0.5f;
+
     [Header("Charging Settings/Variables")]
     [SerializeField] private bool isCharging;
     [SerializeField] private float currentCharge;
@@ -81,6 +84,7 @@ public class AstralDeathRaySpell : Spell
         }
     }
 
+
     private void SetChargeAmount(float charge, float maxcharge)
     {
         spellCharge.CurrentCharge = charge / maxcharge;
@@ -121,13 +125,12 @@ public class AstralDeathRaySpell : Spell
 
     private void Awake()
     {
-        SetSpellVariables();
+        SetSpellVariables(defaultSpellDamage);
         SetChargingInputActions(this);
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _spawnLaser();
         _exhaust = GetComponentInChildren<ParticleSystem>();
         light2D = GetComponent<Light2D>();
-        
     }
 
 
@@ -146,8 +149,6 @@ public class AstralDeathRaySpell : Spell
     #region Laser Settings/Laser Spawn
     private void _setLaserSettings()
     {
-        //_startPoint = transform.position;
-        //_endPoint = wand.MouseWorldPosition;
         if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, LaserSize);
     }
     private void _spawnLaser()

@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class AstralDeathRayBehavior : Attack
 {
     private LineRenderer _laser;
-    private AstralDeathRaySpell _spell;
+    private AstralDeathRaySpell _spell; // has base damage
 
     private Rigidbody2D _rb;
     private float _rotationSpeed;
@@ -109,13 +109,13 @@ public class AstralDeathRayBehavior : Attack
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        var Enemy = collision.GetComponent<Enemy>();
+        var Enemy = collision.GetComponent<EnemyManager>();
 
         if (Enemy != null)
         {
             var health = Enemy.GetComponent<Health>();
             // For balancing purposes, it would be great for the laser to only deal 1-5 damage, 5 being already OP
-            health?.Damage(1, this);
+            health?.Damage(Enemy.UnitStats.CalculateDamageReceivedByEnemyWithDefense(_spell.TotalSpellDamage), this);
         }
     }
 

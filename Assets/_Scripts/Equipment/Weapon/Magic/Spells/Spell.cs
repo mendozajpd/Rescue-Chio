@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public abstract class Spell : MonoBehaviour
 {
     public string SpellName;
+    public float SpellDamage;
+    public float TotalSpellDamage;
     public SpellHandler spellHandler;
     public SpellChargeHandler spellCharge;
     public MagicWeapon wand;
@@ -24,8 +26,9 @@ public abstract class Spell : MonoBehaviour
 
     }
 
-    public void SetSpellVariables()
+    public void SetSpellVariables(float defaultSpellDamage)
     {
+        SpellDamage = defaultSpellDamage;
         spellHandler = GetComponentInParent<SpellHandler>();
         wand = spellHandler.Wand;
     }

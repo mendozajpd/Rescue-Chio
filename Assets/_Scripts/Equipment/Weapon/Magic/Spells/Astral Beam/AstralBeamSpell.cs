@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AstralBeamSpell : Spell
 {
+    [Header("Spell Settings")]
+    [SerializeField] private float defaultSpellDamage;
+
     private AstralBeamBehavior _laser;
     private Vector3 _laserStartPosition;
     private Vector3 _laserEndPosition;
@@ -27,7 +30,7 @@ public class AstralBeamSpell : Spell
 
     private void Awake()
     {
-        SetSpellVariables();
+        SetSpellVariables(defaultSpellDamage);
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _laser = Resources.Load<AstralBeamBehavior>("Player/Weapons/Magic/Spells/AstralBeam/AstralBeamPrefab");
     }

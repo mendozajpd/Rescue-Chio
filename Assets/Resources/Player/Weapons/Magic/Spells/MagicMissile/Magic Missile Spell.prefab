@@ -45,12 +45,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpellName: Magic Missile
+  SpellDamage: 0
   spellHandler: {fileID: 0}
+  spellCharge: {fileID: 0}
   wand: {fileID: 0}
   CanSwing: 1
-  magicMissile: {fileID: 0}
-  missileSpawnLocation: {fileID: 0}
-  isOverhand: 0
+  WeaponAngle: 0
+  CanRotate: 0
+  Charging:
+    m_Name: Charging
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a04c6c44-715d-4834-94cb-7c36c08d51f5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  defaultSpellDamage: 5
   missileTravelSpeed: 30
   heightDividend: 8
   offsetX: 1
@@ -63,3 +74,5 @@ MonoBehaviour:
   lightIntensityOnDeath: 10
   usePool: 1
   canSwing: 1
+  wandAngle: 90
+  canRotate: 1
