@@ -114,8 +114,9 @@ public class AstralDeathRayBehavior : Attack
         if (Enemy != null)
         {
             var health = Enemy.GetComponent<Health>();
-            // For balancing purposes, it would be great for the laser to only deal 1-5 damage, 5 being already OP
-            health?.Damage(Enemy.UnitStats.CalculateDamageReceivedByEnemyWithDefense(_spell.TotalSpellDamage), this);
+            var playerStats = _spell.wand.equipment.playerStats;
+            bool isCrit = playerStats.isCriticalStrike();
+            health?.Damage(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), this);
         }
     }
 

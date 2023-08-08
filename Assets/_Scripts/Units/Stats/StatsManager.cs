@@ -5,16 +5,16 @@ using UnityEngine;
 public class StatsManager : MonoBehaviour
 {
     // DEFAULT STATS
-    [SerializeField] private float _defaultMaxHealth;
-    [SerializeField] private float _defaultMaxMana;
-    [SerializeField] private float _defaultAggro;
-    [SerializeField] private float _defaultAttackSpeed;
-    [SerializeField] private float _defaultCritHitChance;
-    [SerializeField] private float _defaultBaseDamage; // idk about this, change in the future maybe
-    [SerializeField] private float _defaultDefense;
-    [SerializeField] private float _defaultHealthRegen; // idk about this too, i just placed it here just in case
-    [SerializeField] private float _defaultKnockback;
-    [SerializeField] private float _defaultMoveSpeed;
+    private float _defaultMaxHealth;
+    private float _defaultMaxMana;
+    private float _defaultAggro;
+    private float _defaultAttackSpeed;
+    private float _defaultCritHitChance;
+    private float _defaultBaseDamage; // idk about this, change in the future maybe
+    private float _defaultDefense;
+    private float _defaultHealthRegen; // idk about this too, i just placed it here just in case
+    private float _defaultKnockback;
+    private float _defaultMoveSpeed;
 
     // BONUS STATS
     private float _bonusMaxHealth;
@@ -28,6 +28,7 @@ public class StatsManager : MonoBehaviour
     private float _bonusKnockback;
     private float _bonusCurrentMoveSpeed;
 
+    // TOTAL STATS
     private float _totalMaxHealth;
     private float _totalMaxMana;
     private float _totalAggro;
@@ -159,11 +160,10 @@ public class StatsManager : MonoBehaviour
     }
 
 
-    //[Header("Attack Speed Variables")]
 
     void Start()
     {
-        
+        StartCoroutine(calculateTotalStats(0.3f));
     }
 
     void Update()
@@ -175,6 +175,24 @@ public class StatsManager : MonoBehaviour
     {
 
     }
+
+    #region Max Health Calculator
+
+    public void CalculateTotalMaxHealth()
+    {
+        TotalMaxHealth = DefaultMaxHealth + BonusMaxHealth;
+    }
+
+    #endregion
+
+    #region Max Mana Calculator
+
+    public void CalculateTotalMaxMana()
+    {
+        TotalMaxMana = DefaultMaxMana + BonusMaxMana;
+    }
+
+    #endregion
 
     #region Aggro Calculator
     // The more aggro a player has the more likely it will be targeted by the enemy
@@ -199,6 +217,18 @@ public class StatsManager : MonoBehaviour
     // critical hit is always damage * 2
     // default critical hit chance = 4%
 
+    public void CalculateTotalCritChance()
+    {
+        TotalCritHitChance = DefaultCritHitChance + BonusCritHitChance;
+    }
+
+    public bool isCriticalStrike()
+    {
+        int critRNG = Random.Range(1, 100);
+        //Debug.Log("CritRNG :" + critRNG + "/ 100");
+        //Debug.Log("CritRNG IS:" + (critRNG < TotalCritHitChance ? true : false));
+        return critRNG < TotalCritHitChance ? true : false;
+    }
 
 
     #endregion
@@ -217,9 +247,9 @@ public class StatsManager : MonoBehaviour
 
     public float CalculateTotalDamage(float baseDamage) 
     {
-        Debug.Log("base damage is: " + baseDamage);
+        //Debug.Log("base damage is: " + baseDamage);
         TotalDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
-        Debug.Log("total damage is: " + TotalDamage);
+        //Debug.Log("total damage is: " + TotalDamage);
         return TotalDamage;
     }
     // must be calculated first
@@ -233,6 +263,18 @@ public class StatsManager : MonoBehaviour
     // Round down 
 
     // CREATE A DIFFERENT TOTAL DAMAGE CALCULATOR FOR ENEMY
+
+    // FOR THE PLAYER
+    public float CalculateFinalDamageToEnemy(float damage, bool isCrit)
+    {
+        float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTotalDamage(damage));
+        netDmg = Mathf.Round(Random.Range(-0.15f, 0.15f) * netDmg);
+        netDmg = netDmg <= 0 ? 1 : netDmg;
+        Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
+        return isCrit ? netDmg * 2 : netDmg;
+    }
+
+    // FOR THE ENEMY
 
     #endregion
 
@@ -252,15 +294,15 @@ public class StatsManager : MonoBehaviour
     {
         // var netDmg = (atkDamage - TotalDefense * factor); // ONLY IF I AM ADDING DIFFICULTY
         float netDmg = (atkDamage - TotalDefense * 0.5f); // 0.5f is the easiest 
-        return Mathf.Round(netDmg);
+        return netDmg < 0 ? 1 : Mathf.Round(netDmg);
     }
 
     // for enemies
     public float CalculateDamageReceivedByEnemyWithDefense(float atkDamage)
     {
         float netDmg = (atkDamage - TotalDefense * 0.5f);
-        Debug.Log(gameObject.name + " has received " + netDmg);
-        return Mathf.Round(netDmg);
+        //Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
+        return netDmg < 0 ? 1 : Mathf.Round(netDmg);
     }
 
     #endregion
@@ -304,9 +346,20 @@ public class StatsManager : MonoBehaviour
 
     public void CalculateTotalStats()
     {
+        CalculateTotalMaxHealth();
+        CalculateTotalMaxMana();
         CalculateTotalAttackSpeed();
         //CalculateTotalDamage(); // currently cannot be called without a parameter
         CalculateTotalDefense();
+        CalculateTotalCritChance();
+    }    
+    // TEMPORARY
+    IEnumerator calculateTotalStats(float numOfSeconds)
+    {
+        yield return new WaitForSeconds(numOfSeconds);
+        CalculateTotalStats();
+
+        StartCoroutine(calculateTotalStats(numOfSeconds));
     }
 
     // Reset

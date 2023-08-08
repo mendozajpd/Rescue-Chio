@@ -20,7 +20,7 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultCritHitChance: 0
   DefaultBaseDamage: 0
-  DefaultDefense: 0
+  DefaultDefense: 5
   DefaultHealthRegen: 0
   DefaultKnockback: 0
   DefaultMoveSpeed: 5

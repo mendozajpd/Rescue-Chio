@@ -21,7 +21,7 @@ public abstract class Weapon : MonoBehaviour
     public Animator Anim;
 
     // Equipment
-    protected PlayerEquipment equipment;
+    public PlayerEquipment equipment;
 
     public void UseTimer()
     {
