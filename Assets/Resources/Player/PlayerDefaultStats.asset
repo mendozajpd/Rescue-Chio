@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitName: Player
   DebugOn: 1
-  DefaultMaxHealth: 100
+  DefaultMaxHealth: 3000
   DefaultMaxMana: 0
   DefaultAggro: 0
   DefaultAttackSpeed: 0
-  DefaultCritHitChance: 0
+  DefaultCritHitChance: 50
   DefaultBaseDamage: 0
   DefaultDefense: 5
   DefaultHealthRegen: 0

@@ -238,10 +238,6 @@ public class StatsManager : MonoBehaviour
     // Calculate Total Damage
     // Give back total damage to weapon
     // Weapon will calculate how much damage it will output
-    //private float GetBaseDamage(Weapon weapon)
-    //{
-    //    return weapon.BaseDamage;
-    //}
 
     // TOTAL DAMAGE OF THE WEAPON USING RN (BASICALLY TRUE DAMAGE)
 
@@ -252,15 +248,6 @@ public class StatsManager : MonoBehaviour
         //Debug.Log("total damage is: " + TotalDamage);
         return TotalDamage;
     }
-    // must be calculated first
-    // Damage will be randomized between the -+damageDifference%
-
-    // get base damage
-    // add weapon modifier (i will probably not implement this)
-    // add damage bonuses to base damage
-    // totalDamage = base damage + (base damage + totalBonusDamage)
-    // totalBonusDamage = baseDamage * bonusDamage * 0.01
-    // Round down 
 
     // CREATE A DIFFERENT TOTAL DAMAGE CALCULATOR FOR ENEMY
 
@@ -268,7 +255,7 @@ public class StatsManager : MonoBehaviour
     public float CalculateFinalDamageToEnemy(float damage, bool isCrit)
     {
         float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTotalDamage(damage));
-        netDmg = Mathf.Round(Random.Range(-0.15f, 0.15f) * netDmg);
+        netDmg = Mathf.Round(Random.Range(- netDmg * 0.15f, netDmg * 0.15f) + netDmg);
         netDmg = netDmg <= 0 ? 1 : netDmg;
         Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
         return isCrit ? netDmg * 2 : netDmg;
@@ -301,7 +288,7 @@ public class StatsManager : MonoBehaviour
     public float CalculateDamageReceivedByEnemyWithDefense(float atkDamage)
     {
         float netDmg = (atkDamage - TotalDefense * 0.5f);
-        //Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
+        Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
         return netDmg < 0 ? 1 : Mathf.Round(netDmg);
     }
 

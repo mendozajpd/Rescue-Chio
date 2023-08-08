@@ -175,9 +175,9 @@ public class MagicWeapon : Weapon
 
     private void SetSpellDamage(int i)
     {
-        BaseDamage = Spells[i].SpellDamage;
+        BaseWeaponDamage = Spells[i].SpellDamage;
         SetTotalWeaponDamage(equipment);
-        Spells[i].TotalSpellDamage = TotalDamage;
+        Spells[i].TotalSpellDamage = TotalWeaponDamage;
     }
 
     private void _castSpell()

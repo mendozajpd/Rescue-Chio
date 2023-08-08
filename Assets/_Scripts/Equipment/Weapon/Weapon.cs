@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 public abstract class Weapon : MonoBehaviour
 {
     // Common Weapon Variables
-    protected float TotalDamage;
-    public float BaseDamage;
+    public float TotalWeaponDamage;
+    public float BaseWeaponDamage;
+    public float TotalWeaponKnockback;
+    public float BaseWeaponKnockback;
     public float UseTime;
 
     //Input System Variables
@@ -48,7 +50,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected void SetTotalWeaponDamage(PlayerEquipment equipment)
     {
-        TotalDamage = equipment.playerStats.CalculateTotalDamage(BaseDamage);
+        TotalWeaponDamage = equipment.playerStats.CalculateTotalDamage(BaseWeaponDamage);
     }
 
 }

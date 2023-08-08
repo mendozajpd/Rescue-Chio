@@ -5211,7 +5211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab587bb21fca04946afaac1ba9bc7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseDamage: 5
+  TotalWeaponDamage: 0
+  BaseWeaponDamage: 0
+  TotalWeaponKnockback: 0
+  BaseWeaponKnockback: 0
   UseTime: 0
   Fire:
     m_Name: Fire
@@ -5242,6 +5245,7 @@ MonoBehaviour:
     m_Flags: 0
   Sprite: {fileID: 0}
   Anim: {fileID: 0}
+  equipment: {fileID: 0}
   Spells:
   - {fileID: 0}
   SpellCharge: {fileID: 0}
@@ -10288,6 +10292,14 @@ PrefabInstance:
     - target: {fileID: 3469948200461879043, guid: c382b97da7730394197051f9656f2f17, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007171673026463874, guid: c382b97da7730394197051f9656f2f17, type: 3}
+      propertyPath: Charging.m_Id
+      value: 22e73712-8be3-4ee3-b512-3024a5272c12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007171673026463874, guid: c382b97da7730394197051f9656f2f17, type: 3}
+      propertyPath: Charging.m_Name
+      value: Charging
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c382b97da7730394197051f9656f2f17, type: 3}
@@ -16314,16 +16326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5898e37049b5a42b943bb4237dcb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultMaxHealth: 0
-  _defaultMaxMana: 0
-  _defaultAggro: 0
-  _defaultAttackSpeed: 0
-  _defaultCritHitChance: 0
-  _defaultBaseDamage: 0
-  _defaultDefense: 0
-  _defaultHealthRegen: 0
-  _defaultKnockback: 0
-  _defaultMoveSpeed: 0
 --- !u!114 &1461599464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16749,16 +16751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5898e37049b5a42b943bb4237dcb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultMaxHealth: 0
-  _defaultMaxMana: 0
-  _defaultAggro: 0
-  _defaultAttackSpeed: 0
-  _defaultCritHitChance: 0
-  _defaultBaseDamage: 0
-  _defaultDefense: 0
-  _defaultHealthRegen: 0
-  _defaultKnockback: 0
-  _defaultMoveSpeed: 0
 --- !u!114 &1506409106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17404,7 +17396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
       propertyPath: defaultSpellDamage
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}

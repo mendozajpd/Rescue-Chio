@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpellName: Astral Death Ray
-  SpellDamage: 0.5
+  SpellDamage: 0
+  TotalSpellDamage: 0
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
