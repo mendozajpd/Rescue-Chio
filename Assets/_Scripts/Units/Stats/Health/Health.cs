@@ -9,14 +9,20 @@ public class Health : Gauge, IDamageable, IHealable
 
     private HealthBar _healthBarPrefab;
 
+    private PopUpTextScript _damagePopUp;
+
     private void Awake()
     {
+        _damagePopUp = Resources.Load<PopUpTextScript>("DamagePopUp");
         _spawnHealthBar();
     }
 
     // Can be used to inflict debuff if there is
     public void Damage(float damageAmount, Attack attack)
     {
+        var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
+        spawnDamagePopUp.SetPopUpText(damageAmount.ToString());
+
         if (CurrentValue - damageAmount <= 0)
         {
             hasDied?.Invoke();

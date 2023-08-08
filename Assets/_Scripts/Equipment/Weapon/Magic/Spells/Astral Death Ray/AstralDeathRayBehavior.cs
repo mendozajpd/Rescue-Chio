@@ -126,6 +126,7 @@ public class AstralDeathRayBehavior : Attack
     #region Enable/Disable Laser
     public void ActivateLaser(float width)
     {
+
         _laser.startWidth = width;
         _laser.endWidth = width;
         _laserHitbox.enabled = true;

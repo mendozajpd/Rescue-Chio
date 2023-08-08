@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  defaultSpellDamage: 0.5
+  defaultSpellDamage: 1
   isCharging: 0
   currentCharge: 0
   maxCharge: 100
