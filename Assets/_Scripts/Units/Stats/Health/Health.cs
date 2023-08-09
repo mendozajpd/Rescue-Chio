@@ -10,6 +10,8 @@ public class Health : Gauge, IDamageable, IHealable
     private HealthBar _healthBarPrefab;
 
     private PopUpTextScript _damagePopUp;
+    private Color32 normalAttackColor = Color.white;
+    private Color32 critAttackColor = Color.red;
 
     private void Awake()
     {
@@ -18,10 +20,10 @@ public class Health : Gauge, IDamageable, IHealable
     }
 
     // Can be used to inflict debuff if there is
-    public void Damage(float damageAmount, Attack attack)
+    public void Damage(float damageAmount, bool isCrit, Attack attack)
     {
         var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
-        spawnDamagePopUp.SetPopUpText(damageAmount.ToString());
+        spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), isCrit, normalAttackColor, critAttackColor);
 
         if (CurrentValue - damageAmount <= 0)
         {
