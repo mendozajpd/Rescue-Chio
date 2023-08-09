@@ -11,14 +11,19 @@ public class PlayerManager : UnitManager
     // STATS -          UnitStats
     // DEFAULT STATS -  UnitDefaultStats
 
+    public PlayerEquipment UnitEquipment;
 
     private void Awake()
     {
         GetRequiredComponents();
         SetDefaultStats("Player/PlayerDefaultStats");
+        UnitEquipment = GetComponentInChildren<PlayerEquipment>();
     }
 
+    public void GetWeaponBaseDamage()
+    {
 
+    }
 
 
 }

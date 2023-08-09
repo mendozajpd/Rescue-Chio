@@ -50,7 +50,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected void SetTotalWeaponDamage(PlayerEquipment equipment)
     {
-        TotalWeaponDamage = equipment.playerStats.CalculateTotalDamage(BaseWeaponDamage);
+        TotalWeaponDamage = equipment.playerStats.CalculateTrueDamage(BaseWeaponDamage);
     }
 
 }

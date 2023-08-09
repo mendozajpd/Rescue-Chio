@@ -13,6 +13,8 @@ public class Health : Gauge, IDamageable, IHealable
     private Color32 normalAttackColor = Color.white;
     private Color32 critAttackColor = Color.red;
 
+    [SerializeField] private bool godMode;
+
     private void Awake()
     {
         _damagePopUp = Resources.Load<PopUpTextScript>("DamagePopUp");
@@ -20,10 +22,26 @@ public class Health : Gauge, IDamageable, IHealable
     }
 
     // Can be used to inflict debuff if there is
-    public void Damage(float damageAmount, bool isCrit, Attack attack)
+    public void DamageCrittable(float damageAmount, bool isCrit, Attack attack)
     {
         var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
         spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), isCrit, normalAttackColor, critAttackColor);
+
+        if (CurrentValue - damageAmount <= 0)
+        {
+            hasDied?.Invoke();
+            attack.OnEnemyDeath(this);
+            Destroy(gameObject);
+            return;
+        }
+
+        CurrentValue -= godMode ? 0 : damageAmount;
+    }
+
+    public void Damage(float damageAmount, Attack attack)
+    {
+        var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
+        spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), normalAttackColor);
 
         if (CurrentValue - damageAmount <= 0)
         {

@@ -116,7 +116,7 @@ public class AstralDeathRayBehavior : Attack
             var health = Enemy.GetComponent<Health>();
             var playerStats = _spell.wand.equipment.playerStats;
             bool isCrit = playerStats.isCriticalStrike();
-            health?.Damage(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, this);
+            health?.DamageCrittable(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, this);
         }
     }
 

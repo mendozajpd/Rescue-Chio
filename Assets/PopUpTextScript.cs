@@ -49,7 +49,7 @@ public class PopUpTextScript : MonoBehaviour
         _text = text;
         _tmp.fontSize = fontSizeRNG;
         _tmp.color = textColor;
-        _timeUntilDestruction += offSetRNGx * 0.1f;
+        _timeUntilDestruction += offSetRNGx * 0.2f;
         transform.position = new Vector3(transform.position.x + offSetRNGx * 0.1f, transform.position.y + offSetRNGy * 0.1f, 1);
         transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);
     }
@@ -63,7 +63,7 @@ public class PopUpTextScript : MonoBehaviour
         _text = text;
         _tmp.fontSize = isCrit ? fontSizeRNG * 1.5f : fontSizeRNG;
         _tmp.color = isCrit ? critAttack : normalAttack;
-        _timeUntilDestruction = isCrit ? _timeUntilDestruction + (offSetRNGx * 0.1f)  * 2 : _timeUntilDestruction;
+        _timeUntilDestruction = isCrit ? (_timeUntilDestruction + offSetRNGx * 0.2f)  * 2 : _timeUntilDestruction + offSetRNGx * 0.1f;
         _tmp.sortingOrder = isCrit ? 1 : 0;
         transform.position = new Vector3(transform.position.x + offSetRNGx * 0.1f, transform.position.y + offSetRNGy * 0.1f, 1);
         transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);

@@ -28,6 +28,18 @@ public class StatsManager : MonoBehaviour
     private float _bonusKnockback;
     private float _bonusCurrentMoveSpeed;
 
+    // PENALTY STATS
+    private float _penaltyMaxHealth;
+    private float _penaltyMaxMana;
+    private float _penaltyAggro;
+    private float _penaltyAttackSpeed;
+    private float _penaltyCritHitChance;
+    private float _penaltyBaseDamage;
+    private float _penaltyDefense;
+    private float _penaltyHealthRegen;
+    private float _penaltyKnockback;
+    private float _penaltyCurrentMoveSpeed;
+
     // TOTAL STATS
     private float _totalMaxHealth;
     private float _totalMaxMana;
@@ -42,124 +54,183 @@ public class StatsManager : MonoBehaviour
 
 
     // DEFAULT STATS GETTERS
+    #region DEFAULT STATS
     public float DefaultMaxHealth { get => _defaultMaxHealth; }
     public float DefaultMaxMana { get => _defaultMaxMana; }
-    public float DefaultAggro { get => _defaultAggro;  }
+    public float DefaultAggro { get => _defaultAggro; }
     public float DefaultAttackSpeed { get => _defaultAttackSpeed; }
     public float DefaultCritHitChance { get => _defaultCritHitChance; }
     public float DefaultBaseDamage { get => _defaultBaseDamage; }
-    public float DefaultDefense { get => _defaultDefense;  }
+    public float DefaultDefense { get => _defaultDefense; }
     public float DefaultHealthRegen { get => _defaultHealthRegen; }
     public float DefaultKnockback { get => _defaultKnockback; }
-    public float DefaultMoveSpeed { get => _defaultMoveSpeed; }
+    public float DefaultMoveSpeed { get => _defaultMoveSpeed; } 
+    #endregion
 
+    #region BONUS STATS
     // BONUS STATS GETTERS
-    public float BonusMaxHealth 
-    { 
-        get => _bonusMaxHealth; 
-        set => _bonusMaxHealth = value; 
+    public float BonusMaxHealth
+    {
+        get => _bonusMaxHealth;
+        set => _bonusMaxHealth = value;
     }
-    public float BonusMaxMana 
-    { 
-        get => _bonusMaxMana; 
-        set => _bonusMaxMana = value; 
+    public float BonusMaxMana
+    {
+        get => _bonusMaxMana;
+        set => _bonusMaxMana = value;
     }
-    public float BonusAggro 
-    { 
-        get => _bonusAggro; 
-        set => _bonusAggro = value; 
+    public float BonusAggro
+    {
+        get => _bonusAggro;
+        set => _bonusAggro = value;
     }
-    public float BonusAttackSpeed 
-    { 
-        get => _bonusAttackSpeed; 
+    public float BonusAttackSpeed
+    {
+        get => _bonusAttackSpeed;
         set => _bonusAttackSpeed = value;
     }
-    public float BonusCritHitChance 
-    { 
-        get => _bonusCritHitChance; 
-        set => _bonusCritHitChance = value; 
+    public float BonusCritHitChance
+    {
+        get => _bonusCritHitChance;
+        set => _bonusCritHitChance = value;
     }
-    public float BonusDamage 
-    { 
-        get => _bonusBaseDamage; 
-        set => _bonusBaseDamage = value; 
+    public float BonusDamage
+    {
+        get => _bonusBaseDamage;
+        set => _bonusBaseDamage = value;
     }
-    public float BonusDefense 
-    { 
-        get => _bonusDefense; 
-        set => _bonusDefense = value; 
+    public float BonusDefense
+    {
+        get => _bonusDefense;
+        set => _bonusDefense = value;
     }
-    public float BonusHealthRegen 
-    { 
-        get => _bonusHealthRegen; 
-        set => _bonusHealthRegen = value; 
+    public float BonusHealthRegen
+    {
+        get => _bonusHealthRegen;
+        set => _bonusHealthRegen = value;
     }
-    public float BonusKnockback 
-    { 
-        get => _bonusKnockback; 
-        set => _bonusKnockback = value; 
+    public float BonusKnockback
+    {
+        get => _bonusKnockback;
+        set => _bonusKnockback = value;
     }
-    public float BonusCurrentMoveSpeed 
-    { 
-        get => _bonusCurrentMoveSpeed; 
-        set => _bonusCurrentMoveSpeed = value; 
-    }
+    public float BonusMoveSpeed
+    {
+        get => _bonusCurrentMoveSpeed;
+        set => _bonusCurrentMoveSpeed = value;
+    } 
+    #endregion
 
+    #region PENALTY STATS
+    // PENALTY STATS GETTERS AND SETTERS
+    public float PenaltyMaxHealth
+    {
+        get => _penaltyMaxHealth;
+        set => _penaltyMaxHealth = value;
+    }
+    public float PenaltyMaxMana
+    {
+        get => _penaltyMaxMana;
+        set => _penaltyMaxMana = value;
+    }
+    public float PenaltyAggro
+    {
+        get => _penaltyAggro;
+        set => _penaltyAggro = value;
+    }
+    public float PenaltyAttackSpeed // SLOWNESS
+    {
+        get => _penaltyAttackSpeed;
+        set => _penaltyAttackSpeed = value;
+    }
+    public float PenaltyCritHitChance
+    {
+        get => _penaltyCritHitChance;
+        set => _penaltyCritHitChance = value;
+    }
+    public float PenaltyDamage
+    {
+        get => _penaltyBaseDamage;
+        set => _penaltyBaseDamage = value;
+    }
+    public float PenaltyDefense
+    {
+        get => _penaltyDefense;
+        set => _penaltyDefense = value;
+    }
+    public float PenaltyHealthRegen
+    {
+        get => _penaltyHealthRegen;
+        set => _penaltyHealthRegen = value;
+    }
+    public float PenaltyKnockback // TENACITY
+    {
+        get => _penaltyKnockback;
+        set => _penaltyKnockback = value;
+    }
+    public float PenaltyMoveSpeed // SLOWNESS
+    {
+        get => _penaltyCurrentMoveSpeed;
+        set => _penaltyCurrentMoveSpeed = value;
+    } 
+    #endregion
 
+    #region TOTAL STATS
     // TOTAL STATS GETTERS
-    public float TotalMaxHealth 
-    { 
-        get => _totalMaxHealth; 
-        set => _totalMaxHealth = value; 
+    public float TotalMaxHealth
+    {
+        get => _totalMaxHealth;
+        set => _totalMaxHealth = value;
     }
-    public float TotalMaxMana 
-    { 
-        get => _totalMaxMana; 
-        set => _totalMaxMana = value; 
-    }
-
-    public float TotalAggro 
-    { 
-        get => _totalAggro; 
-        set => _totalAggro = value; 
-    }
-    public float TotalAttackSpeed 
-    { 
-        get => _totalAttackSpeed; 
-        set => _totalAttackSpeed = value; 
-    }
-    public float TotalCritHitChance 
-    { 
-        get => _totalCritHitChance; 
-        set => _totalCritHitChance = value; 
-    }
-    public float TotalDamage 
-    { 
-        get => _totalDamage; 
-        set => _totalDamage = value; 
-    }
-    public float TotalDefense 
-    { 
-        get => _totalDefense; 
-        set => _totalDefense = value; 
-    }
-    public float TotalHealthRegen 
-    { 
-        get => _totalHealthRegen; 
-        set => _totalHealthRegen = value; 
-    }
-    public float TotalKnockback 
-    { 
-        get => _totalKnockback; 
-        set => _totalKnockback = value; 
-    }
-    public float TotalMovementSpeed 
-    { 
-        get => _totalMovementSpeed; 
-        set => _totalMovementSpeed = value; 
+    public float TotalMaxMana
+    {
+        get => _totalMaxMana;
+        set => _totalMaxMana = value;
     }
 
+    public float TotalAggro
+    {
+        get => _totalAggro;
+        set => _totalAggro = value;
+    }
+    public float TotalAttackSpeed
+    {
+        get => _totalAttackSpeed;
+        set => _totalAttackSpeed = value;
+    }
+    public float TotalCritHitChance
+    {
+        get => _totalCritHitChance;
+        set => _totalCritHitChance = value;
+    }
+    public float TotalDamage
+    {
+        get => _totalDamage;
+        set => _totalDamage = value;
+    }
+    public float TotalDefense
+    {
+        get => _totalDefense;
+        set => _totalDefense = value;
+    }
+    public float TotalHealthRegen
+    {
+        get => _totalHealthRegen;
+        set => _totalHealthRegen = value;
+    }
+    public float TotalKnockback
+    {
+        get => _totalKnockback;
+        set => _totalKnockback = value;
+    }
+    public float TotalMoveSpeed
+    {
+        get => _totalMovementSpeed;
+        set => _totalMovementSpeed = value;
+    }
+    #endregion
 
+    public System.Action CalculateStats;
 
     void Start()
     {
@@ -239,14 +310,18 @@ public class StatsManager : MonoBehaviour
     // Give back total damage to weapon
     // Weapon will calculate how much damage it will output
 
-    // TOTAL DAMAGE OF THE WEAPON USING RN (BASICALLY TRUE DAMAGE)
+    public void CalculateTotalWeaponBaseDamage(float baseDamage)
+    {
+        TotalDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
+    }
 
-    public float CalculateTotalDamage(float baseDamage) 
+    // TOTAL DAMAGE OF THE WEAPON USING (BASICALLY TRUE DAMAGE)
+    public float CalculateTrueDamage(float baseDamage) 
     {
         //Debug.Log("base damage is: " + baseDamage);
-        TotalDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
+        float netDmg = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
         //Debug.Log("total damage is: " + TotalDamage);
-        return TotalDamage;
+        return netDmg;
     }
 
     // CREATE A DIFFERENT TOTAL DAMAGE CALCULATOR FOR ENEMY
@@ -254,7 +329,7 @@ public class StatsManager : MonoBehaviour
     // FOR THE PLAYER
     public float CalculateFinalDamageToEnemy(float damage, bool isCrit)
     {
-        float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTotalDamage(damage));
+        float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTrueDamage(damage));
         netDmg = Mathf.Round(Random.Range(- netDmg * 0.15f, netDmg * 0.15f) + netDmg);
         netDmg = netDmg <= 0 ? 1 : netDmg;
         Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
@@ -309,6 +384,10 @@ public class StatsManager : MonoBehaviour
 
     #region Movement Speed Calculator
     // totalMovespeed = defaultMovespeed + bonusMovespeed - penaltyMovespeed
+    private void CalculateTotalMovementSpeed()
+    {
+        TotalMoveSpeed = DefaultMoveSpeed + BonusMoveSpeed - PenaltyMoveSpeed;
+    }
     #endregion
 
 
@@ -333,13 +412,15 @@ public class StatsManager : MonoBehaviour
 
     public void CalculateTotalStats()
     {
+        CalculateStats?.Invoke();
         CalculateTotalMaxHealth();
         CalculateTotalMaxMana();
         CalculateTotalAttackSpeed();
-        //CalculateTotalDamage(); // currently cannot be called without a parameter
         CalculateTotalDefense();
         CalculateTotalCritChance();
+        CalculateTotalMovementSpeed();
     }    
+
     // TEMPORARY
     IEnumerator calculateTotalStats(float numOfSeconds)
     {
