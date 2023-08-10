@@ -5452,8 +5452,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 353940685}
+  - component: {fileID: 353940686}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DamagePopUps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5474,6 +5475,18 @@ Transform:
   m_Father: {fileID: 1715286395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &353940686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353940684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39514586f143a42469d136827bc2e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &421585551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11692,7 +11705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9854578c9a978e34f862f93b71868862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPools: {fileID: 0}
+  ObjectPools: {fileID: 1715286396}
 --- !u!1 &1300409986
 GameObject:
   m_ObjectHideFlags: 0
@@ -16782,7 +16795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
-  godMode: 0
+  godMode: 1
   knockbackImmune: 0
 --- !u!58 &1387974015
 CircleCollider2D:
@@ -17066,7 +17079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
-  godMode: 0
+  godMode: 1
   knockbackImmune: 0
 --- !u!1 &1468208015
 GameObject:
@@ -17269,7 +17282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
-  godMode: 0
+  godMode: 1
   knockbackImmune: 0
 --- !u!58 &1481844361
 CircleCollider2D:
@@ -17811,7 +17824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
-  godMode: 0
+  godMode: 1
   knockbackImmune: 0
 --- !u!58 &1544696219
 CircleCollider2D:
@@ -17912,6 +17925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8a7fcdaa7e2b24d90483ff4fb7acf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Pools: []
 --- !u!1 &1779804878
 GameObject:
   m_ObjectHideFlags: 0
@@ -18550,6 +18564,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
+      propertyPath: maxCharge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
       propertyPath: defaultSpellDamage
       value: 50
       objectReference: {fileID: 0}
@@ -18669,6 +18687,10 @@ PrefabInstance:
     - target: {fileID: 3157353482022079346, guid: 6427615cbf6f1854bb06cab2d863d148, type: 3}
       propertyPath: m_Name
       value: DamagePopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3157353482022079346, guid: 6427615cbf6f1854bb06cab2d863d148, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6427615cbf6f1854bb06cab2d863d148, type: 3}

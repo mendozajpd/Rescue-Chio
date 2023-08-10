@@ -9,13 +9,19 @@ public class PopUpTextScript : MonoBehaviour
     protected Animator _anim;
     protected bool timerEnabled = true;
     protected float _timePassed;
-    [SerializeField] protected string _text;
-    [SerializeField] protected float _timeUntilDestruction;
-    [SerializeField] protected float fadeOutSpeed = 0.15f;
+    protected string _text;
+    protected float _timeUntilDestruction;
 
+    [Header("Settings")]
+    [SerializeField] protected float fadeOutSpeed = 0.15f;
     [SerializeField] protected float rotationOffSetAmount = 2;
 
+    [Header("Default Settings")]
+    [SerializeField] protected float defaultTimeUntilDestruction = 1.5f;
+    [SerializeField] protected float defaultFontSize = 5;
+
     private System.Action<PopUpTextScript> _sendToPool;
+
 
     private void OnEnable()
     {
@@ -25,6 +31,7 @@ public class PopUpTextScript : MonoBehaviour
 
     private void Awake()
     {
+        _timeUntilDestruction = defaultTimeUntilDestruction;
         _tmp = GetComponent<TextMeshPro>();
         _anim = GetComponent<Animator>();
         _tmp.overrideColorTags = true;
@@ -41,6 +48,7 @@ public class PopUpTextScript : MonoBehaviour
 
         if (_timePassed >= _timeUntilDestruction)
         {
+            Debug.Log("this ran");
             timerEnabled = false;
             _anim.SetTrigger("ShrinkDown");
             //Destroy(gameObject, 0.15f);
@@ -49,7 +57,7 @@ public class PopUpTextScript : MonoBehaviour
         }
     }
 
-    // interpolate from
+    //interpolate from
     public void SetPopUpText(string text, Color32 textColor)
     {
         float fontSize = _tmp.fontSize;
@@ -73,10 +81,16 @@ public class PopUpTextScript : MonoBehaviour
         _text = text;
         _tmp.fontSize = isCrit ? fontSizeRNG * 1.5f : fontSizeRNG;
         _tmp.color = isCrit ? critAttack : normalAttack;
-        _timeUntilDestruction = isCrit ? (_timeUntilDestruction + offSetRNGx * 0.2f)  * 2 : _timeUntilDestruction + offSetRNGx * 0.1f;
+        _timeUntilDestruction = isCrit ? (_timeUntilDestruction + Mathf.Abs(offSetRNGx * 0.1f)) * 1.5f : _timeUntilDestruction + offSetRNGx * 0.1f;
         _tmp.sortingOrder = isCrit ? 1 : 0;
         transform.position = new Vector3(transform.position.x + offSetRNGx * 0.1f, transform.position.y + offSetRNGy * 0.1f, 1);
         transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);
+    }
+
+    public void ResetPopUpSettings()
+    {
+        _tmp.fontSize = defaultFontSize;
+        _timeUntilDestruction = defaultTimeUntilDestruction;
     }
 
     public void SetLocationPopUpLocation(Vector3 spawnLocation)
@@ -97,6 +111,7 @@ public class PopUpTextScript : MonoBehaviour
 
     public void ResetTimer()
     {
+        //HasEnded = false;
         _timePassed = 0;
         timerEnabled = true;
     }

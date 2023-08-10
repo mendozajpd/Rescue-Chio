@@ -41,6 +41,7 @@ public class DamagePopUpPool : GameObjectPool
             damagePopUp.gameObject.SetActive(true);
         }, damagePopUp =>
         {
+            damagePopUp.ResetPopUpSettings();
             damagePopUp.gameObject.SetActive(false);
         }, damagePopUp =>
         {
