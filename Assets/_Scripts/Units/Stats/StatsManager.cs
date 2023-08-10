@@ -332,7 +332,8 @@ public class StatsManager : MonoBehaviour
         float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTrueDamage(damage));
         netDmg = Mathf.Round(Random.Range(- netDmg * 0.15f, netDmg * 0.15f) + netDmg);
         netDmg = netDmg <= 0 ? 1 : netDmg;
-        Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
+        //Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
+        //if (isCrit) Debug.Log("CRIT!");
         return isCrit ? netDmg * 2 : netDmg;
     }
 
@@ -363,7 +364,7 @@ public class StatsManager : MonoBehaviour
     public float CalculateDamageReceivedByEnemyWithDefense(float atkDamage)
     {
         float netDmg = (atkDamage - TotalDefense * 0.5f);
-        Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
+        //Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
         return netDmg < 0 ? 1 : Mathf.Round(netDmg);
     }
 

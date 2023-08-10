@@ -46,7 +46,7 @@ public class DamagePopUpPool : GameObjectPool
         }, damagePopUp =>
         {
             Destroy(damagePopUp.gameObject);
-        }, true, 1000, 1500);
+        }, true, 500, 1000);
     }
 
     private void SetDamagePopUpSettings(PopUpTextScript popup, Vector3 popUpLocation, bool isCrit, string text, Color32 normalAtkColor, Color32 critAtkColor)

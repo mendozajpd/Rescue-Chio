@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4631019b0f13c4d9d88f40b2199d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: 
-  _timeUntilDestruction: 1.5
   fadeOutSpeed: 0.15
   rotationOffSetAmount: 6
+  defaultTimeUntilDestruction: 1.5
+  defaultFontSize: 4

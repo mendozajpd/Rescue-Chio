@@ -17,13 +17,44 @@ public class Health : Gauge, IDamageable, IHealable
     // Invoke the method here 
     public System.Action SpawnDamagePopUp;
 
+
+    public bool Invincible;
+    private float _invincibilityDuration = 0.3f; 
+    // SHOULD CHANGE INVINCIBILITY TO ATTACK INFLICTION
+    // CREATE A METHOD THAT WOULD WOULD TAKE IN A FLOAT THAT WOULD CHANGE THE INVINCIBILITY TIME, SETINVINCIBILITY TIME
+    private float _invincibilityTime;
+
     [SerializeField] private bool godMode;
     [SerializeField] private bool knockbackImmune;
+
+    public float ImmunityTime 
+    { 
+        get => _invincibilityTime;
+        set 
+        { 
+            _invincibilityTime = value;
+            Invincible = _invincibilityTime <= 0 ? false : true;
+        } 
+    }
+
     private void Awake()
     {
         //_damagePopUp = Resources.Load<PopUpTextScript>("DamagePopUp");
         _damagePopUpPool = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<DamagePopUpPool>();
         _spawnHealthBar();
+    }
+
+    private void Update()
+    {
+        immunityTimer();
+    }
+
+    private void immunityTimer()
+    {
+        if (ImmunityTime > 0)
+        {
+            ImmunityTime -= Time.deltaTime;
+        }
     }
 
     #region DAMAGE FUNCTIONS
@@ -43,6 +74,8 @@ public class Health : Gauge, IDamageable, IHealable
         }
 
         CurrentValue -= godMode ? 0 : damageAmount;
+        // TEMPORARY
+        _invincibilityTime = damageAmount == 1 ? _invincibilityDuration / 2 : _invincibilityDuration;
     }
 
     public void Damage(float damageAmount, Attack attack)
@@ -88,5 +121,6 @@ public class Health : Gauge, IDamageable, IHealable
         var healthBar = Instantiate(_healthBarPrefab, transform);
         healthBar.AssignHealthGauge(this);
     }
+
 
 }

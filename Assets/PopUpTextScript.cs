@@ -14,7 +14,7 @@ public class PopUpTextScript : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] protected float fadeOutSpeed = 0.15f;
-    [SerializeField] protected float rotationOffSetAmount = 2;
+    [SerializeField] protected float offSetAmount = 2;
 
     [Header("Default Settings")]
     [SerializeField] protected float defaultTimeUntilDestruction = 1.5f;
@@ -39,7 +39,6 @@ public class PopUpTextScript : MonoBehaviour
     // vector 3 up * offset
     void Start()
     {
-        _tmp.text = _text;
     }
 
     void Update()
@@ -48,7 +47,6 @@ public class PopUpTextScript : MonoBehaviour
 
         if (_timePassed >= _timeUntilDestruction)
         {
-            Debug.Log("this ran");
             timerEnabled = false;
             _anim.SetTrigger("ShrinkDown");
             //Destroy(gameObject, 0.15f);
@@ -61,10 +59,10 @@ public class PopUpTextScript : MonoBehaviour
     public void SetPopUpText(string text, Color32 textColor)
     {
         float fontSize = _tmp.fontSize;
-        float offSetRNGx = Random.Range(-rotationOffSetAmount, rotationOffSetAmount);
-        float offSetRNGy = Random.Range(-rotationOffSetAmount, rotationOffSetAmount);
+        float offSetRNGx = Random.Range(-offSetAmount, offSetAmount);
+        float offSetRNGy = Random.Range(-offSetAmount, offSetAmount);
         float fontSizeRNG = Random.Range(fontSize - 0.5f, fontSize + 0.5f);
-        _text = text;
+        _tmp.text = text;
         _tmp.fontSize = fontSizeRNG;
         _tmp.color = textColor;
         _timeUntilDestruction += offSetRNGx * 0.2f;
@@ -75,11 +73,11 @@ public class PopUpTextScript : MonoBehaviour
     public void SetPopUpText(string text, bool isCrit, Color32 normalAttack, Color32 critAttack)
     {
         float fontSize = _tmp.fontSize;
-        float offSetRNGx = Random.Range(-rotationOffSetAmount, rotationOffSetAmount);
-        float offSetRNGy = Random.Range(-rotationOffSetAmount, rotationOffSetAmount);
+        float offSetRNGx = Random.Range(-offSetAmount, offSetAmount);
+        float offSetRNGy = Random.Range(-offSetAmount, offSetAmount);
         float fontSizeRNG = Random.Range(fontSize - 0.5f, fontSize + 0.5f);
-        _text = text;
-        _tmp.fontSize = isCrit ? fontSizeRNG * 1.5f : fontSizeRNG;
+        _tmp.text = text;
+        _tmp.fontSize = isCrit ? fontSizeRNG * 1.35f : fontSizeRNG;
         _tmp.color = isCrit ? critAttack : normalAttack;
         _timeUntilDestruction = isCrit ? (_timeUntilDestruction + Mathf.Abs(offSetRNGx * 0.1f)) * 1.5f : _timeUntilDestruction + offSetRNGx * 0.1f;
         _tmp.sortingOrder = isCrit ? 1 : 0;

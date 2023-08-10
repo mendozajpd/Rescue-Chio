@@ -113,10 +113,15 @@ public class AstralDeathRayBehavior : Attack
 
         if (Enemy != null)
         {
+            // ADD PARTICLES ON ENEMY POSITION TO INDICATE A HIT
             var health = Enemy.GetComponent<Health>();
-            var playerStats = _spell.wand.equipment.playerStats;
-            bool isCrit = playerStats.isCriticalStrike();
-            health?.DamageCrittable(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, this);
+            bool isInvincible = health.Invincible;
+            if (!isInvincible)
+            {
+                var playerStats = _spell.wand.equipment.playerStats;
+                bool isCrit = playerStats.isCriticalStrike();
+                health?.DamageCrittable(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, this);
+            }
         }
     }
 
