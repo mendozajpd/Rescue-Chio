@@ -15,6 +15,14 @@ public class PopUpTextScript : MonoBehaviour
 
     [SerializeField] protected float rotationOffSetAmount = 2;
 
+    private System.Action<PopUpTextScript> _sendToPool;
+
+    private void OnEnable()
+    {
+        // Settrigger true
+        _anim.SetTrigger("PopUp");
+    }
+
     private void Awake()
     {
         _tmp = GetComponent<TextMeshPro>();
@@ -35,7 +43,9 @@ public class PopUpTextScript : MonoBehaviour
         {
             timerEnabled = false;
             _anim.SetTrigger("ShrinkDown");
-            Destroy(gameObject, 0.15f);
+            //Destroy(gameObject, 0.15f);
+            // Send to Pool
+            StartCoroutine(sendToPoolWithDelay(0.15f));
         }
     }
 
@@ -67,6 +77,28 @@ public class PopUpTextScript : MonoBehaviour
         _tmp.sortingOrder = isCrit ? 1 : 0;
         transform.position = new Vector3(transform.position.x + offSetRNGx * 0.1f, transform.position.y + offSetRNGy * 0.1f, 1);
         transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);
+    }
+
+    public void SetLocationPopUpLocation(Vector3 spawnLocation)
+    {
+        transform.position = spawnLocation;
+    }
+
+    public void SetPoolSender(System.Action<PopUpTextScript> poolSender)
+    {
+        _sendToPool = poolSender;
+    }
+
+    IEnumerator sendToPoolWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _sendToPool(this);
+    }
+
+    public void ResetTimer()
+    {
+        _timePassed = 0;
+        timerEnabled = true;
     }
 
 }

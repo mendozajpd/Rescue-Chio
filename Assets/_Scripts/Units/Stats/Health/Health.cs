@@ -6,26 +6,33 @@ public class Health : Gauge, IDamageable, IHealable
 {
     public delegate void DeathHandler();
     public event DeathHandler hasDied;
-
     private HealthBar _healthBarPrefab;
-
     private PopUpTextScript _damagePopUp;
     private Color32 normalAttackColor = Color.white;
     private Color32 critAttackColor = Color.red;
 
-    [SerializeField] private bool godMode;
+    // DamagePopUpPool 
+    private DamagePopUpPool _damagePopUpPool;
 
+    // Invoke the method here 
+    public System.Action SpawnDamagePopUp;
+
+    [SerializeField] private bool godMode;
+    [SerializeField] private bool knockbackImmune;
     private void Awake()
     {
-        _damagePopUp = Resources.Load<PopUpTextScript>("DamagePopUp");
+        //_damagePopUp = Resources.Load<PopUpTextScript>("DamagePopUp");
+        _damagePopUpPool = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<DamagePopUpPool>();
         _spawnHealthBar();
     }
 
+    #region DAMAGE FUNCTIONS
     // Can be used to inflict debuff if there is
     public void DamageCrittable(float damageAmount, bool isCrit, Attack attack)
     {
-        var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
-        spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), isCrit, normalAttackColor, critAttackColor);
+        //PopUpTextScript spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
+        //spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), isCrit, normalAttackColor, critAttackColor);
+        _damagePopUpPool.SpawnDamageText(transform.position, isCrit, damageAmount.ToString(), normalAttackColor, critAttackColor);
 
         if (CurrentValue - damageAmount <= 0)
         {
@@ -53,7 +60,9 @@ public class Health : Gauge, IDamageable, IHealable
 
         CurrentValue -= damageAmount;
     }
+    #endregion
 
+    #region HEAL FUNCTIONS
     public void Heal(float healAmount)
     {
         if (CurrentValue + healAmount > MaxValue)
@@ -64,6 +73,14 @@ public class Health : Gauge, IDamageable, IHealable
 
         CurrentValue += healAmount;
     }
+    #endregion
+
+    #region KNOCKBACK FUNCTIONS
+    // poison and burning cant be knockback
+    // what if there are attacks that should not inflict knockback?
+
+    // Find the right place to add knockback function and how to implement it
+    #endregion
 
     private void _spawnHealthBar()
     {

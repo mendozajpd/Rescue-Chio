@@ -390,7 +390,6 @@ public class StatsManager : MonoBehaviour
     }
     #endregion
 
-
     #region Stats Setters
 
     public void SetDefaultStats(DefaultStatsSO defaultStats)
