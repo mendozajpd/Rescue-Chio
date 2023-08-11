@@ -15,7 +15,7 @@ public class Health : Gauge, IDamageable, IHealable
     [Header("Knockback Variables")]
     private Rigidbody2D _rb;
     public bool Knockbacked;
-    private float _knockbackDuration = 0.2f;
+    private float _knockbackDuration = 0.15f;
     private float _knockbackTime;
 
     [Header("Invincibility Variables")]
@@ -144,7 +144,7 @@ public class Health : Gauge, IDamageable, IHealable
         // get direction
         Vector2 direction = (Vector2)transform.position - knockbackSource;
         // inflict knockback
-        _rb.AddForce(direction * extraKnockbackAmt, ForceMode2D.Impulse);
+        _rb.AddForce(direction * extraKnockbackAmt, ForceMode2D.Force);
         // TotalKnockback + extraknockback
     }
 
