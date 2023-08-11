@@ -101,7 +101,6 @@ public class MagicWeapon : Weapon
         // Spell Handler
         spellHandler = GetComponentInChildren<SpellHandler>();
         SpellCharge = GetComponentInChildren<SpellChargeHandler>();
-        PlayerPos = GetComponentInParent<PlayerController>().transform.position;
 
         SetInputVariables();
         SetSpriteVariables();
@@ -121,6 +120,7 @@ public class MagicWeapon : Weapon
         _getSwingAngle();
         _calculateWeaponSwingTrajectory();
         _rotateWeaponAroundAnchor();
+        PlayerPos = GetComponentInParent<PlayerController>().transform.position;
 
     }
 

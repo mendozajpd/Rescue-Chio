@@ -17,6 +17,7 @@ public abstract class UnitManager : MonoBehaviour
     // Stats
     public StatsManager UnitStats;
 
+
     public DefaultStatsSO UnitDefaultStats;
 
 

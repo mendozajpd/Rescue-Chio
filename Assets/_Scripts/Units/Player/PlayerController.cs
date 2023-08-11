@@ -4,17 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; 
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : Controller
 {
-    [SerializeField] private Animator anim;
-    [SerializeField] private SpriteRenderer sprite;
-    private Rigidbody2D _rb;
+    private PlayerManager _unit;
+    private Animator anim;
+    private SpriteRenderer sprite;
+
+    // KNOCKBACKED variables
+    private bool _knockbacked;
 
     // Input System Variables
-    [SerializeField] private PlayerInputActions playerControls;
-    [SerializeField] private InputAction move;
-    [SerializeField] private InputAction dash;
-    [SerializeField] private InputAction fire;
+    private PlayerInputActions playerControls;
+    private InputAction move;
+    private InputAction dash;
+    private InputAction fire;
 
     // MouseLocation
     private float _mouseLocation;
@@ -28,8 +32,9 @@ public class PlayerController : Controller
     // Direction
     private Vector2 moveDirection;
 
-    // Dash Variables
+    // Dash Variables TEMPORARY - MIGHT ADD A INTERFACE 'IDASHABLE'
     [SerializeField] private DashStatsSO dashStats;
+    public bool Dashing;
     private AudioClip _dashSound;
     private float _dashCooldown;
     private float _dashDuration;
@@ -37,6 +42,17 @@ public class PlayerController : Controller
     private Vector2 _dashDirection;
     private float _dashCooldownTime;
     private float _dashTime;
+
+    public float DashTime 
+    { 
+        get => _dashTime;
+        set 
+        { 
+            _dashTime = value;
+            Dashing = _dashTime <= 0 ? false : true;
+        } 
+    }
+    
 
     public DashStatsSO DashStats 
     { 
@@ -48,14 +64,13 @@ public class PlayerController : Controller
             // Set new dashstats
             _setDashStats(dashStats);
             // Instantiate new dash particles
-
         }
     }
+
 
     // Dash Actions
     public Action hasDashed;
     public Action hasStoppedDashing;
-
 
     // Dash Animation Variables - SCALE PLAYER
     private float _currentValue;
@@ -73,6 +88,7 @@ public class PlayerController : Controller
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
+        _unit = GetComponent<PlayerManager>();
         //afterimages = PS_afterimages.emission;
 
         if (dashStats != null) _setDashStats(dashStats);
@@ -92,16 +108,13 @@ public class PlayerController : Controller
         {
             _dashHandler();
         }
-
-
-
+        _knockbacked = _unit.UnitHealth.Knockbacked;
     }
 
 
     private void anim_RunHandler()
     {
         moveDirection = move.ReadValue<Vector2>();
-
 
         if (moveDirection.magnitude > 0)
         {
@@ -112,7 +125,6 @@ public class PlayerController : Controller
         {
             anim.speed = moveSpeed / moveSpeed;
             anim.SetBool("isRunning", false);
-            
         }
     }
 
@@ -120,7 +132,7 @@ public class PlayerController : Controller
     {
         _getMousePosition();
 
-        if (_dashTime <= 0 )
+        if (DashTime <= 0 )
         {
             if (_mouseLocation > 0)
             {
@@ -136,11 +148,12 @@ public class PlayerController : Controller
 
     private void FixedUpdate()
     {
-        if (_dashTime <= 0)
+        if (!Dashing && !_knockbacked)
         {
             _moveCharacter();
         }
-        else
+
+        if (Dashing && !_knockbacked)
         {
             _dashMovement();
         }
@@ -157,19 +170,18 @@ public class PlayerController : Controller
     {
         move = playerControls.Player.Move;
         dash = playerControls.Player.Dash;
-        fire = playerControls.Player.Fire;
+        //fire = playerControls.Player.Fire;
 
         move.Enable();
         dash.Enable();
-        fire.Enable();
-
+        //fire.Enable();
     }
-
 
     private void OnDisable()
     {
         move.Disable();
         dash.Disable();
+        //dash.Disable();
     }
     #endregion
 
@@ -195,9 +207,9 @@ public class PlayerController : Controller
     }
     private void _dashDurationTimer()
     {
-        if (_dashTime > 0)
+        if (DashTime > 0)
         {
-            _dashTime -= Time.deltaTime;
+            DashTime -= Time.deltaTime;
         }
     }
 
@@ -213,12 +225,12 @@ public class PlayerController : Controller
     {
         _dashDurationTimer();
 
-        if (_dashTime <= 0)
+        if (DashTime <= 0)
         {
             _dashCooldownTimer();
         }
 
-        if (dash.triggered && _dashTime <= 0 && _dashCooldownTime <= 0 )
+        if (dash.triggered && DashTime <= 0 && _dashCooldownTime <= 0 )
         {
             if (move.ReadValue<Vector2>().magnitude > 0)
             {
@@ -231,10 +243,10 @@ public class PlayerController : Controller
             if (dashStats.hasAnim) _currentValue = dashStats.baseValue;
             audioSource.Play();
             hasDashed?.Invoke();
-            _dashTime = _dashDuration;
+            DashTime = _dashDuration;
         }
 
-        if (_dashTime > 0)
+        if (DashTime > 0)
         {
             anim.SetBool("isDashing", true);
             if (dashStats.hasAnim)
@@ -243,7 +255,7 @@ public class PlayerController : Controller
             }
         }
 
-        if (_dashTime <= 0 && anim.GetBool("isDashing"))
+        if (DashTime <= 0 && anim.GetBool("isDashing"))
         {
             hasStoppedDashing?.Invoke();
             _dashCooldownTime = _dashCooldown;
@@ -254,7 +266,7 @@ public class PlayerController : Controller
 
     private void _dashMovement()
     {
-        if (_dashTime > 0)
+        if (DashTime > 0)
         {
             _rb.velocity = _dashDirection * _dashSpeed * (moveSpeed * 0.2f);
         }
