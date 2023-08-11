@@ -39,7 +39,6 @@ public class Health : Gauge, IDamageable, IHealable
 
     private void Awake()
     {
-        //_damagePopUp = Resources.Load<PopUpTextScript>("DamagePopUp");
         _damagePopUpPool = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<DamagePopUpPool>();
         _spawnHealthBar();
     }
@@ -57,12 +56,10 @@ public class Health : Gauge, IDamageable, IHealable
         }
     }
 
-    #region DAMAGE FUNCTIONS
+    #region DAMAGE/INVINCIBILITY FUNCTIONS
     // Can be used to inflict debuff if there is
-    public void DamageCrittable(float damageAmount, bool isCrit, Attack attack)
+    public void Damage(float damageAmount, bool isCrit, float invincibilityTime, Attack attack)
     {
-        //PopUpTextScript spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
-        //spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), isCrit, normalAttackColor, critAttackColor);
         _damagePopUpPool.SpawnDamageText(transform.position, isCrit, damageAmount.ToString(), normalAttackColor, critAttackColor);
 
         if (CurrentValue - damageAmount <= 0)
@@ -74,25 +71,30 @@ public class Health : Gauge, IDamageable, IHealable
         }
 
         CurrentValue -= godMode ? 0 : damageAmount;
-        // TEMPORARY
-        _invincibilityTime = damageAmount == 1 ? _invincibilityDuration / 2 : _invincibilityDuration;
+        _SetInvincibilityTime(damageAmount, invincibilityTime);
     }
 
-    public void Damage(float damageAmount, Attack attack)
+    private void _SetInvincibilityTime(float damageAmount, float iTime)
     {
-        var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
-        spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), normalAttackColor);
-
-        if (CurrentValue - damageAmount <= 0)
-        {
-            hasDied?.Invoke();
-            attack.OnEnemyDeath(this);
-            Destroy(gameObject);
-            return;
-        }
-
-        CurrentValue -= damageAmount;
+        _invincibilityTime = (damageAmount == 1 ? _invincibilityDuration / 2 : _invincibilityDuration) + iTime;
     }
+
+    //public void Damage(float damageAmount, Attack attack)
+    //{
+    //    var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
+    //    spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), normalAttackColor);
+
+    //    if (CurrentValue - damageAmount <= 0)
+    //    {
+    //        hasDied?.Invoke();
+    //        attack.OnEnemyDeath(this);
+    //        Destroy(gameObject);
+    //        return;
+    //    }
+
+    //    CurrentValue -= damageAmount;
+    //}
+
     #endregion
 
     #region HEAL FUNCTIONS

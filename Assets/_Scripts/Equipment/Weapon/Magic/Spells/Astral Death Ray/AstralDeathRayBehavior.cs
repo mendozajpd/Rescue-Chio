@@ -19,8 +19,8 @@ public class AstralDeathRayBehavior : Attack
     private Light2D _light2D;
     private float _fadeMultiplier = 7;
 
-
     private EdgeCollider2D _laserHitbox;
+    private float _iTimeAfterHit = -0.15f;
 
     //Laser Tip
     private AstralDeathRayEnd _tipPrefab;
@@ -64,7 +64,6 @@ public class AstralDeathRayBehavior : Attack
     void Update()
     {
         LaserHandlers();
-
     }
 
     public void LaserHandlers()
@@ -120,7 +119,7 @@ public class AstralDeathRayBehavior : Attack
             {
                 var playerStats = _spell.wand.equipment.playerStats;
                 bool isCrit = playerStats.isCriticalStrike();
-                health?.DamageCrittable(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, this);
+                health?.Damage(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, _iTimeAfterHit, this);
             }
         }
     }

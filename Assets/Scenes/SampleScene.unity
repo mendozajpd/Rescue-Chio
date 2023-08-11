@@ -16795,6 +16795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Invincible: 0
   godMode: 1
   knockbackImmune: 0
 --- !u!58 &1387974015
@@ -17079,6 +17080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Invincible: 0
   godMode: 1
   knockbackImmune: 0
 --- !u!1 &1468208015
@@ -17282,6 +17284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Invincible: 0
   godMode: 1
   knockbackImmune: 0
 --- !u!58 &1481844361
@@ -17603,6 +17606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Invincible: 0
   godMode: 0
   knockbackImmune: 0
 --- !u!114 &1506409105
@@ -17824,6 +17828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Invincible: 0
   godMode: 1
   knockbackImmune: 0
 --- !u!58 &1544696219
@@ -18678,7 +18683,7 @@ PrefabInstance:
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 3157353482022079343, guid: 6427615cbf6f1854bb06cab2d863d148, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 3657433087
+      value: 4143972351
       objectReference: {fileID: 0}
     - target: {fileID: 3157353482022079343, guid: 6427615cbf6f1854bb06cab2d863d148, type: 3}
       propertyPath: m_hasFontAssetChanged

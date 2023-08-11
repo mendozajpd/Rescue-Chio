@@ -1,5 +1,5 @@
 public interface IDamageable 
 {
-    public void DamageCrittable(float damageAmount, bool isCrit, Attack attack);
-    public void Damage(float damageAmount, Attack attack);
+    public void Damage(float damageAmount, bool isCrit, float iTime, Attack attack);
+    //public void Damage(float damageAmount, Attack attack);
 }

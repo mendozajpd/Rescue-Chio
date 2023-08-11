@@ -16,8 +16,6 @@ public class DamagePopUpPool : GameObjectPool
     private Color32 _normalAtkColor;
     private Color32 _critAtkColor;
 
-    // Make method here that will change the position and settings
-
     private void Awake()
     {
         _popUpText = Resources.Load<PopUpTextScript>("DamagePopUp");
@@ -29,9 +27,6 @@ public class DamagePopUpPool : GameObjectPool
         {
             PopUpTextScript damagePopUp = Instantiate(_popUpText, transform);
             damagePopUp.SetPoolSender(_releaseToPool);
-            //damagePopUp.Set
-            // Set Damage Settings
-            // Set Pop Up Location
             return damagePopUp;
         }, damagePopUp =>
         {
@@ -54,25 +49,15 @@ public class DamagePopUpPool : GameObjectPool
         popup.SetLocationPopUpLocation(popUpLocation);
         popup.SetPopUpText(text, isCrit, normalAtkColor, critAtkColor);
     }
+
     public void SpawnDamageText(Vector3 popUpLocation, bool isCrit, string text, Color32 normalAtkColor, Color32 critAtkColor)
     {
-        //Debug.Log("works");
         _popUpLoc = popUpLocation;
         _isCrit = isCrit;
         _text = text;
         _normalAtkColor = normalAtkColor;
         _critAtkColor = critAtkColor;
         Pool.Get();
-    }
-
-    public void SpawnDamageText(Vector3 popUpLocation, string text, Color32 normalAtkColor)
-    {
-        // this is for without crit
-    }
-
-    void Update()
-    {
-
     }
 
     private void _releaseToPool(PopUpTextScript popUpText)

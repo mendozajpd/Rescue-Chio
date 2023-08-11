@@ -49,8 +49,6 @@ public class PopUpTextScript : MonoBehaviour
         {
             timerEnabled = false;
             _anim.SetTrigger("ShrinkDown");
-            //Destroy(gameObject, 0.15f);
-            // Send to Pool
             StartCoroutine(sendToPoolWithDelay(0.15f));
         }
     }
@@ -109,7 +107,6 @@ public class PopUpTextScript : MonoBehaviour
 
     public void ResetTimer()
     {
-        //HasEnded = false;
         _timePassed = 0;
         timerEnabled = true;
     }
