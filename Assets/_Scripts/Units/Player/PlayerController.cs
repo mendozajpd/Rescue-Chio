@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Controller
 {
     [SerializeField] private Animator anim;
     [SerializeField] private SpriteRenderer sprite;
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _dashDirection;
     private float _dashCooldownTime;
     private float _dashTime;
+
     public DashStatsSO DashStats 
     { 
         get => dashStats;

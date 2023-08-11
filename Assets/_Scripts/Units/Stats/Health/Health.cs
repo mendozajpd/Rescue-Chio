@@ -2,32 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Health : Gauge, IDamageable, IHealable
 {
     public delegate void DeathHandler();
     public event DeathHandler hasDied;
     private HealthBar _healthBarPrefab;
-    private PopUpTextScript _damagePopUp;
     private Color32 normalAttackColor = Color.white;
     private Color32 critAttackColor = Color.red;
-
-    // DamagePopUpPool 
     private DamagePopUpPool _damagePopUpPool;
 
-    // Invoke the method here 
-    public System.Action SpawnDamagePopUp;
+    [Header("Knockback Variables")]
+    private Rigidbody2D _rb;
+    public bool Knockbacked;
+    private float _knockbackDuration = 0.2f;
+    private float _knockbackTime;
 
-
+    [Header("Invincibility Variables")]
     public bool Invincible;
     private float _invincibilityDuration = 0.3f; 
-    // SHOULD CHANGE INVINCIBILITY TO ATTACK INFLICTION
-    // CREATE A METHOD THAT WOULD WOULD TAKE IN A FLOAT THAT WOULD CHANGE THE INVINCIBILITY TIME, SETINVINCIBILITY TIME
     private float _invincibilityTime;
 
     [SerializeField] private bool godMode;
     [SerializeField] private bool knockbackImmune;
 
-    public float ImmunityTime 
+    public float InvincibilityTime 
     { 
         get => _invincibilityTime;
         set 
@@ -37,22 +36,42 @@ public class Health : Gauge, IDamageable, IHealable
         } 
     }
 
+    public float KnockbackTime 
+    { 
+        get => _knockbackTime;
+        set 
+        { 
+            _knockbackTime = value;
+            Knockbacked = _knockbackTime <= 0 ? false : true;
+        } 
+    }
+
     private void Awake()
     {
         _damagePopUpPool = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<DamagePopUpPool>();
+        _rb = GetComponent<Rigidbody2D>();
         _spawnHealthBar();
     }
 
     private void Update()
     {
-        immunityTimer();
+        _invincibilityTimer();
+        _knockbackTimer();
     }
 
-    private void immunityTimer()
+    private void _knockbackTimer()
     {
-        if (ImmunityTime > 0)
+        if (KnockbackTime > 0)
         {
-            ImmunityTime -= Time.deltaTime;
+            KnockbackTime -= Time.deltaTime;
+        }
+    }
+
+    private void _invincibilityTimer()
+    {
+        if (InvincibilityTime > 0)
+        {
+            InvincibilityTime -= Time.deltaTime;
         }
     }
 
@@ -115,6 +134,21 @@ public class Health : Gauge, IDamageable, IHealable
     // what if there are attacks that should not inflict knockback?
 
     // Find the right place to add knockback function and how to implement it
+
+    public void InflictKnocback(Vector2 knockbackSource, float extraKnockbackAmt)
+    {
+        // set knockbackTime
+        _setKnockbackTime();
+        // get direction
+        Vector2 direction = (Vector2)transform.position - knockbackSource;
+        // inflict knockback
+        // TotalKnockback + extraknockback
+    }
+
+    private void _setKnockbackTime()
+    {
+        KnockbackTime = _knockbackDuration;
+    }
     #endregion
 
     private void _spawnHealthBar()
