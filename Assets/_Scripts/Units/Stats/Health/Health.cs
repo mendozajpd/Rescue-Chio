@@ -43,7 +43,11 @@ public class Health : Gauge, IDamageable, IHealable
         { 
             _knockbackTime = value;
             Knockbacked = _knockbackTime <= 0 ? false : true;
-            if (!Knockbacked) _rb.velocity = Vector2.zero;
+            if (!Knockbacked) 
+            { 
+                _rb.velocity = Vector2.zero;
+                _rb.isKinematic = true;
+            }
         } 
     }
 
@@ -140,6 +144,7 @@ public class Health : Gauge, IDamageable, IHealable
     {
         // set knockbackTime
         _setKnockbackTime();
+        _rb.isKinematic = false;
         Knockbacked = true;
         // get direction
         Vector2 direction = (Vector2)transform.position - knockbackSource;

@@ -118,11 +118,13 @@ public class PlayerController : Controller
 
         if (moveDirection.magnitude > 0)
         {
+            if(_rb.isKinematic) _rb.isKinematic = false;
             anim.speed = moveSpeed <= defaultMoveSpeed ? moveSpeed/ defaultMoveSpeed : moveSpeed * (defaultMoveSpeed/moveSpeed) / defaultMoveSpeed;
             anim.SetBool("isRunning", true);
         }
         else
         {
+            _rb.isKinematic = true;
             anim.speed = moveSpeed / moveSpeed;
             anim.SetBool("isRunning", false);
         }
@@ -155,6 +157,7 @@ public class PlayerController : Controller
 
         if (Dashing && !_knockbacked)
         {
+            if (_rb.isKinematic) _rb.isKinematic = false;
             _dashMovement();
         }
 

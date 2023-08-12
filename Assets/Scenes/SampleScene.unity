@@ -16795,6 +16795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Knockbacked: 0
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
@@ -16822,7 +16823,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387974009}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -17000,7 +17001,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461599458}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -17080,6 +17081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Knockbacked: 0
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
@@ -17284,6 +17286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Knockbacked: 0
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
@@ -17311,7 +17314,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481844355}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -17396,38 +17399,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52e70352a487ea4d8b213f4185a0291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  sprite: {fileID: 0}
-  move:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 936df769-54c3-4b4b-a51f-dd90e6253e12
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  dash:
-    m_Name: Dash
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 8f3df291-6b6f-40b5-9899-28c21826e939
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  fire:
-    m_Name: Fire
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 232ee4db-1a6f-4d47-96af-5bf1eed18e5e
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   moveSpeed: 5
   defaultMoveSpeed: 5
   dashStats: {fileID: 11400000, guid: 9afcc65a029f46e4c9db031ae4982adc, type: 2}
+  Dashing: 0
   audioSource: {fileID: 0}
 --- !u!58 &1506409099
 CircleCollider2D:
@@ -17580,6 +17555,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
   UnitEquipment: {fileID: 0}
+  UnitController: {fileID: 0}
 --- !u!114 &1506409103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17606,6 +17582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Knockbacked: 0
   Invincible: 0
   godMode: 0
   knockbackImmune: 0
@@ -17828,6 +17805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  Knockbacked: 0
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
@@ -17855,7 +17833,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544696213}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
