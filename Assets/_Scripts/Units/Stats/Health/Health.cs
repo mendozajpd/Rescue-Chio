@@ -15,7 +15,7 @@ public class Health : Gauge, IDamageable, IHealable
     [Header("Knockback Variables")]
     private Rigidbody2D _rb;
     public bool Knockbacked;
-    private float _knockbackDuration = 0.15f;
+    private float _knockbackDuration = 0.25f;
     private float _knockbackTime;
 
     [Header("Invincibility Variables")]
@@ -64,11 +64,18 @@ public class Health : Gauge, IDamageable, IHealable
         _knockbackTimer();
     }
 
+    private void FixedUpdate()
+    {
+        KnockbackRecoveryHandler();
+    }
+
+    #region Timers
     private void _knockbackTimer()
     {
         if (KnockbackTime > 0)
         {
             KnockbackTime -= Time.deltaTime;
+
         }
     }
 
@@ -78,7 +85,8 @@ public class Health : Gauge, IDamageable, IHealable
         {
             InvincibilityTime -= Time.deltaTime;
         }
-    }
+    } 
+    #endregion
 
     #region DAMAGE/INVINCIBILITY FUNCTIONS
     // Can be used to inflict debuff if there is
@@ -138,24 +146,28 @@ public class Health : Gauge, IDamageable, IHealable
     // poison and burning cant be knockback
     // what if there are attacks that should not inflict knockback?
 
-    // Find the right place to add knockback function and how to implement it
-
-    public void InflictKnocback(Vector2 knockbackSource, float extraKnockbackAmt)
+    public void InflictKnocback(Vector2 knockbackSource, float knockbackAmt, bool crit)
     {
-        // set knockbackTime
         _setKnockbackTime();
         _rb.isKinematic = false;
         Knockbacked = true;
-        // get direction
         Vector2 direction = (Vector2)transform.position - knockbackSource;
-        // inflict knockback
-        _rb.AddForce(direction * extraKnockbackAmt, ForceMode2D.Force);
+        _rb.AddForce(direction.normalized * (crit ? knockbackAmt * 1.4f : knockbackAmt), ForceMode2D.Impulse);
         // TotalKnockback + extraknockback
     }
 
     private void _setKnockbackTime()
     {
         KnockbackTime = _knockbackDuration;
+    }
+
+    private void KnockbackRecoveryHandler()
+    {
+        if (Knockbacked)
+        {
+            Vector2 halfedVelocity = (_rb.velocity * (1 + (KnockbackTime/_knockbackDuration)) / 1.75f);
+            _rb.velocity = halfedVelocity;
+        }
     }
     #endregion
 

@@ -121,7 +121,7 @@ public class AstralDeathRayBehavior : Attack
                 bool isCrit = playerStats.isCriticalStrike();
                 health?.Damage(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, _iTimeAfterHit, this);
                 //health?.InflictKnocback(_spell.wand.PlayerPos, 5f);
-                health?.InflictKnocback(_spell.wand.PlayerPos, playerStats.CalculateTotalKnockback(Enemy.UnitStats.TotalKnockbackResistance));
+                health?.InflictKnocback(_spell.wand.PlayerPos, playerStats.CalculateTotalKnockback(Enemy.UnitStats.TotalKnockbackResistance), isCrit);
             }
         }
     }

@@ -49,6 +49,8 @@ MonoBehaviour:
   SpellName: Astral Death Ray
   SpellDamage: 0
   TotalSpellDamage: 0
+  SpellKnockback: 0
+  TotalSpellKnockback: 0
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
@@ -65,6 +67,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   defaultSpellDamage: 1
+  defaultSpellKnockback: 1
   isCharging: 0
   currentCharge: 0
   maxCharge: 100

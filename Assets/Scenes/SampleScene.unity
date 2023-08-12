@@ -16795,6 +16795,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
+  knockbackRecoveryRate: 0.5
 --- !u!58 &1387974015
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -17081,6 +17082,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
+  knockbackRecoveryRate: 0.5
 --- !u!1 &1468208015
 GameObject:
   m_ObjectHideFlags: 0
@@ -17286,6 +17288,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
+  knockbackRecoveryRate: 0.5
 --- !u!58 &1481844361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -17582,6 +17585,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 0
   knockbackImmune: 0
+  knockbackRecoveryRate: 0.5
 --- !u!114 &1506409105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17805,6 +17809,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 0
+  knockbackRecoveryRate: 0.5
 --- !u!58 &1544696219
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18544,7 +18549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
       propertyPath: maxCharge
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
       propertyPath: defaultSpellDamage
