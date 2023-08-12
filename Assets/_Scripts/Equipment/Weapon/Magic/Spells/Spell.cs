@@ -8,6 +8,8 @@ public abstract class Spell : MonoBehaviour
     public string SpellName;
     public float SpellDamage;
     public float TotalSpellDamage;
+    public float SpellKnockback;
+    public float TotalSpellKnockback;
     public SpellHandler spellHandler;
     public SpellChargeHandler spellCharge;
     public MagicWeapon wand;
@@ -26,9 +28,10 @@ public abstract class Spell : MonoBehaviour
 
     }
 
-    public void SetSpellVariables(float defaultSpellDamage)
+    public void SetSpellVariables(float defaultSpellDamage, float defaultSpellKB)
     {
         SpellDamage = defaultSpellDamage;
+        SpellKnockback = defaultSpellKB;
         spellHandler = GetComponentInParent<SpellHandler>();
         wand = spellHandler.Wand;
     }

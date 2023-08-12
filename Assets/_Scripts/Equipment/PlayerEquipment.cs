@@ -11,6 +11,7 @@ public class PlayerEquipment : MonoBehaviour
     private int _numberOfChildren;
 
     private float _totalBaseDamage;
+    private float _totalWeaponKB;
     public int NumberOfChildren 
     { 
         get => _numberOfChildren; 
@@ -60,6 +61,7 @@ public class PlayerEquipment : MonoBehaviour
     private void _calculateStats()
     {
         playerStats.CalculateTotalWeaponBaseDamage(_getWeaponBaseDamage());
+        playerStats.CalculateTrueKnockback(_totalWeaponKB);
     }
 
     private float _getWeaponBaseDamage()
@@ -71,6 +73,11 @@ public class PlayerEquipment : MonoBehaviour
             _totalBaseDamage += weapon.BaseWeaponDamage;
         }
         return _totalBaseDamage;
+    }
+
+    public void GetWeaponKnocback(float weaponKB)
+    {
+        _totalWeaponKB = weaponKB;
     }
 
     IEnumerator getNumberOfChildren(float numOfSecondsUntilUpdate)

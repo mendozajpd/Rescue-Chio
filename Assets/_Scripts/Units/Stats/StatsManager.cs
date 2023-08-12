@@ -14,6 +14,7 @@ public class StatsManager : MonoBehaviour
     private float _defaultDefense;
     private float _defaultHealthRegen; // idk about this too, i just placed it here just in case
     private float _defaultKnockback;
+    private float _defaultKnockbackResistance;
     private float _defaultMoveSpeed;
 
     // BONUS STATS
@@ -26,6 +27,7 @@ public class StatsManager : MonoBehaviour
     private float _bonusDefense;
     private float _bonusHealthRegen;
     private float _bonusKnockback;
+    private float _bonusKnockbackResistance;
     private float _bonusCurrentMoveSpeed;
 
     // PENALTY STATS
@@ -38,6 +40,7 @@ public class StatsManager : MonoBehaviour
     private float _penaltyDefense;
     private float _penaltyHealthRegen;
     private float _penaltyKnockback;
+    private float _penaltyKnockbackResistance;
     private float _penaltyCurrentMoveSpeed;
 
     // TOTAL STATS
@@ -50,6 +53,7 @@ public class StatsManager : MonoBehaviour
     private float _totalDefense;
     private float _totalHealthRegen;
     private float _totalKnockback;
+    private float _totalKnockbackResistance;
     private float _totalMovementSpeed;
 
 
@@ -64,6 +68,7 @@ public class StatsManager : MonoBehaviour
     public float DefaultDefense { get => _defaultDefense; }
     public float DefaultHealthRegen { get => _defaultHealthRegen; }
     public float DefaultKnockback { get => _defaultKnockback; }
+    public float DefaultKnockbackResistance { get => _defaultKnockbackResistance; set => _defaultKnockbackResistance = value; }
     public float DefaultMoveSpeed { get => _defaultMoveSpeed; } 
     #endregion
 
@@ -109,6 +114,7 @@ public class StatsManager : MonoBehaviour
         get => _bonusHealthRegen;
         set => _bonusHealthRegen = value;
     }
+    public float BonusKnockbackResistance { get => _bonusKnockbackResistance; set => _bonusKnockbackResistance = value; }
     public float BonusKnockback
     {
         get => _bonusKnockback;
@@ -168,6 +174,7 @@ public class StatsManager : MonoBehaviour
         get => _penaltyKnockback;
         set => _penaltyKnockback = value;
     }
+    public float PenaltyKnockbackResistance { get => _penaltyKnockbackResistance; set => _penaltyKnockbackResistance = value; }
     public float PenaltyMoveSpeed // SLOWNESS
     {
         get => _penaltyCurrentMoveSpeed;
@@ -223,6 +230,7 @@ public class StatsManager : MonoBehaviour
         get => _totalKnockback;
         set => _totalKnockback = value;
     }
+    public float TotalKnockbackResistance { get => _totalKnockbackResistance; set => _totalKnockbackResistance = value; }
     public float TotalMoveSpeed
     {
         get => _totalMovementSpeed;
@@ -380,6 +388,22 @@ public class StatsManager : MonoBehaviour
 
     // knockback cap
 
+    public float CalculateTrueKnockback(float baseWeaponKnockback)
+    {
+        //TotalKnockback = DefaultKnockback + BonusKnockback;
+        // TEMPORARY
+        TotalKnockback = DefaultKnockback + baseWeaponKnockback;
+        return TotalKnockback;
+    }
+
+    public float CalculateTotalKnockback(float receiverKnockbackResistance)
+    {
+        // 100 knockback resistance will always half the knockback dealt
+        float netKb = TotalKnockback / (receiverKnockbackResistance / 100 + 1);
+        Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
+        return netKb;
+    }
+
     // add extra knockback if it is critical hit
     #endregion
 
@@ -388,6 +412,13 @@ public class StatsManager : MonoBehaviour
     private void CalculateTotalMovementSpeed()
     {
         TotalMoveSpeed = DefaultMoveSpeed + BonusMoveSpeed - PenaltyMoveSpeed;
+    }
+    #endregion
+
+    #region Knockback Resistance Calculator
+    private void CalculateTotalKnockbackResistance()
+    {
+        TotalKnockbackResistance = DefaultKnockbackResistance + BonusKnockbackResistance - PenaltyKnockbackResistance;
     }
     #endregion
 
@@ -406,6 +437,7 @@ public class StatsManager : MonoBehaviour
             _defaultDefense = defaultStats.DefaultDefense;
             _defaultHealthRegen = defaultStats.DefaultHealthRegen; // idk about this too, i just placed it here just in case
             _defaultKnockback = defaultStats.DefaultKnockback;
+            _defaultKnockbackResistance = defaultStats.DefaultKnockbackResistance;
             _defaultMoveSpeed = defaultStats.DefaultMoveSpeed;
         }
     }
@@ -418,6 +450,7 @@ public class StatsManager : MonoBehaviour
         CalculateTotalAttackSpeed();
         CalculateTotalDefense();
         CalculateTotalCritChance();
+        CalculateTotalKnockbackResistance();
         CalculateTotalMovementSpeed();
     }    
 

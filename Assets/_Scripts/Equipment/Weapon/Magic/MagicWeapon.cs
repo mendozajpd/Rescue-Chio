@@ -168,16 +168,21 @@ public class MagicWeapon : Weapon
             else
             {
                 Spells[i].gameObject.SetActive(true);
-                SetSpellDamage(i);
+                SetSpellStats(i);
             }
         }
     }
 
-    private void SetSpellDamage(int i)
+    private void SetSpellStats(int i)
     {
         BaseWeaponDamage = Spells[i].SpellDamage;
         SetTotalWeaponDamage(equipment);
         Spells[i].TotalSpellDamage = TotalWeaponDamage;
+
+        BaseWeaponKnockback = Spells[i].SpellKnockback;
+        SetTotalWeaponKnockback(equipment);
+        Spells[i].TotalSpellKnockback = TotalWeaponKnockback;
+        equipment.GetWeaponKnocback(TotalWeaponKnockback);
     }
 
     private void _castSpell()
