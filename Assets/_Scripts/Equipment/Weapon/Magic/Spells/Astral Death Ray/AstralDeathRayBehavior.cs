@@ -49,11 +49,13 @@ public class AstralDeathRayBehavior : Attack
         _spawnLaserTip();
     }
 
-    public void SetLaserSettings(float laserdistance, float rotationSpeed, float size)
+    public void SetLaserSettings(float laserdistance, float rotationSpeed, float size, bool inflictsKB)
     {
         LaserDistance = laserdistance;
         _rotationSpeed = rotationSpeed;
         _laserSize = size;
+        inflictsKnockback = inflictsKB;
+
     }
 
     void Start()
@@ -92,7 +94,7 @@ public class AstralDeathRayBehavior : Attack
         }
     }
 
-    #region Collision Related Variables
+    #region Collision/Damage Variables
     private void _setEdgeCollider(LineRenderer laser)
     {
         List<Vector2> edges = new List<Vector2>();
@@ -106,6 +108,10 @@ public class AstralDeathRayBehavior : Attack
         _laserHitbox.SetPoints(edges);
     }
 
+    public void SetKnockbackSettingForAttack(bool canInflictKB)
+    {
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         var Enemy = collision.GetComponent<EnemyManager>();
@@ -113,18 +119,20 @@ public class AstralDeathRayBehavior : Attack
         if (Enemy != null)
         {
             // ADD PARTICLES ON ENEMY POSITION TO INDICATE A HIT
-            var health = Enemy.GetComponent<Health>();
-            bool isInvincible = health.Invincible;
+            var EnemyHealth = Enemy.GetComponent<Health>();
+            bool isInvincible = EnemyHealth.Invincible;
             if (!isInvincible)
             {
                 var playerStats = _spell.wand.equipment.playerStats;
                 bool isCrit = playerStats.isCriticalStrike();
-                health?.Damage(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, _iTimeAfterHit, this);
-                //health?.InflictKnocback(_spell.wand.PlayerPos, 5f);
-                health?.InflictKnocback(_spell.wand.PlayerPos, playerStats.CalculateTotalKnockback(Enemy.UnitStats.TotalKnockbackResistance), isCrit);
+                PlayerDealDamageToEnemy(Enemy, EnemyHealth, playerStats, this, _spell.TotalSpellDamage, _spell.wand.PlayerPos,_iTimeAfterHit, isCrit, inflictsKnockback);
+                //EnemyHealth?.Damage(Enemy.UnitStats.CalculateFinalDamageToEnemy(_spell.TotalSpellDamage, isCrit), isCrit, _iTimeAfterHit, this);
+                //EnemyHealth?.InflictKnocback(_spell.wand.PlayerPos, playerStats.CalculateTotalKnockback(Enemy.UnitStats.TotalKnockbackResistance), isCrit);
             }
         }
     }
+
+
 
 
     #endregion

@@ -68,6 +68,7 @@ MonoBehaviour:
     m_Flags: 0
   defaultSpellDamage: 1
   defaultSpellKnockback: 1
+  inflictsKnockback: 1
   isCharging: 0
   currentCharge: 0
   maxCharge: 100
