@@ -94,15 +94,15 @@ public class PlayerEquipment : MonoBehaviour
 
     private void _calculateCurrentStats()
     {
-        playerStats.CalculateCurrentWeaponDamage(TotalCurrentWeaponDamage);
+        //playerStats.CalculateCurrentWeaponDamage(TotalCurrentWeaponDamage);
         playerStats.CalculateTrueKnockback(TotalWeaponKB);
     }
 
-    public void SetCurrentWeaponBaseDamage(float baseDamage)
-    {
+    //public void SetCurrentWeaponBaseDamage(float baseDamage)
+    //{
 
-        TotalCurrentWeaponDamage = baseDamage;
-    }
+    //    TotalCurrentWeaponDamage = baseDamage;
+    //}
 
     private float _getTotalWeaponBaseDamage()
     {

@@ -18,7 +18,7 @@ public abstract class Attack : MonoBehaviour
         if(inflictKB) health?.InflictKnocback(knockbackSource, stats.CalculateTotalKnockback(unitStats.TotalKnockbackResistance), isCrit);
     }
 
-    protected void AttackHitsEnemy(Collider2D collision, StatsManager attackerStats, float damage, Vector2 knockbackSource, float iTime)
+    protected void DealDamageToEnemy(Collider2D collision, StatsManager attackerStats, float damage, Vector2 knockbackSource, float iTime)
     {
         var Enemy = collision.GetComponent<EnemyManager>();
 

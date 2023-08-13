@@ -114,43 +114,8 @@ public class AstralDeathRayBehavior : Attack
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        AttackHitsEnemy(collision, _spell.wand.equipment.playerStats, _spell.TotalSpellDamage, _spell.wand.PlayerPos, _iTimeAfterHit);
-        //var Enemy = collision.GetComponent<EnemyManager>();
-
-        //if (Enemy != null)
-        //{
-        //    // ADD PARTICLES ON ENEMY POSITION TO INDICATE A HIT
-        //    var EnemyHealth = Enemy.GetComponent<Health>();
-        //    bool isInvincible = EnemyHealth.Invincible;
-        //    if (!isInvincible)
-        //    {
-        //        var playerStats = _spell.wand.equipment.playerStats;
-        //        bool isCrit = playerStats.isCriticalStrike();
-        //        DealDamage(EnemyHealth, playerStats, this, _spell.TotalSpellDamage, _spell.wand.PlayerPos, _iTimeAfterHit, isCrit, inflictsKnockback);
-        //    }
-        //}
+        DealDamageToEnemy(collision, _spell.wand.equipment.playerStats, _spell.TotalSpellDamage, _spell.wand.PlayerPos, _iTimeAfterHit);
     }
-
-    //protected void CollideWithEnemy(Collider2D collision)
-    //{
-    //    var Enemy = collision.GetComponent<EnemyManager>();
-
-    //    if (Enemy != null)
-    //    {
-    //        // ADD PARTICLES ON ENEMY POSITION TO INDICATE A HIT
-    //        var EnemyHealth = Enemy.GetComponent<Health>();
-    //        bool isInvincible = EnemyHealth.Invincible;
-    //        if (!isInvincible)
-    //        {
-    //            var playerStats = _spell.wand.equipment.playerStats;
-    //            bool isCrit = playerStats.isCriticalStrike();
-    //            DealDamage(EnemyHealth, playerStats, this, _spell.TotalSpellDamage, _spell.wand.PlayerPos, _iTimeAfterHit, isCrit, inflictsKnockback);
-    //        }
-    //    }
-    //}
-
-
-
 
     #endregion
 

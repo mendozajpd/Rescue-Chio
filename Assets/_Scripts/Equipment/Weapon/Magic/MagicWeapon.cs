@@ -59,7 +59,7 @@ public class MagicWeapon : Weapon
             }
             SetWandActions();
             _enableCurrentSpell();
-            equipment.SetCurrentWeaponBaseDamage(BaseWeaponDamage);
+            //equipment.SetCurrentWeaponBaseDamage(BaseWeaponDamage);
         }
     }
 
@@ -111,7 +111,7 @@ public class MagicWeapon : Weapon
 
     void Start()
     {
-        equipment.SetCurrentWeaponBaseDamage(BaseWeaponDamage);
+        //equipment.SetCurrentWeaponBaseDamage(BaseWeaponDamage);
 
     }
 
@@ -185,7 +185,7 @@ public class MagicWeapon : Weapon
         SetTotalWeaponKnockback(equipment);
         Spells[i].TotalSpellKnockback = TotalWeaponKnockback;
         equipment.GetWeaponKnocback(TotalWeaponKnockback);
-        equipment.SetCurrentWeaponBaseDamage(BaseWeaponDamage);
+        //equipment.SetCurrentWeaponBaseDamage(BaseWeaponDamage);
 
     }
 

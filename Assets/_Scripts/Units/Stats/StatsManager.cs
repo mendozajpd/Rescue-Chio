@@ -51,7 +51,7 @@ public class StatsManager : MonoBehaviour
     private float _totalAttackSpeed;
     private float _totalCritHitChance;
     private float _totalDamage;
-    private float _totalCurrentWeaponDamage;
+    //private float _totalCurrentWeaponDamage;
     private float _totalDefense;
     private float _totalHealthRegen;
     private float _totalKnockback;
@@ -217,11 +217,11 @@ public class StatsManager : MonoBehaviour
         get => _totalDamage;
         set => _totalDamage = value;
     }
-    public float TotalCurrentWeaponDamage 
-    { 
-        get => _totalCurrentWeaponDamage; 
-        set => _totalCurrentWeaponDamage = value; 
-    }
+    //public float TotalCurrentWeaponDamage 
+    //{ 
+    //    get => _totalCurrentWeaponDamage; 
+    //    set => _totalCurrentWeaponDamage = value; 
+    //}
     public float TotalDefense
     {
         get => _totalDefense;
@@ -266,7 +266,7 @@ public class StatsManager : MonoBehaviour
 
     public void CalculateTotalMaxHealth()
     {
-        TotalMaxHealth = DefaultMaxHealth + BonusMaxHealth;
+        TotalMaxHealth = DefaultMaxHealth + BonusMaxHealth - PenaltyMaxHealth;
     }
 
     #endregion
@@ -275,7 +275,7 @@ public class StatsManager : MonoBehaviour
 
     public void CalculateTotalMaxMana()
     {
-        TotalMaxMana = DefaultMaxMana + BonusMaxMana;
+        TotalMaxMana = DefaultMaxMana + BonusMaxMana - PenaltyMaxMana;
     }
 
     #endregion
@@ -289,11 +289,12 @@ public class StatsManager : MonoBehaviour
     #endregion
 
     #region Attack Speed Calculator
-    // totalAttackSpeed = defaultAttackspeed + totalBonusattackspeed
-    // totalBonusattackspeed = defaultAttackSpeed * bonusAttackSpeed * 0.01
+
+    // MAKE CHARGING SPEED SCALE WITH ATTACK SPEED
     public void CalculateTotalAttackSpeed()
     {
-        TotalAttackSpeed = DefaultAttackSpeed + (DefaultAttackSpeed * BonusAttackSpeed * 0.01f);
+        // If Total Attack Speed goes below 0, it will default to 1
+        TotalAttackSpeed = TotalAttackSpeed <= 1 ? 1 : DefaultAttackSpeed + (DefaultAttackSpeed * (BonusAttackSpeed - PenaltyAttackSpeed) * 0.01f);
     }
 
     #endregion
@@ -323,22 +324,18 @@ public class StatsManager : MonoBehaviour
     #endregion
 
     #region Damage Calculator
-    // Get Base Damage
-    // Calculate Total Damage
-    // Give back total damage to weapon
-    // Weapon will calculate how much damage it will output
 
     public void CalculateCurrentWeaponDamage(float baseDamage)
     {
-        TotalCurrentWeaponDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
+        //TotalCurrentWeaponDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
 
     }
+
     public void CalculateTotalWeaponBaseDamage(float baseDamage)
     {
         TotalDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
     }
 
-    // TOTAL DAMAGE OF THE WEAPON USING (BASICALLY TRUE DAMAGE)
     public float CalculateTrueDamage(float baseDamage)
     {
         float netDmg = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
@@ -350,9 +347,6 @@ public class StatsManager : MonoBehaviour
         return netDmg;
     }
 
-    // CREATE A DIFFERENT TOTAL DAMAGE CALCULATOR FOR ENEMY
-
-    // FOR THE PLAYER
     public float CalculateFinalDamage(float damage, bool isCrit)
     {
         float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTrueDamage(damage));
@@ -366,20 +360,12 @@ public class StatsManager : MonoBehaviour
         return isCrit ? netDmg * 2 : netDmg;
     }
 
-    // FOR THE ENEMY
-
     #endregion
 
     #region Defense Calculator
-    // THIS IS TO BE CALCULATED WHEN UNIT IS TAKING DAMAGE
-    // must be calculated 2nd after damage and before adding critical hit
-    // player defense is different to enemy/object defense
-
-    // for players
-    // net dmg = (attack damage - def * factor) factor is dependent on difficulty, the higher the factor the more damage player takes
     public void CalculateTotalDefense()
     {
-        TotalDefense = DefaultDefense + BonusDefense;
+        TotalDefense = DefaultDefense + BonusDefense - PenaltyDefense;
     }
 
     public float CalculateDamageReceivedByPlayerWithDefense(float atkDamage)
@@ -420,7 +406,7 @@ public class StatsManager : MonoBehaviour
     {
         // 100 knockback resistance will always half the knockback dealt
         float netKb = TotalKnockback / (receiverKnockbackResistance / 100 + 1);
-        Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
+        if(debugMode) Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
         return netKb;
     }
     #endregion
