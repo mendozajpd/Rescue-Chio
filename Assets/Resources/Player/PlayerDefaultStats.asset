@@ -23,5 +23,5 @@ MonoBehaviour:
   DefaultDefense: 5
   DefaultHealthRegen: 0
   DefaultKnockback: 0
-  DefaultKnockbackResistance: 50
+  DefaultKnockbackResistance: 0
   DefaultMoveSpeed: 5

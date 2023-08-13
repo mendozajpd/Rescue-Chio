@@ -12,6 +12,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private float _totalBaseDamage;
     private float _totalWeaponKB;
+    private float _totalCurrentWeaponDamage;
     public int NumberOfChildren 
     { 
         get => _numberOfChildren; 
@@ -23,9 +24,37 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
+    public float TotalBaseDamage 
+    { 
+        get => _totalBaseDamage;
+        set 
+        { 
+            _totalBaseDamage = value;
+            _calculateCurrentStats();
+        } 
+    }
+    public float TotalWeaponKB 
+    { 
+        get => _totalWeaponKB;
+        set 
+        { 
+            _totalWeaponKB = value;
+            _calculateCurrentStats();
+        }
+    }
+
+    public float TotalCurrentWeaponDamage 
+    { 
+        get => _totalCurrentWeaponDamage;
+        set 
+        { 
+            _totalCurrentWeaponDamage = value; 
+        }
+    }
+
     private void OnEnable()
     {
-        playerStats.CalculateStats += _calculateStats;
+        playerStats.CalculateStats += _calculateTotalStats;
     }
 
     private void OnDisable()
@@ -58,26 +87,37 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
-    private void _calculateStats()
+    private void _calculateTotalStats()
     {
-        playerStats.CalculateTotalWeaponBaseDamage(_getWeaponBaseDamage());
-        playerStats.CalculateTrueKnockback(_totalWeaponKB);
+        playerStats.CalculateTotalWeaponBaseDamage(_getTotalWeaponBaseDamage());
     }
 
-    private float _getWeaponBaseDamage()
+    private void _calculateCurrentStats()
     {
-        _totalBaseDamage = 0;
+        playerStats.CalculateCurrentWeaponDamage(TotalCurrentWeaponDamage);
+        playerStats.CalculateTrueKnockback(TotalWeaponKB);
+    }
+
+    public void SetCurrentWeaponBaseDamage(float baseDamage)
+    {
+
+        TotalCurrentWeaponDamage = baseDamage;
+    }
+
+    private float _getTotalWeaponBaseDamage()
+    {
+        TotalBaseDamage = 0;
 
         foreach(Weapon weapon in Weapons)
         {
-            _totalBaseDamage += weapon.BaseWeaponDamage;
+            TotalBaseDamage += weapon.BaseWeaponDamage;
         }
-        return _totalBaseDamage;
+        return TotalBaseDamage;
     }
 
     public void GetWeaponKnocback(float weaponKB)
     {
-        _totalWeaponKB = weaponKB;
+        TotalWeaponKB = weaponKB;
     }
 
     IEnumerator getNumberOfChildren(float numOfSecondsUntilUpdate)

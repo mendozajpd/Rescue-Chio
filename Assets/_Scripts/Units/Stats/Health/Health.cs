@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Health : Gauge, IDamageable, IHealable
 {
+
     public delegate void DeathHandler();
     public event DeathHandler hasDied;
     private HealthBar _healthBarPrefab;
@@ -108,8 +109,9 @@ public class Health : Gauge, IDamageable, IHealable
 
     private void _SetInvincibilityTime(float damageAmount, float iTime)
     {
-        _invincibilityTime = (damageAmount == 1 ? _invincibilityDuration / 2 : _invincibilityDuration) + iTime;
+        _invincibilityTime = (damageAmount == 1 ? _invincibilityDuration / 1.3f : _invincibilityDuration) + iTime;
     }
+
 
     //public void Damage(float damageAmount, Attack attack)
     //{
@@ -148,6 +150,7 @@ public class Health : Gauge, IDamageable, IHealable
 
     public void InflictKnocback(Vector2 knockbackSource, float knockbackAmt, bool crit)
     {
+        _rb.velocity = _rb.velocity / 2;
         _setKnockbackTime();
         _rb.isKinematic = false;
         Knockbacked = true;

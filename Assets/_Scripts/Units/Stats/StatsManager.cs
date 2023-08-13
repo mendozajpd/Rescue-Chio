@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StatsManager : MonoBehaviour
 {
+    [SerializeField] private bool debugMode;
     // DEFAULT STATS
     private float _defaultMaxHealth;
     private float _defaultMaxMana;
@@ -50,6 +51,7 @@ public class StatsManager : MonoBehaviour
     private float _totalAttackSpeed;
     private float _totalCritHitChance;
     private float _totalDamage;
+    private float _totalCurrentWeaponDamage;
     private float _totalDefense;
     private float _totalHealthRegen;
     private float _totalKnockback;
@@ -69,7 +71,7 @@ public class StatsManager : MonoBehaviour
     public float DefaultHealthRegen { get => _defaultHealthRegen; }
     public float DefaultKnockback { get => _defaultKnockback; }
     public float DefaultKnockbackResistance { get => _defaultKnockbackResistance; set => _defaultKnockbackResistance = value; }
-    public float DefaultMoveSpeed { get => _defaultMoveSpeed; } 
+    public float DefaultMoveSpeed { get => _defaultMoveSpeed; }
     #endregion
 
     #region BONUS STATS
@@ -124,7 +126,7 @@ public class StatsManager : MonoBehaviour
     {
         get => _bonusCurrentMoveSpeed;
         set => _bonusCurrentMoveSpeed = value;
-    } 
+    }
     #endregion
 
     #region PENALTY STATS
@@ -179,7 +181,7 @@ public class StatsManager : MonoBehaviour
     {
         get => _penaltyCurrentMoveSpeed;
         set => _penaltyCurrentMoveSpeed = value;
-    } 
+    }
     #endregion
 
     #region TOTAL STATS
@@ -215,6 +217,11 @@ public class StatsManager : MonoBehaviour
         get => _totalDamage;
         set => _totalDamage = value;
     }
+    public float TotalCurrentWeaponDamage 
+    { 
+        get => _totalCurrentWeaponDamage; 
+        set => _totalCurrentWeaponDamage = value; 
+    }
     public float TotalDefense
     {
         get => _totalDefense;
@@ -247,7 +254,7 @@ public class StatsManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void UpdateStats()
@@ -304,8 +311,11 @@ public class StatsManager : MonoBehaviour
     public bool isCriticalStrike()
     {
         int critRNG = Random.Range(1, 100);
-        //Debug.Log("CritRNG :" + critRNG + "/ 100");
-        //Debug.Log("CritRNG IS:" + (critRNG < TotalCritHitChance ? true : false));
+        if (debugMode)
+        {
+            Debug.Log("CritRNG :" + critRNG + "/ 100");
+            Debug.Log("CritRNG IS:" + (critRNG < TotalCritHitChance ? true : false));
+        }
         return critRNG < TotalCritHitChance ? true : false;
     }
 
@@ -318,30 +328,41 @@ public class StatsManager : MonoBehaviour
     // Give back total damage to weapon
     // Weapon will calculate how much damage it will output
 
+    public void CalculateCurrentWeaponDamage(float baseDamage)
+    {
+        TotalCurrentWeaponDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
+
+    }
     public void CalculateTotalWeaponBaseDamage(float baseDamage)
     {
         TotalDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
     }
 
     // TOTAL DAMAGE OF THE WEAPON USING (BASICALLY TRUE DAMAGE)
-    public float CalculateTrueDamage(float baseDamage) 
+    public float CalculateTrueDamage(float baseDamage)
     {
-        //Debug.Log("base damage is: " + baseDamage);
         float netDmg = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
-        //Debug.Log("total damage is: " + TotalDamage);
+        if (debugMode)
+        {
+            Debug.Log("base damage is: " + baseDamage);
+            Debug.Log("total damage is: " + TotalDamage);
+        }
         return netDmg;
     }
 
     // CREATE A DIFFERENT TOTAL DAMAGE CALCULATOR FOR ENEMY
 
     // FOR THE PLAYER
-    public float CalculateFinalDamageToEnemy(float damage, bool isCrit)
+    public float CalculateFinalDamage(float damage, bool isCrit)
     {
         float netDmg = CalculateDamageReceivedByEnemyWithDefense(CalculateTrueDamage(damage));
-        netDmg = Mathf.Round(Random.Range(- netDmg * 0.15f, netDmg * 0.15f) + netDmg);
+        netDmg = Mathf.Round(Random.Range(-netDmg * 0.15f, netDmg * 0.15f) + netDmg);
         netDmg = netDmg <= 0 ? 1 : netDmg;
-        //Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
-        //if (isCrit) Debug.Log("CRIT!");
+        if (debugMode)
+        {
+            Debug.Log("FINAL DAMAGE: " + (isCrit ? netDmg * 2 : netDmg));
+            if (isCrit) Debug.Log("CRIT!");
+        }
         return isCrit ? netDmg * 2 : netDmg;
     }
 
@@ -368,11 +389,10 @@ public class StatsManager : MonoBehaviour
         return netDmg < 0 ? 1 : Mathf.Round(netDmg);
     }
 
-    // for enemies
     public float CalculateDamageReceivedByEnemyWithDefense(float atkDamage)
     {
         float netDmg = (atkDamage - TotalDefense * 0.5f);
-        //Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
+        if (debugMode) Debug.Log(gameObject.name + " has received " + (netDmg < 0 ? 1 : netDmg));
         return netDmg < 0 ? 1 : Mathf.Round(netDmg);
     }
 
@@ -403,8 +423,6 @@ public class StatsManager : MonoBehaviour
         Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
         return netKb;
     }
-
-    // add extra knockback if it is critical hit
     #endregion
 
     #region Movement Speed Calculator
@@ -452,7 +470,7 @@ public class StatsManager : MonoBehaviour
         CalculateTotalCritChance();
         CalculateTotalKnockbackResistance();
         CalculateTotalMovementSpeed();
-    }    
+    }
 
     // TEMPORARY
     IEnumerator calculateTotalStats(float numOfSeconds)
