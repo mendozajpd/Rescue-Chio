@@ -13,4 +13,10 @@ public class StatusEffectsManager : MonoBehaviour
     {
         
     }
+
+
+    public void CalculateStats()
+    {
+
+    }
 }

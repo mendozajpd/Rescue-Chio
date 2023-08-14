@@ -12,7 +12,9 @@ public class PlayerEquipment : MonoBehaviour
 
     private float _totalBaseDamage;
     private float _totalWeaponKB;
-    private float _totalCurrentWeaponDamage;
+
+
+    public System.Action CalculateStats;
     public int NumberOfChildren 
     { 
         get => _numberOfChildren; 
@@ -21,6 +23,7 @@ public class PlayerEquipment : MonoBehaviour
             if (value == _numberOfChildren) return;
             _numberOfChildren = value;
             _listWeaponsInEquipment();
+            CalculateWeaponBasedStats();
         }
     }
 
@@ -30,7 +33,7 @@ public class PlayerEquipment : MonoBehaviour
         set 
         { 
             _totalBaseDamage = value;
-            _calculateCurrentStats();
+            //CalculateWeaponBasedStats();
         } 
     }
     public float TotalWeaponKB 
@@ -39,22 +42,14 @@ public class PlayerEquipment : MonoBehaviour
         set 
         { 
             _totalWeaponKB = value;
-            _calculateCurrentStats();
+            //CalculateWeaponBasedStats();
         }
     }
 
-    public float TotalCurrentWeaponDamage 
-    { 
-        get => _totalCurrentWeaponDamage;
-        set 
-        { 
-            _totalCurrentWeaponDamage = value; 
-        }
-    }
 
     private void OnEnable()
     {
-        playerStats.CalculateStats += _calculateTotalStats;
+        //playerStats.CalculateStats += _calculateTotalStats;
     }
 
     private void OnDisable()
@@ -87,15 +82,14 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
-    private void _calculateTotalStats()
-    {
-        playerStats.CalculateTotalWeaponBaseDamage(_getTotalWeaponBaseDamage());
-    }
 
-    private void _calculateCurrentStats()
+    public void CalculateWeaponBasedStats()
     {
         //playerStats.CalculateCurrentWeaponDamage(TotalCurrentWeaponDamage);
         playerStats.CalculateTrueKnockback(TotalWeaponKB);
+        _getTotalWeaponBaseDamage();
+
+        CalculateStats?.Invoke();
     }
 
     //public void SetCurrentWeaponBaseDamage(float baseDamage)

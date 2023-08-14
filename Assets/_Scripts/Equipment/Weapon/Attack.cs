@@ -11,7 +11,7 @@ public abstract class Attack : MonoBehaviour
         Debug.Log("death message");
     }
 
-    protected void DealDamage(Health health, StatsManager stats, Attack attack, float damage, Vector2 knockbackSource, float iTime, bool isCrit, bool inflictKB)
+    private void DealDamage(Health health, StatsManager stats, Attack attack, float damage, Vector2 knockbackSource, float iTime, bool isCrit, bool inflictKB)
     {
         var unitStats = health.GetComponent<StatsManager>();
         health?.Damage(unitStats.CalculateFinalDamage(damage, isCrit), isCrit, iTime, attack);

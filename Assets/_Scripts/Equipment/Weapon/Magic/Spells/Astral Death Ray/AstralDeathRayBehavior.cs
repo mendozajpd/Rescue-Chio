@@ -13,7 +13,6 @@ public class AstralDeathRayBehavior : Attack
     private float _rotationSpeed;
     private float _rotateAmount;
     private float _laserDistance;
-    private float _laserSize;
 
     private List<AstralDeathRayParticles> _particles;
     private Light2D _light2D;
@@ -49,13 +48,11 @@ public class AstralDeathRayBehavior : Attack
         _spawnLaserTip();
     }
 
-    public void SetLaserSettings(float laserdistance, float rotationSpeed, float size, bool inflictsKB)
+    public void SetLaserSettings(float laserdistance, float rotationSpeed, bool inflictsKB)
     {
         LaserDistance = laserdistance;
         _rotationSpeed = rotationSpeed;
-        _laserSize = size;
         inflictsKnockback = inflictsKB;
-
     }
 
     void Start()
@@ -68,10 +65,12 @@ public class AstralDeathRayBehavior : Attack
         LaserHandlers();
     }
 
+    #region Handlers
+
     public void LaserHandlers()
     {
         if (!gameObject.activeSelf) return;
-        
+
         _laserStartPointPositionHandler();
         _setLaserPositions();
         _lightHandler();
@@ -79,20 +78,23 @@ public class AstralDeathRayBehavior : Attack
 
     private void _lightHandler()
     {
-        if(_spell.CurrentCharge == 100)
+        if (_spell.CurrentCharge == 100)
         {
             _light2D.intensity = Random.Range(2f, 5f);
             return;
         }
 
-        if (_light2D.intensity > 0 )
+        if (_light2D.intensity > 0)
         {
             _light2D.intensity -= Time.deltaTime * _fadeMultiplier;
-        } else
+        }
+        else
         {
             _light2D.intensity = 0;
         }
     }
+
+    #endregion
 
     #region Collision/Damage Variables
     private void _setEdgeCollider(LineRenderer laser)
@@ -108,13 +110,14 @@ public class AstralDeathRayBehavior : Attack
         _laserHitbox.SetPoints(edges);
     }
 
-    public void SetKnockbackSettingForAttack(bool canInflictKB)
-    {
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        DealDamageToEnemy(collision, _spell.wand.equipment.playerStats, _spell.TotalSpellDamage, _spell.wand.PlayerPos, _iTimeAfterHit);
+        var playerStats = _spell.wand.equipment.playerStats;
+        var totalSpellDamage = _spell.TotalSpellDamage;
+        var kbSource = _spell.wand.PlayerPos;
+
+        DealDamageToEnemy(collision, playerStats, totalSpellDamage,kbSource, _iTimeAfterHit);
     }
 
     #endregion

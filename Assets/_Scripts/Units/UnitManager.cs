@@ -17,6 +17,9 @@ public abstract class UnitManager : MonoBehaviour
     // Stats
     public StatsManager UnitStats;
 
+    // Powerups
+    public PowerupsManager UnitPowerups;
+
 
     public DefaultStatsSO UnitDefaultStats;
 
@@ -45,5 +48,11 @@ public abstract class UnitManager : MonoBehaviour
         {
             Debug.Log("Default Stats for " + gameObject.name + " not found!");
         }
+    }
+
+    public virtual void CalculateStats()
+    {
+        UnitStatusEffects.CalculateStats();
+        UnitPowerups.CalculateStats();
     }
 }

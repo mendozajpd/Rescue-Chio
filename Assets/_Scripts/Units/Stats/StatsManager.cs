@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatsManager : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
+
     // DEFAULT STATS
     private float _defaultMaxHealth;
     private float _defaultMaxMana;
@@ -245,21 +246,11 @@ public class StatsManager : MonoBehaviour
     }
     #endregion
 
-    public System.Action CalculateStats;
+    //public System.Action CalculateStats;
 
     void Start()
     {
-        StartCoroutine(calculateTotalStats(0.3f));
-    }
-
-    void Update()
-    {
-
-    }
-
-    public void UpdateStats()
-    {
-
+        StartCoroutine(calculateTotalStats(0.1f));
     }
 
     #region Max Health Calculator
@@ -398,13 +389,14 @@ public class StatsManager : MonoBehaviour
     {
         //TotalKnockback = DefaultKnockback + BonusKnockback;
         // TEMPORARY
-        TotalKnockback = DefaultKnockback + baseWeaponKnockback;
+        BonusKnockback = baseWeaponKnockback; // Add other factors
+        TotalKnockback = DefaultKnockback + BonusKnockback - PenaltyKnockback;
         return TotalKnockback;
     }
 
     public float CalculateTotalKnockback(float receiverKnockbackResistance)
     {
-        // 100 knockback resistance will always half the knockback dealt
+        // 100 knockback resistance will always half the knockback dealt (may change this)
         float netKb = TotalKnockback / (receiverKnockbackResistance / 100 + 1);
         if(debugMode) Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
         return netKb;
@@ -412,7 +404,6 @@ public class StatsManager : MonoBehaviour
     #endregion
 
     #region Movement Speed Calculator
-    // totalMovespeed = defaultMovespeed + bonusMovespeed - penaltyMovespeed
     private void CalculateTotalMovementSpeed()
     {
         TotalMoveSpeed = DefaultMoveSpeed + BonusMoveSpeed - PenaltyMoveSpeed;
@@ -448,7 +439,7 @@ public class StatsManager : MonoBehaviour
 
     public void CalculateTotalStats()
     {
-        CalculateStats?.Invoke();
+        //CalculateStats?.Invoke();
         CalculateTotalMaxHealth();
         CalculateTotalMaxMana();
         CalculateTotalAttackSpeed();
@@ -456,6 +447,13 @@ public class StatsManager : MonoBehaviour
         CalculateTotalCritChance();
         CalculateTotalKnockbackResistance();
         CalculateTotalMovementSpeed();
+    }
+
+    public void CalculateAllStats()
+    {
+        var unit = GetComponent<UnitManager>();
+        unit.CalculateStats();
+        CalculateTotalStats();
     }
 
     // TEMPORARY
