@@ -6,6 +6,8 @@ public class StatsManager : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
 
+    private UnitManager _unit;
+
     // DEFAULT STATS
     private float _defaultMaxHealth;
     private float _defaultMaxMana;
@@ -25,7 +27,7 @@ public class StatsManager : MonoBehaviour
     private float _bonusAggro;
     private float _bonusAttackSpeed;
     private float _bonusCritHitChance;
-    private float _bonusBaseDamage;
+    private float _bonusDamage;
     private float _bonusDefense;
     private float _bonusHealthRegen;
     private float _bonusKnockback;
@@ -38,7 +40,7 @@ public class StatsManager : MonoBehaviour
     private float _penaltyAggro;
     private float _penaltyAttackSpeed;
     private float _penaltyCritHitChance;
-    private float _penaltyBaseDamage;
+    private float _penaltyDamage;
     private float _penaltyDefense;
     private float _penaltyHealthRegen;
     private float _penaltyKnockback;
@@ -104,8 +106,8 @@ public class StatsManager : MonoBehaviour
     }
     public float BonusDamage
     {
-        get => _bonusBaseDamage;
-        set => _bonusBaseDamage = value;
+        get => _bonusDamage;
+        set => _bonusDamage = value;
     }
     public float BonusDefense
     {
@@ -159,8 +161,8 @@ public class StatsManager : MonoBehaviour
     }
     public float PenaltyDamage
     {
-        get => _penaltyBaseDamage;
-        set => _penaltyBaseDamage = value;
+        get => _penaltyDamage;
+        set => _penaltyDamage = value;
     }
     public float PenaltyDefense
     {
@@ -246,8 +248,11 @@ public class StatsManager : MonoBehaviour
     }
     #endregion
 
-    //public System.Action CalculateStats;
-
+    private void Awake()
+    {
+        _unit = GetComponent<UnitManager>();
+        _unit.StatUpdate += _calculateAllStats;
+    }
     void Start()
     {
         StartCoroutine(calculateTotalStats(0.1f));
@@ -437,9 +442,62 @@ public class StatsManager : MonoBehaviour
         }
     }
 
-    public void CalculateTotalStats()
+    private void _getStatsfromUnit()
     {
-        //CalculateStats?.Invoke();
+        #region listedStats
+        //_bonusMaxHealth = _unit.StatList[0];
+        //_bonusMaxMana = _unit.StatList[1];
+        //_bonusAggro = _unit.StatList[2];
+        //_bonusAttackSpeed = _unit.StatList[3];
+        //_bonusCritHitChance = _unit.StatList[4];
+        //_bonusDamage = _unit.StatList[5];
+        //_bonusDefense = _unit.StatList[6];
+        //_bonusHealthRegen = _unit.StatList[7];
+        //_bonusKnockback = _unit.StatList[8];
+        //_bonusKnockbackResistance = _unit.StatList[9];
+        //_bonusCurrentMoveSpeed = _unit.StatList[10];
+        //_penaltyMaxHealth = _unit.StatList[11];
+        //_penaltyMaxMana = _unit.StatList[12];
+        //_penaltyAggro = _unit.StatList[13];
+        //_penaltyAttackSpeed = _unit.StatList[14];
+        //_penaltyCritHitChance = _unit.StatList[15];
+        //_penaltyDamage = _unit.StatList[16];
+        //_penaltyDefense = _unit.StatList[17];
+        //_penaltyHealthRegen = _unit.StatList[18];
+        //_penaltyKnockback = _unit.StatList[19];
+        //_penaltyKnockbackResistance = _unit.StatList[20];
+        //_penaltyCurrentMoveSpeed = _unit.StatList[21]; 
+        #endregion
+
+        // BONUS STATS
+        BonusMaxHealth = _unit.TotalBonusMaxHealth;
+        BonusMaxMana = _unit.TotalBonusMaxMana;
+        BonusAggro = _unit.TotalBonusAggro;
+        BonusAttackSpeed = _unit.TotalBonusAttackSpeed;
+        BonusCritHitChance = _unit.TotalBonusCritHitChance;
+        BonusDamage = _unit.TotalBonusDamage;
+        BonusDefense = _unit.TotalBonusDefense;
+        BonusHealthRegen = _unit.TotalBonusHealthRegen;
+        BonusKnockback = _unit.TotalBonusKnockback;
+        BonusKnockbackResistance = _unit.TotalBonusKnockbackResistance;
+        BonusMoveSpeed = _unit.TotalBonusMoveSpeed;
+
+        // PENALTY STATS
+        PenaltyMaxHealth = _unit.TotalPenaltyMaxHealth;
+        PenaltyMaxMana = _unit.TotalPenaltyMaxMana;
+        PenaltyAggro = _unit.TotalPenaltyAggro;
+        PenaltyAttackSpeed = _unit.TotalPenaltyAttackSpeed;
+        PenaltyCritHitChance = _unit.TotalPenaltyCritHitChance;
+        PenaltyDamage = _unit.TotalPenaltyDamage;
+        PenaltyDefense = _unit.TotalPenaltyDefense;
+        PenaltyHealthRegen = _unit.TotalPenaltyHealthRegen;
+        PenaltyKnockback = _unit.TotalPenaltyKnockback;
+        PenaltyKnockbackResistance = _unit.TotalPenaltyKnockbackResistance;
+        PenaltyMoveSpeed = _unit.TotalPenaltyMoveSpeed;
+    }
+
+    private void _calculateTotalStats()
+    {
         CalculateTotalMaxHealth();
         CalculateTotalMaxMana();
         CalculateTotalAttackSpeed();
@@ -449,18 +507,18 @@ public class StatsManager : MonoBehaviour
         CalculateTotalMovementSpeed();
     }
 
-    public void CalculateAllStats()
+    private void _calculateAllStats()
     {
-        var unit = GetComponent<UnitManager>();
-        unit.CalculateStats();
-        CalculateTotalStats();
+        _unit.CalculateBonusPenaltyStats();
+        _getStatsfromUnit();
+        _calculateTotalStats();
     }
 
     // TEMPORARY
     IEnumerator calculateTotalStats(float numOfSeconds)
     {
         yield return new WaitForSeconds(numOfSeconds);
-        CalculateTotalStats();
+        _calculateTotalStats();
 
         StartCoroutine(calculateTotalStats(numOfSeconds));
     }

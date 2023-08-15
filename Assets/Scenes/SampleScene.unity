@@ -2063,6 +2063,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1081050998
 GameObject:
@@ -2361,6 +2362,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1107799321
 GameObject:
@@ -2541,6 +2543,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1182049672
 GameObject:
@@ -3175,6 +3178,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1461599458
 GameObject:
@@ -3269,6 +3273,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!114 &1461599463
 MonoBehaviour:
@@ -3689,6 +3694,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1506409096
 GameObject:
@@ -3708,6 +3714,7 @@ GameObject:
   - component: {fileID: 1506409105}
   - component: {fileID: 1506409103}
   - component: {fileID: 1506409106}
+  - component: {fileID: 1506409107}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3899,6 +3906,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
   UnitEquipment: {fileID: 0}
   UnitController: {fileID: 0}
@@ -3955,6 +3963,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35c9283b554d74047bfd0eb9cb474448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1506409107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506409096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1524962369
@@ -4294,6 +4314,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1651456723
 GameObject:
@@ -4443,6 +4464,7 @@ MonoBehaviour:
   UnitMana: {fileID: 0}
   UnitStatusEffects: {fileID: 0}
   UnitStats: {fileID: 0}
+  UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
 --- !u!1 &1686295379
 GameObject:
