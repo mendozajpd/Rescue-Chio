@@ -25,7 +25,7 @@ public class PlayerManager : UnitManager
         SetDefaultStats("Player/PlayerDefaultStats");
         UnitEquipment = GetComponentInChildren<PlayerEquipment>();
         UnitController = GetComponent<PlayerController>();
-
+        UnitEquipment.CalculateStats += CalculateStats;
     }
 
     private void _clearTotalStats()
