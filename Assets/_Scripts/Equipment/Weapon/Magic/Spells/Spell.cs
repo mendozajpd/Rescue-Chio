@@ -5,21 +5,32 @@ using UnityEngine.InputSystem;
 
 public abstract class Spell : MonoBehaviour
 {
+    public string SpellID;
     public string SpellName;
-    public float SpellDamage;
-    public float TotalSpellDamage;
-    public float SpellKnockback;
-    public float TotalSpellKnockback;
+    protected float spellDamage;
+    protected float spellKnockback;
     public SpellHandler spellHandler;
     public SpellChargeHandler spellCharge;
     public MagicWeapon wand;
 
+    [Header("Wand Settings")]
     public bool CanSwing;
     public float WeaponAngle;
     public bool CanRotate;
 
     private PlayerInputActions playerControls;
     public InputAction Charging;
+
+    public float SpellDamage 
+    { 
+        get => spellDamage; 
+        set => spellDamage = value; 
+    }
+    public float SpellKnockback 
+    { 
+        get => spellKnockback; 
+        set => spellKnockback = value; 
+    }
 
     // Charge
 

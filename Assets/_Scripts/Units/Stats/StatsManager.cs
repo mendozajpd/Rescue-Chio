@@ -69,10 +69,10 @@ public class StatsManager : MonoBehaviour
     public float DefaultAggro { get => _defaultAggro; }
     public float DefaultAttackSpeed { get => _defaultAttackSpeed; }
     public float DefaultCritHitChance { get => _defaultCritHitChance; }
-    public float DefaultBaseDamage { get => _defaultBaseDamage; }
+    public float DefaultBaseDamage { get => _defaultBaseDamage; set => _defaultBaseDamage = value; }
     public float DefaultDefense { get => _defaultDefense; }
     public float DefaultHealthRegen { get => _defaultHealthRegen; }
-    public float DefaultKnockback { get => _defaultKnockback; }
+    public float DefaultKnockback { get => _defaultKnockback; set => _defaultKnockback = value; }
     public float DefaultKnockbackResistance { get => _defaultKnockbackResistance; set => _defaultKnockbackResistance = value; }
     public float DefaultMoveSpeed { get => _defaultMoveSpeed; }
     #endregion
@@ -255,7 +255,7 @@ public class StatsManager : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(calculateTotalStats(0.1f));
+        //StartCoroutine(calculateTotalStats(0.1f));
     }
 
     #region Max Health Calculator
@@ -321,17 +321,6 @@ public class StatsManager : MonoBehaviour
 
     #region Damage Calculator
 
-    public void CalculateCurrentWeaponDamage(float baseDamage)
-    {
-        //TotalCurrentWeaponDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
-
-    }
-
-    public void CalculateTotalWeaponBaseDamage(float baseDamage)
-    {
-        TotalDamage = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
-    }
-
     public float CalculateTrueDamage(float baseDamage)
     {
         float netDmg = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
@@ -390,11 +379,10 @@ public class StatsManager : MonoBehaviour
 
     // knockback cap
 
-    public float CalculateTrueKnockback(float baseWeaponKnockback)
+    public float CalculateTrueKnockback()
     {
         //TotalKnockback = DefaultKnockback + BonusKnockback;
         // TEMPORARY
-        BonusKnockback = baseWeaponKnockback; // Add other factors
         TotalKnockback = DefaultKnockback + BonusKnockback - PenaltyKnockback;
         return TotalKnockback;
     }
@@ -468,6 +456,9 @@ public class StatsManager : MonoBehaviour
         //_penaltyKnockbackResistance = _unit.StatList[20];
         //_penaltyCurrentMoveSpeed = _unit.StatList[21]; 
         #endregion
+        DefaultBaseDamage = _unit.UnitBaseDamage;
+        DefaultKnockback = _unit.UnitBaseKnockback;
+        
 
         // BONUS STATS
         BonusMaxHealth = _unit.TotalBonusMaxHealth;
@@ -501,8 +492,10 @@ public class StatsManager : MonoBehaviour
         CalculateTotalMaxHealth();
         CalculateTotalMaxMana();
         CalculateTotalAttackSpeed();
+        TotalDamage = CalculateTrueDamage(DefaultBaseDamage);
         CalculateTotalDefense();
         CalculateTotalCritChance();
+        TotalKnockback = CalculateTrueKnockback();
         CalculateTotalKnockbackResistance();
         CalculateTotalMovementSpeed();
     }

@@ -114,10 +114,10 @@ public class AstralDeathRayBehavior : Attack
     private void OnTriggerStay2D(Collider2D collision)
     {
         var playerStats = _spell.wand.equipment.playerStats;
-        var totalSpellDamage = _spell.TotalSpellDamage;
+        var totalDamage = _spell.wand.equipment.Unit.UnitStats.TotalDamage;
         var kbSource = _spell.wand.PlayerPos;
 
-        DealDamageToEnemy(collision, playerStats, totalSpellDamage,kbSource, _iTimeAfterHit);
+        DealDamageToEnemy(collision, playerStats, totalDamage, kbSource, _iTimeAfterHit);
     }
 
     #endregion

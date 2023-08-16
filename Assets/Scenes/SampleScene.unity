@@ -629,6 +629,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
+      propertyPath: defaultSpellDamage
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
 --- !u!1 &277179355
@@ -1190,7 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a07c10168745d64f8e8cdf3c5aea149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  Unit: {fileID: 0}
   playerStats: {fileID: 0}
   Weapons: []
 --- !u!1 &535416866
@@ -2065,6 +2069,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1081050998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,6 +2369,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1107799321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,6 +2551,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1182049672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,6 +3187,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1461599458
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,6 +3283,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!114 &1461599463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3696,6 +3705,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1506409096
 GameObject:
   m_ObjectHideFlags: 0
@@ -3711,10 +3721,10 @@ GameObject:
   - component: {fileID: 1506409101}
   - component: {fileID: 1506409102}
   - component: {fileID: 1506409104}
-  - component: {fileID: 1506409105}
-  - component: {fileID: 1506409103}
   - component: {fileID: 1506409106}
+  - component: {fileID: 1506409103}
   - component: {fileID: 1506409107}
+  - component: {fileID: 1506409105}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3908,6 +3918,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
   UnitEquipment: {fileID: 0}
   UnitController: {fileID: 0}
 --- !u!114 &1506409103
@@ -4316,6 +4327,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1651456723
 GameObject:
   m_ObjectHideFlags: 0
@@ -4466,6 +4478,7 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
+  StatList: []
 --- !u!1 &1686295379
 GameObject:
   m_ObjectHideFlags: 0

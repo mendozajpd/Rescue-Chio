@@ -24,10 +24,15 @@ public abstract class UnitManager : MonoBehaviour
     public DefaultStatsSO UnitDefaultStats;
 
 
-    public List<float> StatList = new List<float>();
+    //public List<float> StatList = new List<float>();
 
     #region STATS
     // BONUS STATS
+
+    public float UnitBaseDamage;
+    public float UnitBaseKnockback;
+
+
     public float TotalBonusMaxHealth { get; protected set; }
     public float TotalBonusMaxMana { get; protected set; }
     public float TotalBonusAggro { get; protected set; }

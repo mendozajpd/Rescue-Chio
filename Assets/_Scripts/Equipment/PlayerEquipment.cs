@@ -10,35 +10,252 @@ public class PlayerEquipment : MonoBehaviour
     public List<Weapon> Weapons = new List<Weapon>();
     private int _numberOfChildren;
 
-    private float _totalBaseDamage;
-    private float _totalWeaponKB;
+    private float _currentWeaponBaseDamage;
+    private float _currentWeaponBaseKnockback;
 
     #region Weapon Stats
-    // BONUS STATS
-    public float TotalBonusMaxHealth { get; protected set; }
-    public float TotalBonusMaxMana { get; protected set; }
-    public float TotalBonusAggro { get; protected set; }
-    public float TotalBonusAttackSpeed { get; protected set; }
-    public float TotalBonusCritHitChance { get; protected set; }
-    public float TotalBonusDamage { get; protected set; }
-    public float TotalBonusDefense { get; protected set; }
-    public float TotalBonusHealthRegen { get; protected set; }
-    public float TotalBonusKnockback { get; protected set; }
-    public float TotalBonusKnockbackResistance { get; protected set; }
-    public float TotalBonusMoveSpeed { get; protected set; }
+    protected float _totalBonusMaxHealth;
+    public float TotalBonusMaxHealth
+    {
+        get => _totalBonusMaxHealth;
+        protected set
+        {
+            _totalBonusMaxHealth = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusMaxMana;
+    public float TotalBonusMaxMana
+    {
+        get => _totalBonusMaxMana;
+        protected set
+        {
+            _totalBonusMaxMana = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusAggro;
+    public float TotalBonusAggro
+    {
+        get => _totalBonusAggro;
+        protected set
+        {
+            _totalBonusAggro = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusAttackSpeed;
+    public float TotalBonusAttackSpeed
+    {
+        get => _totalBonusAttackSpeed;
+        protected set
+        {
+            _totalBonusAttackSpeed = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusCritHitChance;
+    public float TotalBonusCritHitChance
+    {
+        get => _totalBonusCritHitChance;
+        protected set
+        {
+            _totalBonusCritHitChance = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusDamage;
+    public float TotalBonusDamage
+    {
+        get => _totalBonusDamage;
+        protected set
+        {
+            _totalBonusDamage = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusDefense;
+    public float TotalBonusDefense
+    {
+        get => _totalBonusDefense;
+        protected set
+        {
+            _totalBonusDefense = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusHealthRegen;
+    public float TotalBonusHealthRegen
+    {
+        get => _totalBonusHealthRegen;
+        protected set
+        {
+            _totalBonusHealthRegen = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusKnockback;
+    public float TotalBonusKnockback
+    {
+        get => _totalBonusKnockback;
+        protected set
+        {
+            _totalBonusKnockback = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusKnockbackResistance;
+    public float TotalBonusKnockbackResistance
+    {
+        get => _totalBonusKnockbackResistance;
+        protected set
+        {
+            _totalBonusKnockbackResistance = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalBonusMoveSpeed;
+    public float TotalBonusMoveSpeed
+    {
+        get => _totalBonusMoveSpeed;
+        protected set
+        {
+            _totalBonusMoveSpeed = value;
+            Unit.UpdateStats();
+        }
+    }
 
     // PENALTY STATS
-    public float TotalPenaltyMaxHealth { get; protected set; }
-    public float TotalPenaltyMaxMana { get; protected set; }
-    public float TotalPenaltyAggro { get; protected set; }
-    public float TotalPenaltyAttackSpeed { get; protected set; }
-    public float TotalPenaltyCritHitChance { get; protected set; }
-    public float TotalPenaltyDamage { get; protected set; }
-    public float TotalPenaltyDefense { get; protected set; }
-    public float TotalPenaltyHealthRegen { get; protected set; }
-    public float TotalPenaltyKnockback { get; protected set; }
-    public float TotalPenaltyKnockbackResistance { get; protected set; }
-    public float TotalPenaltyMoveSpeed { get; protected set; }
+    protected float _totalPenaltyMaxHealth;
+    public float TotalPenaltyMaxHealth
+    {
+        get => _totalPenaltyMaxHealth;
+        protected set
+        {
+            _totalPenaltyMaxHealth = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyMaxMana;
+    public float TotalPenaltyMaxMana
+    {
+        get => _totalPenaltyMaxMana;
+        protected set
+        {
+            _totalPenaltyMaxMana = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyAggro;
+    public float TotalPenaltyAggro
+    {
+        get => _totalPenaltyAggro;
+        protected set
+        {
+            _totalPenaltyAggro = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyAttackSpeed;
+    public float TotalPenaltyAttackSpeed
+    {
+        get => _totalPenaltyAttackSpeed;
+        protected set
+        {
+            _totalPenaltyAttackSpeed = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyCritHitChance;
+    public float TotalPenaltyCritHitChance
+    {
+        get => _totalPenaltyCritHitChance;
+        protected set
+        {
+            _totalPenaltyCritHitChance = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyDamage;
+    public float TotalPenaltyDamage
+    {
+        get => _totalPenaltyDamage;
+        protected set
+        {
+            _totalPenaltyDamage = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyDefense;
+    public float TotalPenaltyDefense
+    {
+        get => _totalPenaltyDefense;
+        protected set
+        {
+            _totalPenaltyDefense = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyHealthRegen;
+    public float TotalPenaltyHealthRegen
+    {
+        get => _totalPenaltyHealthRegen;
+        protected set
+        {
+            _totalPenaltyHealthRegen = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyKnockback;
+    public float TotalPenaltyKnockback
+    {
+        get => _totalPenaltyKnockback;
+        protected set
+        {
+            _totalPenaltyKnockback = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyKnockbackResistance;
+    public float TotalPenaltyKnockbackResistance
+    {
+        get => _totalPenaltyKnockbackResistance;
+        protected set
+        {
+            _totalPenaltyKnockbackResistance = value;
+            Unit.UpdateStats();
+        }
+    }
+
+    protected float _totalPenaltyMoveSpeed;
+    public float TotalPenaltyMoveSpeed
+    {
+        get => _totalPenaltyMoveSpeed;
+        protected set
+        {
+            _totalPenaltyMoveSpeed = value;
+            Unit.UpdateStats();
+        }
+    }
     #endregion
 
     //public System.Action CalculateStats;
@@ -49,26 +266,26 @@ public class PlayerEquipment : MonoBehaviour
         {
             if (value == _numberOfChildren) return;
             _numberOfChildren = value;
-            //_listWeaponsInEquipment();
+            _listWeaponsInEquipment();
             //CalculateWeaponBasedStats();
         }
     }
 
-    public float TotalBaseDamage 
+    public float CurrentWeaponBaseDamage 
     { 
-        get => _totalBaseDamage;
+        get => _currentWeaponBaseDamage;
         set 
         { 
-            _totalBaseDamage = value;
+            _currentWeaponBaseDamage = value;
             //CalculateWeaponBasedStats();
         } 
     }
-    public float TotalWeaponKB 
+    public float CurrentWeaponKnockback 
     { 
-        get => _totalWeaponKB;
+        get => _currentWeaponBaseKnockback;
         set 
         { 
-            _totalWeaponKB = value;
+            _currentWeaponBaseKnockback = value;
             //CalculateWeaponBasedStats();
         }
     }
@@ -90,7 +307,7 @@ public class PlayerEquipment : MonoBehaviour
     }
     void Start()
     {
-        //StartCoroutine(getNumberOfChildren(1));
+        StartCoroutine(getNumberOfChildren(.1f));
     }
 
     void Update()
@@ -107,6 +324,7 @@ public class PlayerEquipment : MonoBehaviour
             var weapon = transform.GetChild(i).GetComponent<Weapon>();
             if (weapon != null) Weapons.Add(weapon);
         }
+        _getEquipmentStats();
     }
 
 
@@ -127,18 +345,18 @@ public class PlayerEquipment : MonoBehaviour
 
     private float _getTotalWeaponBaseDamage()
     {
-        TotalBaseDamage = 0;
+        CurrentWeaponBaseDamage = 0;
 
         foreach(Weapon weapon in Weapons)
         {
-            TotalBaseDamage += weapon.BaseWeaponDamage;
+            CurrentWeaponBaseDamage += weapon.WeaponBaseDamage;
         }
-        return TotalBaseDamage;
+        return CurrentWeaponBaseDamage;
     }
 
     public void GetWeaponKnocback(float weaponKB)
     {
-        TotalWeaponKB = weaponKB;
+        CurrentWeaponKnockback = weaponKB;
     }
 
     IEnumerator getNumberOfChildren(float numOfSecondsUntilUpdate)
@@ -159,17 +377,19 @@ public class PlayerEquipment : MonoBehaviour
     private void _getEquipmentStats()
     {
         // loop to get all stats from the weapon/gear
-
-        foreach (Weapon weapon in Weapons)
+        foreach (Weapon weapon in Weapons) // GETTING ALL WEAPON STATS DOESN'T ACTUALLY MAKE MUCH SENSE
         {
+            // Maybe use += because we're adding them all together
             // BONUS STATS
+            CurrentWeaponBaseDamage = weapon.WeaponBaseDamage;
+            CurrentWeaponKnockback = weapon.WeaponBaseKnockback;
             TotalBonusMaxHealth = weapon.TotalBonusMaxHealth;
             TotalBonusMaxMana = weapon.TotalBonusMaxMana;
             TotalBonusAggro = weapon.TotalBonusAggro;
             TotalBonusAttackSpeed = weapon.TotalBonusAttackSpeed;
             TotalBonusCritHitChance = weapon.TotalBonusCritHitChance;
-            TotalBonusDamage = weapon.TotalBonusDamage;
-            TotalBonusDefense = weapon.TotalBonusDamage;
+            TotalBonusDamage = weapon.TotalBonusDamage + 5;
+            TotalBonusDefense = weapon.TotalBonusDefense;
             TotalBonusHealthRegen = weapon.TotalBonusHealthRegen;
             TotalBonusKnockback = weapon.TotalBonusKnockback;
             TotalBonusKnockbackResistance = weapon.TotalBonusKnockbackResistance;

@@ -86,7 +86,7 @@ public class MagicWeapon : Weapon
         spellHandler.UpdateCurrentSpells -= _handleSpells;
 
 
-        // Cycle through spells TEMPORARY
+        // Cycle through spells
         _changeSpell.performed -= _cycleThroughSpells;
         _changeSpell.Disable();
 
@@ -105,7 +105,6 @@ public class MagicWeapon : Weapon
         SetInputVariables();
         SetSpriteVariables();
 
-        SetTotalWeaponDamage(equipment);
     }
 
     void Start()
@@ -168,24 +167,28 @@ public class MagicWeapon : Weapon
             else
             {
                 Spells[i].gameObject.SetActive(true);
-                SetSpellStats(i);
+                AddSpellStatsToEquipment(i); 
+                // This code will set the stats of the weapon to equipment
+                // but will not actually automatically update
             }
         }
     }
 
-    private void SetSpellStats(int i)
+    private void AddSpellStatsToEquipment(int i)
     {
-        BaseWeaponDamage = Spells[i].SpellDamage;
-        SetTotalWeaponDamage(equipment);
-        Spells[i].TotalSpellDamage = TotalWeaponDamage;
+        WeaponBaseDamage = Spells[i].SpellDamage;
+        //TotalBonusDamage = WeaponBaseDamage;
+        //SetTotalWeaponDamage(equipment); // This just sets the base damage in the stats manager
+        //Spells[i].SpellDamage = TotalWeaponDamage;
 
-        BaseWeaponKnockback = Spells[i].SpellKnockback;
-        SetTotalWeaponKnockback(equipment);
-        Spells[i].TotalSpellKnockback = TotalWeaponKnockback;
-        equipment.GetWeaponKnocback(TotalWeaponKnockback);
+        WeaponBaseKnockback = Spells[i].SpellKnockback;
+        //TotalBonusKnockback = WeaponBaseKnockback;
+        //SetTotalWeaponKnockback(equipment);
+        //Spells[i].SpellKnockback = TotalWeaponKnockback;
 
-        equipment.CalculateWeaponBasedStats();
-
+        //equipment.GetWeaponKnocback(TotalWeaponKnockback);
+        //equipment.CalculateWeaponBasedStats(); // THIS NEEDS TO CHANGE
+        equipment.UpdateEquipmentStats();
     }
 
     private void _castSpell()
