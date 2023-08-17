@@ -61,6 +61,7 @@ public class PlayerManager : UnitManager
 
     public override void CalculateBonusPenaltyStats()
     {
+        base.CalculateBonusPenaltyStats();
         _clearTotalStats();
         _addAllStats();
     }

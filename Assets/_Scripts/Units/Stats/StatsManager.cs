@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(StatusEffectsManager),typeof(PowerupsManager))]
 public class StatsManager : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
@@ -259,7 +260,7 @@ public class StatsManager : MonoBehaviour
     }
     void Start()
     {
-        //StartCoroutine(calculateTotalStats(0.1f));
+        _calculateAllStats();
     }
 
     #region Max Health Calculator
@@ -297,10 +298,6 @@ public class StatsManager : MonoBehaviour
     #endregion
 
     #region Critical Hit Chance Calculator
-    // must be added after defense is calculated
-    // critical hit is always damage * 2
-    // default critical hit chance = 4%
-
     public void CalculateTotalCritChance()
     {
         TotalCritHitChance = DefaultCritHitChance + BonusCritHitChance;
@@ -316,12 +313,9 @@ public class StatsManager : MonoBehaviour
         }
         return critRNG < TotalCritHitChance ? true : false;
     }
-
-
     #endregion
 
     #region Damage Calculator
-
     public float CalculateTrueDamage(float baseDamage)
     {
         float netDmg = Mathf.Round(baseDamage * (1 + BonusDamage / 100));
@@ -377,15 +371,12 @@ public class StatsManager : MonoBehaviour
     #region Knockback Calculator
     public float CalculateTrueKnockback()
     {
-        //TotalKnockback = DefaultKnockback + BonusKnockback;
         TotalKnockback = DefaultKnockback * (1 + (BonusKnockback - PenaltyKnockback) / 100);
         return TotalKnockback;
     }
 
     public float CalculateTotalKnockback(float receiverKnockbackResistance)
     {
-        // 100 knockback resistance will always half the knockback dealt (may change this)
-        //float netKb = TotalKnockback / (receiverKnockbackResistance / 100 + 1);
         float netKb = TotalKnockback - ( TotalKnockback * (receiverKnockbackResistance/TotalKnockback));
         if(debugMode) Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
         return netKb < 0 ? 0 : netKb;
@@ -424,14 +415,12 @@ public class StatsManager : MonoBehaviour
             _defaultKnockbackResistance = defaultStats.DefaultKnockbackResistance;
             _defaultMoveSpeed = defaultStats.DefaultMoveSpeed;
         }
-        //_calculateAllStats();
     }
 
     private void _getStatsfromUnit()
     {
         DefaultDamage = _unit.UnitBaseDamage;
         DefaultKnockback = _unit.UnitBaseKnockback;
-        
 
         // BONUS STATS
         BonusMaxHealth = _unit.TotalBonusMaxHealth;
@@ -478,30 +467,6 @@ public class StatsManager : MonoBehaviour
         _unit.CalculateBonusPenaltyStats();
         _getStatsfromUnit();
         _calculateTotalStats();
-    }
-
-    // TEMPORARY
-    IEnumerator calculateTotalStats(float numOfSeconds)
-    {
-        yield return new WaitForSeconds(numOfSeconds);
-        _calculateTotalStats();
-
-        StartCoroutine(calculateTotalStats(numOfSeconds));
-    }
-
-    // Reset
-    public void SetStatsToDefault(DefaultStatsSO defaultStats)
-    {
-        //_currentMaxHealth = DefaultMaxHealth;
-        //_currentMaxMana = DefaultMaxMana;
-        //_currentAggro = DefaultAggro;
-        //_currentAttackSpeed = DefaultAttackSpeed;
-        //_currentCritHitChance = DefaultCritHitChance;
-        //_currentBaseDamage = DefaultBaseDamage; // idk about this, change in the future maybe
-        //_currentDefense = DefaultDefense;
-        //_currentHealthRegen = DefaultHealthRegen; // idk about this too, i just placed it here just in case
-        //_currentKnockback = DefaultKnockback;
-        //_currentMoveSpeed = DefaultMoveSpeed;
     }
 
     #endregion

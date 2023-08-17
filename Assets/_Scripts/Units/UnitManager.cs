@@ -60,6 +60,7 @@ public abstract class UnitManager : MonoBehaviour
 
 
     #endregion
+
     public System.Action StatUpdate;
 
     public void GetRequiredComponents()

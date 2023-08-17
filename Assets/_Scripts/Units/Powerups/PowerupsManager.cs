@@ -17,6 +17,6 @@ public class PowerupsManager : MonoBehaviour
 
     public void CalculateStats()
     {
-        // do something here
+        //Debug.Log("Powerups calculated!");
     }
 }

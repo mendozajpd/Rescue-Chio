@@ -17,6 +17,6 @@ public class StatusEffectsManager : MonoBehaviour
 
     public void CalculateStats()
     {
-
+        //Debug.Log("Status Effect calculated!");
     }
 }
