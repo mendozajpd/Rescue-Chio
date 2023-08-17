@@ -631,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
       propertyPath: defaultSpellDamage
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
@@ -2013,7 +2013,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1022017726
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2038,7 +2038,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022017720}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2069,7 +2069,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1081050998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2313,7 +2314,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1091884866
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2338,7 +2339,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091884860}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2369,7 +2370,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1107799321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2495,7 +2497,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1156153538
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2520,7 +2522,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156153532}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2551,7 +2553,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1182049672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,7 +3134,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1387974015
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3156,7 +3159,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387974009}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3187,7 +3190,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1461599458
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,7 +3256,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461599458}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3283,7 +3287,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!114 &1461599463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3338,7 +3343,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!1 &1468208015
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,7 +3654,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1481844361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3674,7 +3679,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481844355}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3705,7 +3710,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1506409096
 GameObject:
   m_ObjectHideFlags: 0
@@ -3918,7 +3924,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
   UnitEquipment: {fileID: 0}
   UnitController: {fileID: 0}
 --- !u!114 &1506409103
@@ -4271,7 +4278,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1544696219
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4296,7 +4303,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544696213}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -4327,7 +4334,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1651456723
 GameObject:
   m_ObjectHideFlags: 0
@@ -4422,7 +4430,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 0
+  knockbackImmune: 1
 --- !u!58 &1651456729
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4447,7 +4455,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651456723}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -4478,7 +4486,8 @@ MonoBehaviour:
   UnitStats: {fileID: 0}
   UnitPowerups: {fileID: 0}
   UnitDefaultStats: {fileID: 0}
-  StatList: []
+  UnitBaseDamage: 0
+  UnitBaseKnockback: 0
 --- !u!1 &1686295379
 GameObject:
   m_ObjectHideFlags: 0

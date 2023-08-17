@@ -13,9 +13,9 @@ public abstract class Attack : MonoBehaviour
 
     private void DealDamage(Health health, StatsManager stats, Attack attack, float damage, Vector2 knockbackSource, float iTime, bool isCrit, bool inflictKB)
     {
-        var unitStats = health.GetComponent<StatsManager>();
-        health?.Damage(unitStats.CalculateFinalDamage(damage, isCrit), isCrit, iTime, attack);
-        if(inflictKB) health?.InflictKnocback(knockbackSource, stats.CalculateTotalKnockback(unitStats.TotalKnockbackResistance), isCrit);
+        var damageReceiver = health.GetComponent<StatsManager>();
+        health?.Damage(damageReceiver.CalculateFinalDamage(damage, isCrit), isCrit, iTime, attack);
+        if(inflictKB) health?.InflictKnocback(knockbackSource, stats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance), isCrit);
     }
 
     protected void DealDamageToEnemy(Collider2D collision, StatsManager attackerStats, float damage, Vector2 knockbackSource, float iTime)

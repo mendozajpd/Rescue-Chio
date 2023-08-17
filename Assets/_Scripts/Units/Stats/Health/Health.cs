@@ -24,6 +24,8 @@ public class Health : Gauge, IDamageable, IHealable
     private float _invincibilityDuration = 0.3f; 
     private float _invincibilityTime;
 
+    private UnitManager _unit;
+
     [SerializeField] private bool godMode;
     [SerializeField] private bool knockbackImmune;
 
@@ -70,7 +72,7 @@ public class Health : Gauge, IDamageable, IHealable
         KnockbackRecoveryHandler();
     }
 
-    #region Timers
+    #region TIMERS
     private void _knockbackTimer()
     {
         if (KnockbackTime > 0)
@@ -111,23 +113,6 @@ public class Health : Gauge, IDamageable, IHealable
     {
         _invincibilityTime = (damageAmount == 1 ? _invincibilityDuration / 1.3f : _invincibilityDuration) + iTime;
     }
-
-
-    //public void Damage(float damageAmount, Attack attack)
-    //{
-    //    var spawnDamagePopUp = Instantiate(_damagePopUp, transform.position, Quaternion.identity);
-    //    spawnDamagePopUp.SetPopUpText(damageAmount.ToString(), normalAttackColor);
-
-    //    if (CurrentValue - damageAmount <= 0)
-    //    {
-    //        hasDied?.Invoke();
-    //        attack.OnEnemyDeath(this);
-    //        Destroy(gameObject);
-    //        return;
-    //    }
-
-    //    CurrentValue -= damageAmount;
-    //}
 
     #endregion
 
@@ -180,6 +165,7 @@ public class Health : Gauge, IDamageable, IHealable
         var healthBar = Instantiate(_healthBarPrefab, transform);
         healthBar.AssignHealthGauge(this);
     }
+
 
 
 }

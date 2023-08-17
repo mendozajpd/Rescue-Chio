@@ -24,9 +24,9 @@ public abstract class Gauge : MonoBehaviour
     public System.Action valueChanged;
     public float RatioValue => currentValue / maxValue;
 
-    public void SetMaxValue(DefaultStatsSO defaultStats)
+    public void SetMaxValue(float newMaxValue)
     {
-        maxValue = defaultStats.DefaultMaxHealth;
+        maxValue = newMaxValue;
     }
 
 

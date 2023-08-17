@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpellHandler : MonoBehaviour
 {
-    // TURN THIS INTO A SPELL SCRIPT THAT CAN BE ATTACHED TO THE MAGIC WEAPON. FOR NOW JUST EXPERIMENT
     [SerializeField] private int currentNumberOfSpells;
     [SerializeField] private float updateInSeconds = 0.5f;
 
@@ -34,7 +33,6 @@ public class SpellHandler : MonoBehaviour
 
     IEnumerator _getNumberOfChildren(float secondsUntilUpdate)
     {
-        // check for 
         if (CurrentNumberOfSpells != transform.childCount)
         {
             CurrentNumberOfSpells = transform.childCount;

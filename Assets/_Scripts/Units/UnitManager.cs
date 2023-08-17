@@ -78,7 +78,7 @@ public abstract class UnitManager : MonoBehaviour
         if (UnitDefaultStats != null)
         {
             UnitStats.SetDefaultStats(UnitDefaultStats);
-            UnitHealth.SetMaxValue(UnitDefaultStats);
+            UnitHealth.SetMaxValue(UnitDefaultStats.DefaultMaxHealth);
 
 
             if(UnitDefaultStats.DebugOn) Debug.Log(gameObject.name + ": " + UnitDefaultStats.name + " : Default Stats Set!");

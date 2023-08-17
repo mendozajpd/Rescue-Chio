@@ -97,30 +97,4 @@ public class PlayerManager : UnitManager
 
     }
 
-    //private void _overwriteStatList()
-    //{
-    //    StatList.Clear();
-    //    StatList.Add(TotalBonusMaxHealth);
-    //    StatList.Add(TotalBonusMaxMana);
-    //    StatList.Add(TotalBonusAggro);
-    //    StatList.Add(TotalBonusAttackSpeed);
-    //    StatList.Add(TotalBonusCritHitChance);
-    //    StatList.Add(TotalBonusDamage);
-    //    StatList.Add(TotalBonusDefense);
-    //    StatList.Add(TotalBonusHealthRegen);
-    //    StatList.Add(TotalBonusKnockback);
-    //    StatList.Add(TotalBonusKnockbackResistance);
-    //    StatList.Add(TotalBonusCurrentMoveSpeed);
-    //    StatList.Add(TotalPenaltyMaxHealth);
-    //    StatList.Add(TotalPenaltyMaxMana);
-    //    StatList.Add(TotalPenaltyAggro);
-    //    StatList.Add(TotalPenaltyAttackSpeed);
-    //    StatList.Add(TotalPenaltyCritHitChance);
-    //    StatList.Add(TotalPenaltyDamage);
-    //    StatList.Add(TotalPenaltyDefense);
-    //    StatList.Add(TotalPenaltyHealthRegen);
-    //    StatList.Add(TotalPenaltyKnockback);
-    //    StatList.Add(TotalPenaltyKnockbackResistance);
-    //    StatList.Add(TotalPenaltyCurrentMoveSpeed);
-    //}
 }

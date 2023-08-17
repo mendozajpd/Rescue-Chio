@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : Controller
 {
     private PlayerManager _unit;
+    private StatsManager _stats;
     private Animator anim;
     private SpriteRenderer sprite;
 
@@ -18,7 +19,7 @@ public class PlayerController : Controller
     private PlayerInputActions playerControls;
     private InputAction move;
     private InputAction dash;
-    private InputAction fire;
+    private InputAction fire; // add interact instead of fire
 
     // MouseLocation
     private float _mouseLocation;
@@ -26,9 +27,6 @@ public class PlayerController : Controller
     private Vector2 _mousePos;
     private Vector2 _mouseDir;
 
-    [Header("Move Speed Variables")]
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float defaultMoveSpeed = 5;
     // Direction
     private Vector2 moveDirection;
 
@@ -89,10 +87,10 @@ public class PlayerController : Controller
         sprite = GetComponentInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         _unit = GetComponent<PlayerManager>();
+        _stats = GetComponent<StatsManager>();
         //afterimages = PS_afterimages.emission;
 
         if (dashStats != null) _setDashStats(dashStats);
-        moveSpeed = defaultMoveSpeed;
     }
     void Start()
     {
@@ -119,13 +117,13 @@ public class PlayerController : Controller
         if (moveDirection.magnitude > 0)
         {
             if(_rb.isKinematic) _rb.isKinematic = false;
-            anim.speed = moveSpeed <= defaultMoveSpeed ? moveSpeed/ defaultMoveSpeed : moveSpeed * (defaultMoveSpeed/moveSpeed) / defaultMoveSpeed;
+            anim.speed = _stats.TotalMoveSpeed <= _stats.DefaultMoveSpeed ? _stats.TotalMoveSpeed/ _stats.DefaultMoveSpeed : _stats.TotalMoveSpeed * (_stats.DefaultMoveSpeed/_stats.TotalMoveSpeed) / _stats.DefaultMoveSpeed;
             anim.SetBool("isRunning", true);
         }
         else
         {
             _rb.isKinematic = true;
-            anim.speed = moveSpeed / moveSpeed;
+            anim.speed = _stats.TotalMoveSpeed / _stats.TotalMoveSpeed;
             anim.SetBool("isRunning", false);
         }
     }
@@ -165,7 +163,7 @@ public class PlayerController : Controller
 
     private void _moveCharacter()
     {
-        _rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        _rb.velocity = new Vector2(moveDirection.x * _stats.TotalMoveSpeed, moveDirection.y * _stats.TotalMoveSpeed);
     }
 
     #region InputControls
@@ -271,7 +269,7 @@ public class PlayerController : Controller
     {
         if (DashTime > 0)
         {
-            _rb.velocity = _dashDirection * _dashSpeed * (moveSpeed * 0.2f);
+            _rb.velocity = _dashDirection * _dashSpeed * (_stats.TotalMoveSpeed * 0.2f);
         }
     }
 

@@ -178,7 +178,8 @@ public class AstralDeathRaySpell : Spell
     {
         if (isCharging)
         {
-            CurrentCharge += Time.deltaTime * chargeSpeed;
+            float atkSpeed = wand.equipment.Unit.UnitStats.TotalAttackSpeed;
+            CurrentCharge += Time.deltaTime * (chargeSpeed + (atkSpeed * 0.1f));
         }
     }
 

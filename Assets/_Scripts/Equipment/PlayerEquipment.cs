@@ -379,7 +379,6 @@ public class PlayerEquipment : MonoBehaviour
         // loop to get all stats from the weapon/gear
         foreach (Weapon weapon in Weapons) // GETTING ALL WEAPON STATS DOESN'T ACTUALLY MAKE MUCH SENSE
         {
-            // Maybe use += because we're adding them all together
             // BONUS STATS
             CurrentWeaponBaseDamage = weapon.WeaponBaseDamage;
             CurrentWeaponKnockback = weapon.WeaponBaseKnockback;
@@ -388,7 +387,7 @@ public class PlayerEquipment : MonoBehaviour
             TotalBonusAggro = weapon.TotalBonusAggro;
             TotalBonusAttackSpeed = weapon.TotalBonusAttackSpeed;
             TotalBonusCritHitChance = weapon.TotalBonusCritHitChance;
-            TotalBonusDamage = weapon.TotalBonusDamage + 5;
+            TotalBonusDamage = weapon.TotalBonusDamage;
             TotalBonusDefense = weapon.TotalBonusDefense;
             TotalBonusHealthRegen = weapon.TotalBonusHealthRegen;
             TotalBonusKnockback = weapon.TotalBonusKnockback;
