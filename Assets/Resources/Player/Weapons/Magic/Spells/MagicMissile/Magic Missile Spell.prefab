@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e96a75674dbcf4ca40719f9bc1cd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpellID: 
   SpellName: Magic Missile
-  SpellDamage: 0
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
@@ -62,6 +62,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   defaultSpellDamage: 5
+  defaultSpellKnockback: 0
   missileTravelSpeed: 30
   heightDividend: 8
   offsetX: 1

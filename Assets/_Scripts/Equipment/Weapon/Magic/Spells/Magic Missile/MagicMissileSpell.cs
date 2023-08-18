@@ -61,8 +61,9 @@ public class MagicMissileSpell : Spell
     {
         _pool = new ObjectPool<MagicMissileBehavior>(() =>
         {
+            Transform poolLocation = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<ProjectilesPool>().transform;
+            var magicMissileSpell = Instantiate(_magicMissile, poolLocation);
             var currentSpawnLocation = _missileSpawnLocation.transform.position;
-            var magicMissileSpell = Instantiate(_magicMissile, currentSpawnLocation, Quaternion.identity);
             magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
             magicMissileSpell.Init(_releaseToPool, wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide());
             return magicMissileSpell;

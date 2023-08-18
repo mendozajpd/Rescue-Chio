@@ -652,7 +652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &277179356
 Transform:
   m_ObjectHideFlags: 0
@@ -1935,13 +1935,14 @@ GameObject:
   - component: {fileID: 1022017724}
   - component: {fileID: 1022017723}
   - component: {fileID: 1022017722}
+  - component: {fileID: 1022017729}
   m_Layer: 9
   m_Name: Enemy (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1022017721
 Transform:
   m_ObjectHideFlags: 0
@@ -1972,6 +1973,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1022017723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2071,6 +2116,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1022017729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022017720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1081050998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,13 +2293,14 @@ GameObject:
   - component: {fileID: 1091884864}
   - component: {fileID: 1091884863}
   - component: {fileID: 1091884862}
+  - component: {fileID: 1091884869}
   m_Layer: 9
   m_Name: Enemy (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1091884861
 Transform:
   m_ObjectHideFlags: 0
@@ -2273,6 +2331,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1091884863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,6 +2474,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1091884869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091884860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1107799321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,13 +2533,14 @@ GameObject:
   - component: {fileID: 1156153536}
   - component: {fileID: 1156153535}
   - component: {fileID: 1156153534}
+  - component: {fileID: 1156153541}
   m_Layer: 9
   m_Name: Enemy (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1156153533
 Transform:
   m_ObjectHideFlags: 0
@@ -2456,6 +2571,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1156153535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2555,6 +2714,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1156153541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156153532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1182049672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3056,6 +3227,7 @@ GameObject:
   - component: {fileID: 1387974013}
   - component: {fileID: 1387974012}
   - component: {fileID: 1387974011}
+  - component: {fileID: 1387974018}
   m_Layer: 9
   m_Name: Enemy (2)
   m_TagString: Untagged
@@ -3093,6 +3265,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1387974012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3192,6 +3408,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1387974018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387974009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1461599458
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,6 +3436,7 @@ GameObject:
   - component: {fileID: 1461599465}
   - component: {fileID: 1461599464}
   - component: {fileID: 1461599463}
+  - component: {fileID: 1461599467}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -3302,6 +3531,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1461599464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3344,6 +3617,18 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+--- !u!114 &1461599467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461599458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1468208015
 GameObject:
   m_ObjectHideFlags: 0
@@ -3576,6 +3861,7 @@ GameObject:
   - component: {fileID: 1481844359}
   - component: {fileID: 1481844358}
   - component: {fileID: 1481844357}
+  - component: {fileID: 1481844364}
   m_Layer: 9
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -3613,6 +3899,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1481844358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3712,6 +4042,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1481844364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481844355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1506409096
 GameObject:
   m_ObjectHideFlags: 0
@@ -3726,11 +4068,11 @@ GameObject:
   - component: {fileID: 1506409098}
   - component: {fileID: 1506409101}
   - component: {fileID: 1506409102}
+  - component: {fileID: 1506409105}
   - component: {fileID: 1506409104}
   - component: {fileID: 1506409106}
   - component: {fileID: 1506409103}
   - component: {fileID: 1506409107}
-  - component: {fileID: 1506409105}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3768,8 +4110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52e70352a487ea4d8b213f4185a0291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  defaultMoveSpeed: 5
   dashStats: {fileID: 11400000, guid: 9afcc65a029f46e4c9db031ae4982adc, type: 2}
   Dashing: 0
   audioSource: {fileID: 0}
@@ -3971,6 +4311,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1506409106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4116,7 +4500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1528843567
 Transform:
   m_ObjectHideFlags: 0
@@ -4200,6 +4584,7 @@ GameObject:
   - component: {fileID: 1544696217}
   - component: {fileID: 1544696216}
   - component: {fileID: 1544696215}
+  - component: {fileID: 1544696222}
   m_Layer: 9
   m_Name: Enemy (3)
   m_TagString: Untagged
@@ -4237,6 +4622,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1544696216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4336,6 +4765,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1544696222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544696213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1651456723
 GameObject:
   m_ObjectHideFlags: 0
@@ -4352,13 +4793,14 @@ GameObject:
   - component: {fileID: 1651456727}
   - component: {fileID: 1651456726}
   - component: {fileID: 1651456725}
+  - component: {fileID: 1651456732}
   m_Layer: 9
   m_Name: Enemy (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1651456724
 Transform:
   m_ObjectHideFlags: 0
@@ -4389,6 +4831,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  _defaultMaxHealth: 0
+  _defaultMaxMana: 0
+  _defaultAggro: 0
+  _defaultAttackSpeed: 0
+  _defaultCritHitChance: 0
+  _defaultDamage: 0
+  _defaultDefense: 0
+  _defaultHealthRegen: 0
+  _defaultKnockback: 0
+  _defaultKnockbackResistance: 0
+  _defaultMoveSpeed: 0
+  _bonusMaxHealth: 0
+  _bonusMaxMana: 0
+  _bonusAggro: 0
+  _bonusAttackSpeed: 0
+  _bonusCritHitChance: 0
+  _bonusDamage: 0
+  _bonusDefense: 0
+  _bonusHealthRegen: 0
+  _bonusKnockback: 0
+  _bonusKnockbackResistance: 0
+  _bonusCurrentMoveSpeed: 0
+  _penaltyMaxHealth: 0
+  _penaltyMaxMana: 0
+  _penaltyAggro: 0
+  _penaltyAttackSpeed: 0
+  _penaltyCritHitChance: 0
+  _penaltyDamage: 0
+  _penaltyDefense: 0
+  _penaltyHealthRegen: 0
+  _penaltyKnockback: 0
+  _penaltyKnockbackResistance: 0
+  _penaltyCurrentMoveSpeed: 0
+  _totalMaxHealth: 0
+  _totalMaxMana: 0
+  _totalAggro: 0
+  _totalAttackSpeed: 0
+  _totalCritHitChance: 0
+  _totalDamage: 0
+  _totalDefense: 0
+  _totalHealthRegen: 0
+  _totalKnockback: 0
+  _totalKnockbackResistance: 0
+  _totalMovementSpeed: 0
 --- !u!114 &1651456726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4488,6 +4974,18 @@ MonoBehaviour:
   UnitDefaultStats: {fileID: 0}
   UnitBaseDamage: 0
   UnitBaseKnockback: 0
+--- !u!114 &1651456732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651456723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1535dced7efa203438e8581d742bee93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1686295379
 GameObject:
   m_ObjectHideFlags: 0

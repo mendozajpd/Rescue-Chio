@@ -24,6 +24,7 @@ public class BulletScript : MonoBehaviour
 
     private void OnEnable()
     {
+
     }
 
 
@@ -34,14 +35,13 @@ public class BulletScript : MonoBehaviour
 
     void Start()
     {
-        ShootBullet();
     }
 
-    public void ShootBullet()
+    public void ShootBullet(Vector2 bulletStartPos)
     {
+        transform.position = bulletStartPos;
         Rb2D.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
         StartCoroutine(despawnSelf(1));
-
     }
 
     void Update()
@@ -50,9 +50,8 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (collision.collider.tag != "Player") 
+        // do bullet things
         _sendToPool(this);
-
     }
 
     IEnumerator despawnSelf(float seconds)

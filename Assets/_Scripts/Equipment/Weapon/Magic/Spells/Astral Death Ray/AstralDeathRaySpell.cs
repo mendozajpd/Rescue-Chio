@@ -166,7 +166,8 @@ public class AstralDeathRaySpell : Spell
     private void _spawnLaser()
     {
         _laserPrefab = Resources.Load<AstralDeathRayBehavior>("Player/Weapons/Magic/Spells/AstralDeathRay/AstralDeathRayPrefab");
-        var deathRay = Instantiate(_laserPrefab, Vector3.zero, Quaternion.identity);
+        Transform poolLocation = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<ProjectilesPool>().transform;
+        var deathRay = Instantiate(_laserPrefab, poolLocation);
         _laser = deathRay;
         _laser._setSpell(this);
     } 

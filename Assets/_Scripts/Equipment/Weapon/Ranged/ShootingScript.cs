@@ -55,14 +55,15 @@ public class ShootingScript : MonoBehaviour
     {
         _pool = new ObjectPool<BulletScript>(() =>
         {
-            var bullet = Instantiate(bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
+            Transform poolLocation = Pistol.GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<ProjectilesPool>().transform;
+            var bullet = Instantiate(bulletPrefab, poolLocation);
             bullet.Init(_releaseToPool, this);
+            bullet.ShootBullet(transform.position);
             return bullet;
         }, bullet =>
         {
-            bullet.transform.position = transform.position;
             bullet.gameObject.SetActive(true);
-            bullet.ShootBullet();
+            bullet.ShootBullet(transform.position);
 
         }, bullet =>
         {
