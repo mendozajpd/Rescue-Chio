@@ -44,7 +44,7 @@ public class AstralDeathRayBehavior : Attack
         _particles = new List<AstralDeathRayParticles>(GetComponentsInChildren<AstralDeathRayParticles>());
         _light2D = GetComponent<Light2D>();
         _laserHitbox = GetComponent<EdgeCollider2D>();
-        _tipPrefab = Resources.Load<AstralDeathRayEnd>("Player/Weapons/Magic/Spells/AstralDeathRay/LaserEnd");
+        _tipPrefab = Resources.Load<AstralDeathRayEnd>("Units/Player/Weapons/Magic/Spells/AstralDeathRay/LaserEnd");
         _spawnLaserTip();
     }
 

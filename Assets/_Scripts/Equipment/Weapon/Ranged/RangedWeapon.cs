@@ -339,13 +339,13 @@ public class RangedWeapon : Weapon
 
     private void Attack(InputAction.CallbackContext context)
     {
-        Debug.Log("Pewpew");
+        //Debug.Log("Pewpew");
         _attackHandler();
     }
 
     private void ReloadWeapon(InputAction.CallbackContext context)
     {
-        Debug.Log("reloadin");
+        //Debug.Log("reloadin");
         _reloadHandler();
     }
 

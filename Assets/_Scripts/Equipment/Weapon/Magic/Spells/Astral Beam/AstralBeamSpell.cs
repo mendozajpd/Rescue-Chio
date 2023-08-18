@@ -33,7 +33,7 @@ public class AstralBeamSpell : Spell
     {
         SetSpellVariables(defaultSpellDamage, defaultSpellKnockback);
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
-        _laser = Resources.Load<AstralBeamBehavior>("Player/Weapons/Magic/Spells/AstralBeam/AstralBeamPrefab");
+        _laser = Resources.Load<AstralBeamBehavior>("Units/Player/Weapons/Magic/Spells/AstralBeam/AstralBeamPrefab");
     }
 
     void Start()

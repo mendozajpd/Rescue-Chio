@@ -8,7 +8,7 @@ public class Doppelganger : EnemyManager
     private void Awake()
     {
         GetRequiredComponents();
-        SetDefaultStats("Player/PlayerDefaultStats");
+        SetDefaultStats("Units/Player/PlayerDefaultStats");
     }
 
     void Start()

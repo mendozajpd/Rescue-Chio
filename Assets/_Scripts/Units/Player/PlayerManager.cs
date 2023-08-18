@@ -19,7 +19,7 @@ public class PlayerManager : UnitManager
     private void Awake()
     {
         GetRequiredComponents();
-        SetDefaultStats("Player/PlayerDefaultStats");
+        SetDefaultStats("Units/Player/PlayerDefaultStats");
         UnitEquipment = GetComponentInChildren<PlayerEquipment>();
         UnitController = GetComponent<PlayerController>();
         //UnitEquipment.CalculateStats += CalculateBonusPenaltyStats;

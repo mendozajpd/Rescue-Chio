@@ -36,7 +36,7 @@ public class AstralBeamBehavior : MonoBehaviour
     private void Awake()
     {
         laser = GetComponent<LineRenderer>();
-        explosion = Resources.Load<Explosion_Default>("Explosion_Astral");
+        explosion = Resources.Load<Explosion_Default>("Explosions/Explosion_Astral");
     }
 
     void Start()

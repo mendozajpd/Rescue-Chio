@@ -51,7 +51,7 @@ public class MagicMissileSpell : Spell
 
     private void Awake()
     {
-        _magicMissile = Resources.Load<MagicMissileBehavior>("Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
+        _magicMissile = Resources.Load<MagicMissileBehavior>("Units/Player/Weapons/Magic/Spells/MagicMissile/MagicMissilePrefab");
         SetSpellVariables(defaultSpellDamage, defaultSpellKnockback);
         _missileSpawnLocation = spellHandler;
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);

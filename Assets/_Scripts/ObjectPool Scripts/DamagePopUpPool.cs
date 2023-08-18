@@ -18,7 +18,7 @@ public class DamagePopUpPool : GameObjectPool
 
     private void Awake()
     {
-        _popUpText = Resources.Load<PopUpTextScript>("DamagePopUp");
+        _popUpText = Resources.Load<PopUpTextScript>("Units/DamagePopUp");
     }
 
     void Start()
