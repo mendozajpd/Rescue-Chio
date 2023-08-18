@@ -20,7 +20,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusMaxHealth
     {
         get => _totalBonusMaxHealth;
-        protected set
+        set
         {
             _totalBonusMaxHealth = value;
             equipment.UpdateEquipmentStats();
@@ -31,7 +31,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusMaxMana
     {
         get => _totalBonusMaxMana;
-        protected set
+        set
         {
             _totalBonusMaxMana = value;
             equipment.UpdateEquipmentStats();
@@ -42,7 +42,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusAggro
     {
         get => _totalBonusAggro;
-        protected set
+        set
         {
             _totalBonusAggro = value;
             equipment.UpdateEquipmentStats();
@@ -53,7 +53,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusAttackSpeed
     {
         get => _totalBonusAttackSpeed;
-        protected set
+        set
         {
             _totalBonusAttackSpeed = value;
             equipment.UpdateEquipmentStats();
@@ -64,7 +64,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusCritHitChance
     {
         get => _totalBonusCritHitChance;
-        protected set
+        set
         {
             _totalBonusCritHitChance = value;
             equipment.UpdateEquipmentStats();
@@ -75,7 +75,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusDamage
     {
         get => _totalBonusDamage;
-        protected set
+        set
         {
             _totalBonusDamage = value;
             equipment.UpdateEquipmentStats();
@@ -86,7 +86,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusDefense
     {
         get => _totalBonusDefense;
-        protected set
+        set
         {
             _totalBonusDefense = value;
             equipment.UpdateEquipmentStats();
@@ -97,7 +97,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusHealthRegen
     {
         get => _totalBonusHealthRegen;
-        protected set
+        set
         {
             _totalBonusHealthRegen = value;
             equipment.UpdateEquipmentStats();
@@ -108,7 +108,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusKnockback
     {
         get => _totalBonusKnockback;
-        protected set
+        set
         {
             _totalBonusKnockback = value;
             equipment.UpdateEquipmentStats();
@@ -119,7 +119,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusKnockbackResistance
     {
         get => _totalBonusKnockbackResistance;
-        protected set
+        set
         {
             _totalBonusKnockbackResistance = value;
             equipment.UpdateEquipmentStats();
@@ -130,7 +130,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalBonusMoveSpeed
     {
         get => _totalBonusMoveSpeed;
-        protected set
+        set
         {
             _totalBonusMoveSpeed = value;
             equipment.UpdateEquipmentStats();
@@ -142,7 +142,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyMaxHealth
     {
         get => _totalPenaltyMaxHealth;
-        protected set
+        set
         {
             _totalPenaltyMaxHealth = value;
             equipment.UpdateEquipmentStats();
@@ -153,7 +153,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyMaxMana
     {
         get => _totalPenaltyMaxMana;
-        protected set
+        set
         {
             _totalPenaltyMaxMana = value;
             equipment.UpdateEquipmentStats();
@@ -164,7 +164,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyAggro
     {
         get => _totalPenaltyAggro;
-        protected set
+        set
         {
             _totalPenaltyAggro = value;
             equipment.UpdateEquipmentStats();
@@ -175,7 +175,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyAttackSpeed
     {
         get => _totalPenaltyAttackSpeed;
-        protected set
+        set
         {
             _totalPenaltyAttackSpeed = value;
             equipment.UpdateEquipmentStats();
@@ -186,7 +186,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyCritHitChance
     {
         get => _totalPenaltyCritHitChance;
-        protected set
+        set
         {
             _totalPenaltyCritHitChance = value;
             equipment.UpdateEquipmentStats();
@@ -197,7 +197,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyDamage
     {
         get => _totalPenaltyDamage;
-        protected set
+        set
         {
             _totalPenaltyDamage = value;
             equipment.UpdateEquipmentStats();
@@ -208,7 +208,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyDefense
     {
         get => _totalPenaltyDefense;
-        protected set
+        set
         {
             _totalPenaltyDefense = value;
             equipment.UpdateEquipmentStats();
@@ -219,7 +219,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyHealthRegen
     {
         get => _totalPenaltyHealthRegen;
-        protected set
+        set
         {
             _totalPenaltyHealthRegen = value;
             equipment.UpdateEquipmentStats();
@@ -230,7 +230,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyKnockback
     {
         get => _totalPenaltyKnockback;
-        protected set
+        set
         {
             _totalPenaltyKnockback = value;
             equipment.UpdateEquipmentStats();
@@ -241,7 +241,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyKnockbackResistance
     {
         get => _totalPenaltyKnockbackResistance;
-        protected set
+        set
         {
             _totalPenaltyKnockbackResistance = value;
             equipment.UpdateEquipmentStats();
@@ -252,7 +252,7 @@ public abstract class Weapon : MonoBehaviour
     public float TotalPenaltyMoveSpeed
     {
         get => _totalPenaltyMoveSpeed;
-        protected set
+        set
         {
             _totalPenaltyMoveSpeed = value;
             equipment.UpdateEquipmentStats();

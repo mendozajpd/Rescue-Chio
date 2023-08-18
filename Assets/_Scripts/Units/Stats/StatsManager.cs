@@ -7,6 +7,8 @@ public class StatsManager : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
 
+    public bool DebugMode => debugMode;
+
     private UnitManager _unit;
 
     #region Private Stats
@@ -68,7 +70,7 @@ public class StatsManager : MonoBehaviour
     public float DefaultMaxHealth { get => _defaultMaxHealth; }
     public float DefaultMaxMana { get => _defaultMaxMana; }
     public float DefaultAggro { get => _defaultAggro; }
-    public float DefaultAttackSpeed { get => _defaultAttackSpeed; }
+    public float DefaultAttackSpeed { get => _defaultAttackSpeed; set => _defaultAttackSpeed = value; }
     public float DefaultCritHitChance { get => _defaultCritHitChance; }
     public float DefaultDamage { get => _defaultDamage; set => _defaultDamage = value; }
     public float DefaultDefense { get => _defaultDefense; }
@@ -175,16 +177,24 @@ public class StatsManager : MonoBehaviour
         get => _penaltyHealthRegen;
         set => _penaltyHealthRegen = value;
     }
-    public float PenaltyKnockback // TENACITY
+    public float PenaltyKnockback // Making knockback weaker
     {
         get => _penaltyKnockback;
         set => _penaltyKnockback = value;
     }
-    public float PenaltyKnockbackResistance { get => _penaltyKnockbackResistance; set => _penaltyKnockbackResistance = value; }
+
+    public float PenaltyKnockbackResistance // Making character weaker to knockback
+    { 
+        get => _penaltyKnockbackResistance; 
+        set => _penaltyKnockbackResistance = value; 
+    }
     public float PenaltyMoveSpeed // SLOWNESS
     {
         get => _penaltyCurrentMoveSpeed;
-        set => _penaltyCurrentMoveSpeed = value;
+        set 
+        { 
+            _penaltyCurrentMoveSpeed = value;
+        } 
     }
     #endregion
 
@@ -251,7 +261,6 @@ public class StatsManager : MonoBehaviour
     }
     #endregion
 
-    public System.Action StatChanged;
 
     private void Awake()
     {
@@ -397,7 +406,7 @@ public class StatsManager : MonoBehaviour
     }
     #endregion
 
-    #region Stats Setters
+    #region Stats Calculators
 
     public void SetDefaultStats(DefaultStatsSO defaultStats)
     {
@@ -408,9 +417,9 @@ public class StatsManager : MonoBehaviour
             _defaultAggro = defaultStats.DefaultAggro;
             _defaultAttackSpeed = defaultStats.DefaultAttackSpeed;
             _defaultCritHitChance = defaultStats.DefaultCritHitChance;
-            _defaultDamage = defaultStats.DefaultBaseDamage; // idk about this, change in the future maybe
+            _defaultDamage = defaultStats.DefaultBaseDamage; // For enemies
             _defaultDefense = defaultStats.DefaultDefense;
-            _defaultHealthRegen = defaultStats.DefaultHealthRegen; // idk about this too, i just placed it here just in case
+            _defaultHealthRegen = defaultStats.DefaultHealthRegen;
             _defaultKnockback = defaultStats.DefaultKnockback;
             _defaultKnockbackResistance = defaultStats.DefaultKnockbackResistance;
             _defaultMoveSpeed = defaultStats.DefaultMoveSpeed;
@@ -421,6 +430,7 @@ public class StatsManager : MonoBehaviour
     {
         DefaultDamage = _unit.UnitBaseDamage;
         DefaultKnockback = _unit.UnitBaseKnockback;
+        DefaultAttackSpeed = _unit.UnitBaseAttackSpeed;
 
         // BONUS STATS
         BonusMaxHealth = _unit.TotalBonusMaxHealth;
@@ -464,7 +474,7 @@ public class StatsManager : MonoBehaviour
 
     private void _calculateAllStats()
     {
-        _unit.CalculateBonusPenaltyStats();
+        _unit.CalculateExtraStats();
         _getStatsfromUnit();
         _calculateTotalStats();
     }

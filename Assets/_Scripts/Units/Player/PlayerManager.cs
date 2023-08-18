@@ -59,13 +59,14 @@ public class PlayerManager : UnitManager
         TotalPenaltyMoveSpeed = 0;
     }
 
-    public override void CalculateBonusPenaltyStats()
+    public override void CalculateExtraStats()
     {
-        base.CalculateBonusPenaltyStats();
+        base.CalculateExtraStats();
         _clearTotalStats();
         _addAllStats();
     }
 
+    // ADD THIS TO UNITMANAGER AND THEN MAKE IT VIRTUAL
     private void _addAllStats()
     {
         // Total stats = equipment stats + Powerups stats + status effects stats
@@ -95,7 +96,6 @@ public class PlayerManager : UnitManager
         TotalPenaltyKnockback = UnitEquipment.TotalPenaltyKnockback;
         TotalPenaltyKnockbackResistance = UnitEquipment.TotalPenaltyKnockbackResistance;
         TotalPenaltyMoveSpeed = UnitEquipment.TotalPenaltyMoveSpeed;
-
     }
 
 }

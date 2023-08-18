@@ -25,6 +25,7 @@ public class AstralDeathRaySpell : Spell
     [SerializeField] private float laserSize;
     [SerializeField] private float laserDistance = 10;
     [SerializeField] private float laserRotationSpeed = 30;
+    [SerializeField] private float movementspeedReduction;
 
     [Header("Light Variables")]
     private Light2D light2D;
@@ -179,9 +180,18 @@ public class AstralDeathRaySpell : Spell
     {
         if (isCharging)
         {
-            float atkSpeed = wand.equipment.Unit.UnitStats.TotalAttackSpeed;
+            StatsManager unitStats = wand.equipment.playerStats;
+            float atkSpeed = unitStats.TotalAttackSpeed;
+            _slowDownPlayer(movementspeedReduction);
             CurrentCharge += Time.deltaTime * (chargeSpeed + (atkSpeed * 0.1f));
+            // making player slow straight from the stats
         }
+    }
+
+    private void _slowDownPlayer(float speedReduction)
+    {
+        float movementSpeed = speedReduction * (CurrentCharge / maxCharge);
+        wand.TotalPenaltyMoveSpeed = movementSpeed;
     }
 
     private void StartCharge(InputAction.CallbackContext context)
@@ -205,6 +215,7 @@ public class AstralDeathRaySpell : Spell
         CurrentCharge = defaultCharge;
         spellCharge.DisableSpellCharge();
         _exhaust.Play();
+        _slowDownPlayer(0);
     }
 
     private void _activateLaser()

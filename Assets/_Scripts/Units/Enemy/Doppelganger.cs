@@ -21,8 +21,8 @@ public class Doppelganger : EnemyManager
         
     }
 
-    public override void CalculateBonusPenaltyStats()
+    public override void CalculateExtraStats()
     {
-        base.CalculateBonusPenaltyStats();
+        base.CalculateExtraStats();
     }
 }

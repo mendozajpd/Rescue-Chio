@@ -31,7 +31,7 @@ public abstract class UnitManager : MonoBehaviour
 
     public float UnitBaseDamage;
     public float UnitBaseKnockback;
-
+    public float UnitBaseAttackSpeed;
 
     public float TotalBonusMaxHealth { get; protected set; }
     public float TotalBonusMaxMana { get; protected set; }
@@ -81,15 +81,14 @@ public abstract class UnitManager : MonoBehaviour
             UnitStats.SetDefaultStats(UnitDefaultStats);
             UnitHealth.SetMaxValue(UnitDefaultStats.DefaultMaxHealth);
 
-
-            if(UnitDefaultStats.DebugOn) Debug.Log(gameObject.name + ": " + UnitDefaultStats.name + " : Default Stats Set!");
+            if(UnitStats.DebugMode) Debug.Log(gameObject.name + ": " + UnitDefaultStats.name + " : Default Stats Set!");
         } else
         {
             Debug.Log("Default Stats for " + gameObject.name + " not found!");
         }
     }
 
-    public virtual void CalculateBonusPenaltyStats()
+    public virtual void CalculateExtraStats()
     {
         UnitStatusEffects.CalculateStats();
         UnitPowerups.CalculateStats();
