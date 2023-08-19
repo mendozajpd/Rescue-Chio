@@ -5,13 +5,13 @@ using UnityEngine;
 public class AstralBeamBehavior : MonoBehaviour
 {
     private LineRenderer laser;
+    private Spell spellSource;
 
     [Header("Laser Settings")]
     [SerializeField] private bool isExplosive = true;
     private float _laserSize;
 
     // Length(Time) of Laser
-    private float _laserDurationLength;
     private float _laserDurationTime;
     private float _laserCooldownTime;
 
@@ -23,12 +23,12 @@ public class AstralBeamBehavior : MonoBehaviour
     // Explosion
     private Explosion_Default explosion;
 
-    public void Init(Vector3 startpos, Vector3 endpos, float laserDuration, float laserSize)
+    public void Init(Vector3 startpos, Vector3 endpos, float laserDuration, float laserSize, Spell spell)
     {
+        spellSource = spell;
         _startPoint = startpos;
         _endPoint = endpos;
         _laserDurationTime = laserDuration;
-        _laserDurationLength = laserDuration;
         _laserSize = laserSize;
     }
 
@@ -46,7 +46,6 @@ public class AstralBeamBehavior : MonoBehaviour
 
     void Update()
     {
-        // should only run when gameobject is active
         _laserHandlers();
     }
 
@@ -57,7 +56,6 @@ public class AstralBeamBehavior : MonoBehaviour
             
         _laserTimeHandler();
         _laserWidthHandler(_laserDurationTime);
-        // if laser countdown timer is less then 1 then change the width until it reaches 0
 
     }
 
@@ -102,8 +100,10 @@ public class AstralBeamBehavior : MonoBehaviour
 
     public void explodeTarget()
     {
-        var explod = Instantiate(explosion, _endPoint, Quaternion.identity);
-        explod.Explode();
+        UnitManager explosionSource = spellSource.wand.equipment.Unit;
+        var explode = Instantiate(explosion, _endPoint, Quaternion.identity);
+        explode.SetExplosionSource(explosionSource);
+        explode.Explode();
     }
     
 }

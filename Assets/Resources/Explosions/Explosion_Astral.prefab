@@ -4884,6 +4884,7 @@ GameObject:
   - component: {fileID: 5498282651505405563}
   - component: {fileID: 976334453397357332}
   - component: {fileID: 8304985291066034078}
+  - component: {fileID: 6167224705882332869}
   m_Layer: 7
   m_Name: Explosion_Astral
   m_TagString: Untagged
@@ -5484,7 +5485,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.05
+      scalar: 0.3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5544,7 +5545,7 @@ ParticleSystem:
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: -121.76, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -9758,8 +9759,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6694eb2344cd0649aab948e2a5a8769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFriendly: 1
   intensityFadeSpeed: 0.3
   volumentricIntensityFadeSpeed: 0
+  explosionDuration: 1
 --- !u!114 &8304985291066034078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9839,6 +9842,22 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!58 &6167224705882332869
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498282651505405561}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
 --- !u!1 &5498282651661821614
 GameObject:
   m_ObjectHideFlags: 0

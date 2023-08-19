@@ -58,7 +58,8 @@ public class AstralBeamSpell : Spell
     private void _castAstralBeam(AstralBeamBehavior laserPrefab)
     {
         var castAstralBeam = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
-        castAstralBeam.Init(_laserStartPosition, _laserEndPosition, isExplosive ? defaultExplosiveLaserDurationLength : laserDurationLength, isExplosive ? defaultExplosiveLaserSize : laserSize);
+        //castAstralBeam.Init(_laserStartPosition, _laserEndPosition, isExplosive ? defaultExplosiveLaserDurationLength : laserDurationLength, isExplosive ? defaultExplosiveLaserSize : laserSize);
+        castAstralBeam.Init(_laserStartPosition, _laserEndPosition, defaultExplosiveLaserDurationLength, defaultExplosiveLaserSize, this);
         castAstralBeam.gameObject.SetActive(true);
         castAstralBeam.explodeTarget();
     }

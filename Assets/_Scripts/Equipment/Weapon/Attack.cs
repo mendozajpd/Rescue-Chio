@@ -18,7 +18,7 @@ public abstract class Attack : MonoBehaviour
         if(inflictKB) health?.InflictKnocback(knockbackSource, stats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance), isCrit);
     }
 
-    protected void DealDamageToEnemy(Collider2D collision, StatsManager attackerStats, float damage, Vector2 knockbackSource, float iTime)
+    protected void DealDamageToEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime)
     {
         var Enemy = collision.GetComponent<EnemyManager>();
 
@@ -27,10 +27,11 @@ public abstract class Attack : MonoBehaviour
             // ADD PARTICLES ON ENEMY POSITION TO INDICATE A HIT
             var EnemyHealth = Enemy.GetComponent<Health>();
             bool isInvincible = EnemyHealth.Invincible;
+            var totalDamage = attackerStats.TotalDamage;
             if (!isInvincible)
             {
                 bool isCrit = attackerStats.isCriticalStrike();
-                DealDamage(EnemyHealth, attackerStats, this, damage, knockbackSource, iTime, isCrit, inflictsKnockback);
+                DealDamage(EnemyHealth, attackerStats, this, totalDamage, knockbackSource, iTime, isCrit, inflictsKnockback);
             }
         }
     }

@@ -177,17 +177,7 @@ public class MagicWeapon : Weapon
     private void AddSpellStatsToEquipment(int i)
     {
         WeaponBaseDamage = Spells[i].SpellDamage;
-        //TotalBonusDamage = WeaponBaseDamage;
-        //SetTotalWeaponDamage(equipment); // This just sets the base damage in the stats manager
-        //Spells[i].SpellDamage = TotalWeaponDamage;
-
         WeaponBaseKnockback = Spells[i].SpellKnockback;
-        //TotalBonusKnockback = WeaponBaseKnockback;
-        //SetTotalWeaponKnockback(equipment);
-        //Spells[i].SpellKnockback = TotalWeaponKnockback;
-
-        //equipment.GetWeaponKnocback(TotalWeaponKnockback);
-        //equipment.CalculateWeaponBasedStats(); // THIS NEEDS TO CHANGE
         equipment.UpdateEquipmentStats();
     }
 
