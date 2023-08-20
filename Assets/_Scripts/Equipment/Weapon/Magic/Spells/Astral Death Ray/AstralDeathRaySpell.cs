@@ -64,7 +64,7 @@ public class AstralDeathRaySpell : Spell
         set
         {
             laserSize = value;
-            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, inflictsKnockback);
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed);
         } 
     
     }
@@ -74,7 +74,7 @@ public class AstralDeathRaySpell : Spell
         set
         {
             laserDistance = value;
-            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, inflictsKnockback);
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed);
         }
     }
     public float LaserRotationSpeed 
@@ -83,7 +83,7 @@ public class AstralDeathRaySpell : Spell
         set
         {
             laserRotationSpeed = value;
-            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, inflictsKnockback);
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed);
         }
     }
 
@@ -93,7 +93,7 @@ public class AstralDeathRaySpell : Spell
         set 
         { 
             inflictsKnockback = value;
-            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, inflictsKnockback);
+            _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed);
 
         }
     }
@@ -106,7 +106,7 @@ public class AstralDeathRaySpell : Spell
     private void OnEnable()
     {
         _SubscribeFunctionsToCharge();
-        _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, inflictsKnockback);
+        _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed);
         
     }
 
@@ -162,7 +162,7 @@ public class AstralDeathRaySpell : Spell
     #region Laser Settings/Laser Spawn
     private void _setLaserSettings()
     {
-        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed, inflictsKnockback);
+        if (_laser != null && _laser.gameObject.activeSelf) _laser.SetLaserSettings(LaserDistance, LaserRotationSpeed);
     }
     private void _spawnLaser()
     {

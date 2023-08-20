@@ -65,7 +65,7 @@ public class MagicMissileSpell : Spell
             var magicMissileSpell = Instantiate(_magicMissile, poolLocation);
             var currentSpawnLocation = _missileSpawnLocation.transform.position;
             magicMissileSpell.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
-            magicMissileSpell.Init(_releaseToPool, wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide());
+            magicMissileSpell.Init(_releaseToPool, wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide(), this);
             return magicMissileSpell;
         }, magicMissileSpell =>
         {
@@ -114,7 +114,7 @@ public class MagicMissileSpell : Spell
         var currentSpawnLocation = _missileSpawnLocation.transform.position;
         var castMagicMissile = Instantiate(missilePrefab, currentSpawnLocation, Quaternion.identity);
         castMagicMissile.SetSpellSettings(missileTravelSpeed, heightDividend, offsetX, offsetY, homingRotationSpeed, homingMissileSpeed, angleOfObject, missileSpeedDecreaseOvertime, missileRotateSpeedIncreaseOvertime, lightIntensityOnDeath);
-        castMagicMissile.Init(_releaseToPool,wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide());
+        castMagicMissile.Init(_releaseToPool,wand.MouseWorldPosition, currentSpawnLocation, _determineTrajectorySide(), this);
     }
     #endregion
 

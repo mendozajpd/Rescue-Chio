@@ -48,11 +48,10 @@ public class AstralDeathRayBehavior : Attack
         _spawnLaserTip();
     }
 
-    public void SetLaserSettings(float laserdistance, float rotationSpeed, bool inflictsKB)
+    public void SetLaserSettings(float laserdistance, float rotationSpeed)
     {
         LaserDistance = laserdistance;
         _rotationSpeed = rotationSpeed;
-        InflictsKnockback = inflictsKB;
     }
 
     void Start()
@@ -116,7 +115,7 @@ public class AstralDeathRayBehavior : Attack
         var playerStats = _spell.wand.equipment.playerStats;
         var kbSource = _spell.wand.PlayerPos;
 
-        DamageKnocbackEnemy(collision, playerStats, kbSource, _iTimeAfterHit);
+        TriggerDamageKnocbackEnemy(collision, playerStats, kbSource, _iTimeAfterHit, true);
     }
 
     #endregion

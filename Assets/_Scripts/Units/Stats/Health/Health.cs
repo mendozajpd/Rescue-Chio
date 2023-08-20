@@ -21,7 +21,7 @@ public class Health : Gauge, IDamageable, IHealable
 
     [Header("Invincibility Variables")]
     public bool Invincible;
-    private float _invincibilityDuration = 0.15f; 
+    private float _invincibilityDuration = 0.15f;
     private float _invincibilityTime;
 
     private UnitManager _unit;
@@ -34,29 +34,29 @@ public class Health : Gauge, IDamageable, IHealable
     [SerializeField] private bool debugMode;
     private float _damagePerSecondTime;
     private float _dps;
-    public float InvincibilityTime 
-    { 
+    public float InvincibilityTime
+    {
         get => _invincibilityTime;
-        set 
-        { 
+        set
+        {
             _invincibilityTime = value;
             Invincible = _invincibilityTime <= 0 ? false : true;
-        } 
+        }
     }
 
-    public float KnockbackTime 
-    { 
+    public float KnockbackTime
+    {
         get => _knockbackTime;
-        set 
-        { 
+        set
+        {
             _knockbackTime = value;
             Knockbacked = _knockbackTime <= 0 ? false : true;
-            if (!Knockbacked) 
-            { 
+            if (!Knockbacked)
+            {
                 _rb.velocity = Vector2.zero;
                 _rb.isKinematic = true;
             }
-        } 
+        }
     }
 
     private void Awake()
@@ -99,7 +99,7 @@ public class Health : Gauge, IDamageable, IHealable
         {
             InvincibilityTime -= Time.deltaTime;
         }
-    } 
+    }
 
     private void _damageReceivedTimer()
     {
@@ -110,7 +110,7 @@ public class Health : Gauge, IDamageable, IHealable
 
         if (_damagePerSecondTime <= 0)
         {
-            if(debugMode)
+            if (debugMode)
             {
                 Debug.Log("damge dealt in 1 second: " + _dps);
             }
@@ -165,13 +165,14 @@ public class Health : Gauge, IDamageable, IHealable
 
     public void InflictKnocback(Vector2 knockbackSource, float knockbackAmt, bool crit)
     {
-        _rb.velocity = _rb.velocity / 2;
-        _setKnockbackTime();
-        _rb.isKinematic = false;
-        Knockbacked = true;
-        Vector2 direction = (Vector2)transform.position - knockbackSource;
-        _rb.AddForce(direction.normalized * (crit ? knockbackAmt * 1.4f : knockbackAmt), ForceMode2D.Impulse);
-        // TotalKnockback + extraknockback
+            if (float.IsNaN(knockbackAmt)) knockbackAmt = 0.1f;
+            _rb.velocity = _rb.velocity / 2;
+            _setKnockbackTime();
+            _rb.isKinematic = false;
+            Knockbacked = true;
+            Vector2 direction = (Vector2)transform.position - knockbackSource;
+            _rb.AddForce(direction.normalized * (crit ? knockbackAmt * 1.4f : knockbackAmt), ForceMode2D.Impulse);
+   
     }
 
     private void _setKnockbackTime()
@@ -183,7 +184,7 @@ public class Health : Gauge, IDamageable, IHealable
     {
         if (Knockbacked)
         {
-            Vector2 halfedVelocity = (_rb.velocity * (1 + (KnockbackTime/_knockbackDuration)) / 1.75f);
+            Vector2 halfedVelocity = (_rb.velocity * (1 + (KnockbackTime / _knockbackDuration)) / 1.75f);
             _rb.velocity = halfedVelocity;
         }
     }

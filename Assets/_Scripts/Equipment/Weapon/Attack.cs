@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
 {
-    public bool InflictsKnockback;
-
     public virtual void OnEnemyDeath(Health health)
     {
         Debug.Log("death message");
@@ -18,7 +16,7 @@ public abstract class Attack : MonoBehaviour
         if(inflictKB) health?.InflictKnocback(knockbackSource, attackerStats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance), isCrit);
     }
 
-    protected void DamageKnocbackEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime)
+    protected void TriggerDamageKnocbackEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime, bool inflictsKB)
     {
         var Enemy = collision.GetComponent<EnemyManager>();
 
@@ -31,7 +29,26 @@ public abstract class Attack : MonoBehaviour
             if (!isInvincible)
             {
                 bool isCrit = attackerStats.isCriticalStrike();
-                DealDamageAndKnockback(EnemyHealth, attackerStats, this, totalDamage, knockbackSource, iTime, isCrit, InflictsKnockback);
+                DealDamageAndKnockback(EnemyHealth, attackerStats, this, totalDamage, knockbackSource, iTime, isCrit, inflictsKB);
+            }
+        }
+    }
+
+    protected void CollisionDamageKnocbackEnemy(Collision2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime, bool inflictsKB)
+    {
+        
+        var Enemy = collision.gameObject.GetComponent<EnemyManager>();
+
+        if (Enemy != null)
+        {
+            // ADD PARTICLES ON ENEMY POSITION TO INDICATE A HIT
+            var EnemyHealth = Enemy.GetComponent<Health>();
+            bool isInvincible = EnemyHealth.Invincible;
+            var totalDamage = attackerStats.TotalDamage;
+            if (!isInvincible)
+            {
+                bool isCrit = attackerStats.isCriticalStrike();
+                DealDamageAndKnockback(EnemyHealth, attackerStats, this, totalDamage, knockbackSource, iTime, isCrit, inflictsKB);
             }
         }
     }

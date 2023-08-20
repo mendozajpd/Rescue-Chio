@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MagicMissileBehavior : MonoBehaviour
+public class MagicMissileBehavior : Attack
 {
-
+    private Spell _spell;
     [Header("Missile Settings")]
     private float _missileTravelSpeed;
     private float _heightDividend;
@@ -80,12 +80,13 @@ public class MagicMissileBehavior : MonoBehaviour
     
     }
 
-    public void Init(System.Action<MagicMissileBehavior> releaseToPool, Vector2 mousePosition, Vector2 startPosition, bool isUnderhand)
+    public void Init(System.Action<MagicMissileBehavior> releaseToPool, Vector2 mousePosition, Vector2 startPosition, bool isUnderhand, Spell spellSource)
     {
         _mousePos = mousePosition;
         _startPos = startPosition;
         _underhand = isUnderhand;
         _sendToPool = releaseToPool;
+        _spell = spellSource;
     }
     private void OnEnable()
     {
@@ -297,6 +298,8 @@ public class MagicMissileBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        var playerStats = _spell.wand.equipment.playerStats;
+        CollisionDamageKnocbackEnemy(collision, playerStats, this.transform.position, 0, true);
         _destroyCore();
     }
 

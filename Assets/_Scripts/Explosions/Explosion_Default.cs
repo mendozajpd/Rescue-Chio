@@ -24,7 +24,6 @@ public class Explosion_Default : Attack, IExplode
         _light2D = GetComponent<Light2D>();
         _hitbox = GetComponent<CircleCollider2D>();
         explosionTime = explosionDuration;
-        InflictsKnockback = true;
     }
 
     private void Update()
