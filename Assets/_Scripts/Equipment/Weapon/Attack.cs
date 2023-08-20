@@ -4,21 +4,21 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
 {
-    protected bool inflictsKnockback;
+    public bool InflictsKnockback;
 
     public virtual void OnEnemyDeath(Health health)
     {
         Debug.Log("death message");
     }
 
-    private void DealDamage(Health health, StatsManager stats, Attack attack, float damage, Vector2 knockbackSource, float iTime, bool isCrit, bool inflictKB)
+    private void DealDamageAndKnockback(Health health, StatsManager attackerStats, Attack attack, float damage, Vector2 knockbackSource, float iTime, bool isCrit, bool inflictKB)
     {
         var damageReceiver = health.GetComponent<StatsManager>();
         health?.Damage(damageReceiver.CalculateFinalDamage(damage, isCrit), isCrit, iTime, attack);
-        if(inflictKB) health?.InflictKnocback(knockbackSource, stats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance), isCrit);
+        if(inflictKB) health?.InflictKnocback(knockbackSource, attackerStats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance), isCrit);
     }
 
-    protected void DealDamageToEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime)
+    protected void DamageKnocbackEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime)
     {
         var Enemy = collision.GetComponent<EnemyManager>();
 
@@ -31,7 +31,36 @@ public abstract class Attack : MonoBehaviour
             if (!isInvincible)
             {
                 bool isCrit = attackerStats.isCriticalStrike();
-                DealDamage(EnemyHealth, attackerStats, this, totalDamage, knockbackSource, iTime, isCrit, inflictsKnockback);
+                DealDamageAndKnockback(EnemyHealth, attackerStats, this, totalDamage, knockbackSource, iTime, isCrit, InflictsKnockback);
+            }
+        }
+    }
+    protected void ExplosiveDamageKnocbackEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime, float explosionRadius)
+    {
+        var Enemy = collision.GetComponent<EnemyManager>();
+
+        if (Enemy != null)
+        {
+            var EnemyHealth = Enemy.GetComponent<Health>();
+            bool isInvincible = EnemyHealth.Invincible;
+            var damageReceiver = EnemyHealth.GetComponent<StatsManager>();
+            float distance = Vector2.Distance(transform.position, EnemyHealth.transform.position);
+            float distanceMultiplier = 1.1f / (1 + 0.2f * (distance * (explosionRadius * 2)));
+            float totalDamage = attackerStats.TotalDamage * distanceMultiplier;
+            float totalKnockbackReceived = attackerStats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance) * distanceMultiplier;
+            #region debugs
+            //Debug.Log("distance: " + distance);
+            //float knockbackOverDistance = 1 / (1 + 0.2f * (distance * (explosionRadius * 2)));
+            //Debug.Log("damage multiplier: " + distanceMultiplier);
+            //Debug.Log("knockback multiplier: " + distanceMultiplier);
+            //Debug.Log("damage inflicted: " + totalDamage);
+            //Debug.Log("knockback inflicted: " + totalKnockbackReceived); 
+            #endregion
+            if (!isInvincible)
+            {
+                bool isCrit = attackerStats.isCriticalStrike();
+                EnemyHealth?.Damage(damageReceiver.CalculateFinalDamage(totalDamage, isCrit), isCrit, iTime, this);
+                EnemyHealth?.InflictKnocback(knockbackSource, totalKnockbackReceived, isCrit);
             }
         }
     }

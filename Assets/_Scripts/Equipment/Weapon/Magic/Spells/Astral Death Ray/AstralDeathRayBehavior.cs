@@ -52,7 +52,7 @@ public class AstralDeathRayBehavior : Attack
     {
         LaserDistance = laserdistance;
         _rotationSpeed = rotationSpeed;
-        inflictsKnockback = inflictsKB;
+        InflictsKnockback = inflictsKB;
     }
 
     void Start()
@@ -116,7 +116,7 @@ public class AstralDeathRayBehavior : Attack
         var playerStats = _spell.wand.equipment.playerStats;
         var kbSource = _spell.wand.PlayerPos;
 
-        DealDamageToEnemy(collision, playerStats, kbSource, _iTimeAfterHit);
+        DamageKnocbackEnemy(collision, playerStats, kbSource, _iTimeAfterHit);
     }
 
     #endregion

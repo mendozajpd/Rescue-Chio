@@ -2324,6 +2324,10 @@ PrefabInstance:
       propertyPath: Charging.m_Name
       value: Charging
       objectReference: {fileID: 0}
+    - target: {fileID: 6007171673026463874, guid: c382b97da7730394197051f9656f2f17, type: 3}
+      propertyPath: defaultSpellKnockback
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c382b97da7730394197051f9656f2f17, type: 3}
 --- !u!1 &1091884860
@@ -5787,6 +5791,10 @@ PrefabInstance:
     - target: {fileID: 9056111104971334158, guid: d7dea14b81e88154099079d5ee7270d6, type: 3}
       propertyPath: m_Name
       value: Magic Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9056111104971334158, guid: d7dea14b81e88154099079d5ee7270d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7dea14b81e88154099079d5ee7270d6, type: 3}

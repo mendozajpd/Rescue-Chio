@@ -11,6 +11,7 @@ public class Explosion_Default : Attack, IExplode
     private Light2D _light2D;
 
     private List<UnitManager> damagedByExplosion = new List<UnitManager>();
+    private CircleCollider2D _hitbox;
     [SerializeField] private bool isFriendly;
     [SerializeField] private float intensityFadeSpeed = 1f;
     [SerializeField] private float volumentricIntensityFadeSpeed = 3;
@@ -21,12 +22,13 @@ public class Explosion_Default : Attack, IExplode
     {
         _particles = GetComponent<ParticleSystem>();
         _light2D = GetComponent<Light2D>();
+        _hitbox = GetComponent<CircleCollider2D>();
         explosionTime = explosionDuration;
-        inflictsKnockback = true;
+        InflictsKnockback = true;
     }
 
     private void Update()
-    {
+    { 
         _explosionTimer();
     }
 
@@ -69,7 +71,8 @@ public class Explosion_Default : Attack, IExplode
                 if (!damagedByExplosion.Contains(enemy))
                 {
                     var attackerStats = explosionSource.UnitStats;
-                    DealDamageToEnemy(collision, attackerStats, this.transform.position, 0);
+                    float radiusSize = _hitbox.radius;
+                    ExplosiveDamageKnocbackEnemy(collision, attackerStats, this.transform.position, 0, radiusSize);
                     _addUnitToDamaged(enemy);
                 }
             }
@@ -99,8 +102,7 @@ public class Explosion_Default : Attack, IExplode
     
     private void _deactivateExplosionHitbox()
     {
-        Collider2D hitbox = GetComponent<Collider2D>();
-        if (hitbox.enabled) hitbox.enabled = false;
+        if (_hitbox.enabled) _hitbox.enabled = false;
     }
 
 }
