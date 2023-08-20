@@ -43,30 +43,24 @@ public class AstralBeamSpell : Spell
 
     void Update()
     {
-        _getLaserPoints();
     }
 
     public override void CastSpell()
     {
-        //_laserTime = laserTimeLength;
-        // Spawn laser
         _castAstralBeam(_laser);
-        // Give laser settings to laser
-        //castTrigger.Invoke();
     }
 
     private void _castAstralBeam(AstralBeamBehavior laserPrefab)
     {
+        _getLaserPoints();
         var castAstralBeam = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
-        //castAstralBeam.Init(_laserStartPosition, _laserEndPosition, isExplosive ? defaultExplosiveLaserDurationLength : laserDurationLength, isExplosive ? defaultExplosiveLaserSize : laserSize);
         castAstralBeam.Init(_laserStartPosition, _laserEndPosition, defaultExplosiveLaserDurationLength, defaultExplosiveLaserSize, this);
         castAstralBeam.gameObject.SetActive(true);
-        castAstralBeam.explodeTarget();
     }
 
     private void _getLaserPoints()
     {
-        _laserStartPosition = spellHandler.transform.position;
+        _laserStartPosition = transform.position;
         _laserEndPosition = wand.MouseWorldPosition;
     }
 

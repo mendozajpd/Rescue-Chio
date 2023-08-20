@@ -88,22 +88,49 @@ public class AstralBeamBehavior : MonoBehaviour
 
     private void _setLaserPositions(Vector3 startPoint, Vector3 endPoint)
     {
-        
+        float distance = Vector2.Distance(startPoint, endPoint);
+        Vector2 direction = endPoint - startPoint;
+        RaycastHit2D hit = Physics2D.Raycast(startPoint, direction.normalized, distance, GetIgnoreLayerMask("Player", "AllyProjectiles"));
         Vector3[] positions = new Vector3[]
         {
             startPoint,
-            endPoint
+            hit ? hit.point : endPoint
         };
 
         laser.SetPositions(positions);
-    }    
 
-    public void explodeTarget()
+        if (hit) 
+        { 
+            explodeTarget(hit.point);
+            return;
+        }
+
+        explodeTarget(endPoint);
+
+    }
+
+    public void explodeTarget(Vector2 explosionLocation)
     {
         UnitManager explosionSource = spellSource.wand.equipment.Unit;
-        var explode = Instantiate(explosion, _endPoint, Quaternion.identity);
+        var explode = Instantiate(explosion, explosionLocation, Quaternion.identity);
         explode.SetExplosionSource(explosionSource);
         explode.Explode();
     }
-    
+
+    #region Raycast Functions
+    private int GetIgnoreLayerMask(params string[] layerNamesToIgnore)
+    {
+        int layerMask = 0;
+
+        foreach (string layerName in layerNamesToIgnore)
+        {
+            int layer = LayerMask.NameToLayer(layerName);
+            layerMask |= 1 << layer;
+        }
+
+        return ~layerMask;
+    }
+
+
+    #endregion
 }

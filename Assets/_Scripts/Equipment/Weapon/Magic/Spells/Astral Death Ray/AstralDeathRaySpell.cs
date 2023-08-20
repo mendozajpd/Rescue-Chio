@@ -184,7 +184,6 @@ public class AstralDeathRaySpell : Spell
             float atkSpeed = unitStats.TotalAttackSpeed;
             _slowDownPlayer(movementspeedReduction);
             CurrentCharge += Time.deltaTime * (chargeSpeed + (atkSpeed * 0.1f));
-            // making player slow straight from the stats
         }
     }
 

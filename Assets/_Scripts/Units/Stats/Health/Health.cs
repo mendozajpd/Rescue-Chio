@@ -21,7 +21,7 @@ public class Health : Gauge, IDamageable, IHealable
 
     [Header("Invincibility Variables")]
     public bool Invincible;
-    private float _invincibilityDuration = 0.3f; 
+    private float _invincibilityDuration = 0.15f; 
     private float _invincibilityTime;
 
     private UnitManager _unit;
@@ -29,6 +29,11 @@ public class Health : Gauge, IDamageable, IHealable
     [SerializeField] private bool godMode;
     [SerializeField] private bool knockbackImmune;
 
+
+    // TEMPORARY
+    [SerializeField] private bool debugMode;
+    private float _damagePerSecondTime;
+    private float _dps;
     public float InvincibilityTime 
     { 
         get => _invincibilityTime;
@@ -63,8 +68,7 @@ public class Health : Gauge, IDamageable, IHealable
 
     private void Update()
     {
-        _invincibilityTimer();
-        _knockbackTimer();
+        _timerHandler();
     }
 
     private void FixedUpdate()
@@ -73,6 +77,13 @@ public class Health : Gauge, IDamageable, IHealable
     }
 
     #region TIMERS
+    private void _timerHandler()
+    {
+        _invincibilityTimer();
+        _knockbackTimer();
+        _damageReceivedTimer();
+    }
+
     private void _knockbackTimer()
     {
         if (KnockbackTime > 0)
@@ -89,6 +100,24 @@ public class Health : Gauge, IDamageable, IHealable
             InvincibilityTime -= Time.deltaTime;
         }
     } 
+
+    private void _damageReceivedTimer()
+    {
+        if (_damagePerSecondTime > 0)
+        {
+            _damagePerSecondTime -= Time.deltaTime;
+        }
+
+        if (_damagePerSecondTime <= 0)
+        {
+            if(debugMode)
+            {
+                Debug.Log("damge dealt in 1 second: " + _dps);
+            }
+            _dps = 0;
+            _damagePerSecondTime = 1;
+        }
+    }
     #endregion
 
     #region DAMAGE/INVINCIBILITY FUNCTIONS
@@ -105,6 +134,7 @@ public class Health : Gauge, IDamageable, IHealable
             return;
         }
 
+        _dps += damageAmount;
         CurrentValue -= godMode ? 0 : damageAmount;
         _SetInvincibilityTime(damageAmount, invincibilityTime);
     }

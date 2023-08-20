@@ -46,11 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1c58840a6ba774c8e9d2054c12e6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpellID: 
   SpellName: Astral Death Ray
-  SpellDamage: 0
-  TotalSpellDamage: 0
-  SpellKnockback: 0
-  TotalSpellKnockback: 0
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
@@ -76,6 +73,7 @@ MonoBehaviour:
   laserSize: 0.3
   laserDistance: 30
   laserRotationSpeed: 30
+  movementspeedReduction: 60
   maxLightIntensity: 5
   defaultLightIntensity: 0
   canSwing: 0

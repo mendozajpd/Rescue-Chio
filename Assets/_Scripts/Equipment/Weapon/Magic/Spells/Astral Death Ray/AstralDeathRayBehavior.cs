@@ -19,7 +19,7 @@ public class AstralDeathRayBehavior : Attack
     private float _fadeMultiplier = 7;
 
     private EdgeCollider2D _laserHitbox;
-    private float _iTimeAfterHit = -0.15f;
+    private float _iTimeAfterHit = -0.1f;
 
     //Laser Tip
     private AstralDeathRayEnd _tipPrefab;
