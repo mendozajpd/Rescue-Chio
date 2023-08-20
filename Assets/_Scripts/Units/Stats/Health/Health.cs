@@ -165,6 +165,8 @@ public class Health : Gauge, IDamageable, IHealable
 
     public void InflictKnocback(Vector2 knockbackSource, float knockbackAmt, bool crit)
     {
+        if (!knockbackImmune)
+        {
             if (float.IsNaN(knockbackAmt)) knockbackAmt = 0.1f;
             _rb.velocity = _rb.velocity / 2;
             _setKnockbackTime();
@@ -172,7 +174,8 @@ public class Health : Gauge, IDamageable, IHealable
             Knockbacked = true;
             Vector2 direction = (Vector2)transform.position - knockbackSource;
             _rb.AddForce(direction.normalized * (crit ? knockbackAmt * 1.4f : knockbackAmt), ForceMode2D.Impulse);
-   
+        }
+
     }
 
     private void _setKnockbackTime()

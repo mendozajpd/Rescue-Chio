@@ -55,14 +55,14 @@ public abstract class Attack : MonoBehaviour
     protected void ExplosiveDamageKnocbackEnemy(Collider2D collision, StatsManager attackerStats, Vector2 knockbackSource, float iTime, float explosionRadius)
     {
         var Enemy = collision.GetComponent<EnemyManager>();
-
+        var damagePoint = collision.ClosestPoint(transform.position);
         if (Enemy != null)
         {
             var EnemyHealth = Enemy.GetComponent<Health>();
             bool isInvincible = EnemyHealth.Invincible;
             var damageReceiver = EnemyHealth.GetComponent<StatsManager>();
-            float distance = Vector2.Distance(transform.position, EnemyHealth.transform.position);
-            float distanceMultiplier = 1.1f / (1 + 0.2f * (distance * (explosionRadius * 2)));
+            float distance = Vector2.Distance(transform.position, damagePoint);
+            float distanceMultiplier = 1f / (1 + 0.075f * (distance * (explosionRadius * 2)));
             float totalDamage = attackerStats.TotalDamage * distanceMultiplier;
             float totalKnockbackReceived = attackerStats.CalculateTotalKnockback(damageReceiver.TotalKnockbackResistance) * distanceMultiplier;
             #region debugs
