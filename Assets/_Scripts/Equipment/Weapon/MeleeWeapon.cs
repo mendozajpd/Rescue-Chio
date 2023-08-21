@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 
 public class MeleeWeapon : Weapon
 {
-    // Player Variables
-    private Rigidbody2D _rb;
-
-    // Weapon Rotation Variables
+    [Header("Weapon Settings")]
+    [SerializeField] private float defaultWeaponDamage;
+    [SerializeField] private float defaultWeaponKnockback;
     [SerializeField] private float totalAtkSpeed;
     [SerializeField] private float weaponAngle;
     private float angleOfTheWeapon = 90;
@@ -28,13 +27,13 @@ public class MeleeWeapon : Weapon
     private float _currentThrustPosition;
     private float _thrust;
 
-    // Attack Combo Variables
+    [Header("Attack Combo Variables")]
     [SerializeField] private float attackComboGraceTime;
     [SerializeField] private int currentCombo;
     [SerializeField] private float _attackComboTime;
-    
+
     // Weapon Direction Variables
-    [SerializeField] private bool isLookingLeft;
+    private bool _isLookingLeft;
 
     // Weapon Action Variables
     [SerializeField] private bool _swinging;
@@ -48,28 +47,47 @@ public class MeleeWeapon : Weapon
     [Range(0.1f, 0.5f)]
     public float pitchChangeMultiplier;
 
-    public bool Swinging 
-    { 
-        get => _swinging; 
-         
-    }
-    public bool Thrusting 
-    { 
-        get => _thrusting; 
-    }
+    // HITBOX
+    private Collider2D _weaponHitbox;
 
-
+    public bool Swinging
+    {
+        get => _swinging;
+        set
+        {
+            _swinging = value;
+            if (_swinging)
+            {
+                _weaponHitbox.enabled = true;
+            } else
+            {
+                _weaponHitbox.enabled = false;
+            }
+        }
+    }
+    public bool Thrusting
+    {
+        get => _thrusting;
+        set
+        {
+            _thrusting = value;
+            if (_thrusting)
+            {
+                _weaponHitbox.enabled = true;
+            } else
+            {
+                _weaponHitbox.enabled = false;
+            }
+        }
+    }
 
     private void Awake()
     {
-        // Player Variables
-        _rb = GetComponentInParent<PlayerEquipment>().Unit.GetComponent<Rigidbody2D>();
-
-        // Weapon Variables
         _anchor = gameObject.transform.gameObject;
         Sprite = GetComponentInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-
+        equipment = GetComponentInParent<PlayerEquipment>();
+        _weaponHitbox = GetComponentInChildren<Collider2D>();
         // Input System Variables
         SetInputVariables();
     }
@@ -89,8 +107,10 @@ public class MeleeWeapon : Weapon
 
     void Start()
     {
-        
+        SetWeaponStatsToDefault();
     }
+
+
 
     void Update()
     {
@@ -111,7 +131,7 @@ public class MeleeWeapon : Weapon
     // THIS GOES TO INTO THE INPUT SYSTEM ATTACK 
     private void _attackComboHandler()
     {
-        if (_swinging || _thrusting) return;
+        if (Swinging || Thrusting) return;
 
         if (currentCombo < 3)
         {
@@ -131,7 +151,7 @@ public class MeleeWeapon : Weapon
                 break;
             case 3:
                 _setThrustingPosition();
-                if (_thrusting) return;
+                if (Thrusting) return;
                 _thrustWeapon();
                 break;
         }
@@ -166,12 +186,12 @@ public class MeleeWeapon : Weapon
     {
         _resetCombo();
         _returnToSwingAngle();
-        if (isLookingLeft)
+        if (_isLookingLeft)
         {
             _swing = -1;
         }
 
-        if (!isLookingLeft)
+        if (!_isLookingLeft)
         {
             _swing = 1;
         }
@@ -199,7 +219,7 @@ public class MeleeWeapon : Weapon
     {
         if (_attackComboTime > 0)
         {
-            if (!_swinging && !_thrusting)
+            if (!Swinging && !Thrusting)
             {
                 _attackComboTime -= Time.deltaTime;
             }
@@ -227,12 +247,12 @@ public class MeleeWeapon : Weapon
 
     private void _swingWeapon()
     {
-        if (_swinging) return;
+        if (Swinging) return;
 
         // Attack
         _swing *= -1;
         playRandomMeleeSwing();
-        _swinging = true;
+        Swinging = true;
     }
 
     private void _calculateWeaponSwingTrajectory()
@@ -240,10 +260,10 @@ public class MeleeWeapon : Weapon
         // Weapon Swing
         float t = _swing == 1 ? 0 : -225;
         target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
-        if (Mathf.Abs(t - target.z) < 1 && _swinging)
+        if (Mathf.Abs(t - target.z) < 1 && Swinging)
         {
             //_swing *= -1; // Double Swing
-            _swinging = false;
+            Swinging = false;
         }
         transform.localRotation = Quaternion.Euler(target);
 
@@ -283,14 +303,14 @@ public class MeleeWeapon : Weapon
 
         if (weaponPosition == defaultThrustPosition)
         {
-            _thrusting = false;
+            Thrusting = false;
             _resetCombo();
         }
     }
 
     private void _retractThrustWeapon(Vector2 weaponPosition)
     {
-        if (weaponPosition == _targetThrustPosition && _thrusting)
+        if (weaponPosition == _targetThrustPosition && Thrusting)
         {
             _thrust = 0;
         }
@@ -298,11 +318,11 @@ public class MeleeWeapon : Weapon
 
     private void _thrustWeapon()
     {
-        if (_thrusting) return;
+        if (Thrusting) return;
 
         _thrust = _thrust == 0f ? 1 : 0f;
         playRandomMeleeSwing();
-        _thrusting = true;
+        Thrusting = true;
     }
 
 
@@ -317,11 +337,11 @@ public class MeleeWeapon : Weapon
         {
             //_flipSpriteLookingLeft();
 
-            if (!isLookingLeft && !_swinging)
+            if (!_isLookingLeft && !Swinging)
             {
                 _swing = -1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-                isLookingLeft = true;
+                _isLookingLeft = true;
             }
 
 
@@ -333,11 +353,11 @@ public class MeleeWeapon : Weapon
         {
             //_flipSpriteLookingRight();
 
-            if (isLookingLeft && !_swinging)
+            if (_isLookingLeft && !Swinging)
             {
                 _swing = 1;
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-                isLookingLeft = false;
+                _isLookingLeft = false;
             }
 
         }
@@ -348,11 +368,11 @@ public class MeleeWeapon : Weapon
     // In case there would be different weapons that would need this
     private void _flipSpriteLookingRight()
     {
-        if (_swing == 1 && !_swinging)
+        if (_swing == 1 && !Swinging)
         {
             Sprite.flipX = true;
         }
-        else if (_swing == -1 && !_swinging)
+        else if (_swing == -1 && !Swinging)
         {
             Sprite.flipX = false;
         }
@@ -360,11 +380,11 @@ public class MeleeWeapon : Weapon
 
     private void _flipSpriteLookingLeft()
     {
-        if (_swing == 1 && !_swinging)
+        if (_swing == 1 && !Swinging)
         {
             Sprite.flipX = false;
         }
-        else if (_swing == -1 && !_swinging)
+        else if (_swing == -1 && !Swinging)
         {
             Sprite.flipX = true;
         }
@@ -397,6 +417,13 @@ public class MeleeWeapon : Weapon
     }
 
     #endregion
+
+    private void SetWeaponStatsToDefault()
+    {
+        WeaponBaseDamage = defaultWeaponDamage;
+        WeaponBaseKnockback = defaultWeaponKnockback;
+    }
+
     private void Attack(InputAction.CallbackContext context)
     {
         _attackComboHandler();

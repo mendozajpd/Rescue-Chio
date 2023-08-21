@@ -5,14 +5,28 @@ using UnityEngine.InputSystem;
 
 public abstract class Weapon : MonoBehaviour
 {
-    // Common Weapon Variables
-    public float TotalWeaponDamage { get; protected set; }
-    public float WeaponBaseDamage { get; protected set; }
-    public float TotalWeaponKnockback { get; protected set; }
-    public float WeaponBaseKnockback { get; protected set; }
+    private float _weaponBaseDamage;
+    private float _weaponBaseKnockback;
+    public float WeaponBaseDamage
+    {
+        get => _weaponBaseDamage;
+        protected set
+        {
+            _weaponBaseDamage = value;
+            equipment?.UpdateEquipmentStats();
+        }
+    }
+    public float WeaponBaseKnockback
+    {
+        get => _weaponBaseKnockback;
+        protected set
+        {
+            _weaponBaseKnockback = value;
+            equipment?.UpdateEquipmentStats();
+        }
+    }
+
     public float UseTime;
-
-
 
     #region Weapon Stats
 
@@ -258,6 +272,7 @@ public abstract class Weapon : MonoBehaviour
             equipment.UpdateEquipmentStats();
         }
     }
+
     #endregion
 
     //Input System Variables

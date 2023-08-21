@@ -631,11 +631,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
       propertyPath: defaultSpellDamage
-      value: 50
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2312607566276877118, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
-      propertyPath: movementspeedReduction
-      value: 60
+      propertyPath: defaultSpellKnockback
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5752912b9a4ac3b45b5c47f9b6b9f7f8, type: 3}
@@ -2107,6 +2107,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1022017726
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2325,8 +2326,12 @@ PrefabInstance:
       value: Charging
       objectReference: {fileID: 0}
     - target: {fileID: 6007171673026463874, guid: c382b97da7730394197051f9656f2f17, type: 3}
+      propertyPath: defaultSpellDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007171673026463874, guid: c382b97da7730394197051f9656f2f17, type: 3}
       propertyPath: defaultSpellKnockback
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c382b97da7730394197051f9656f2f17, type: 3}
@@ -2470,6 +2475,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1091884866
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2711,6 +2717,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1156153538
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2960,6 +2967,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2107300705}
     m_Modifications:
+    - target: {fileID: 5605433135441114000, guid: 65d59aa6f7f736945aaa3aacf284beac, type: 3}
+      propertyPath: defaultSpellKnockback
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5605433135441114001, guid: 65d59aa6f7f736945aaa3aacf284beac, type: 3}
       propertyPath: m_Name
       value: Magic Missile Spell
@@ -3407,6 +3418,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1387974015
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3675,6 +3687,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!114 &1461599467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4043,6 +4056,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1481844361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4358,6 +4372,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 0
   knockbackImmune: 0
+  debugMode: 0
 --- !u!114 &1506409105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4768,6 +4783,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1544696219
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4978,6 +4994,7 @@ MonoBehaviour:
   Invincible: 0
   godMode: 1
   knockbackImmune: 1
+  debugMode: 0
 --- !u!58 &1651456729
 CircleCollider2D:
   m_ObjectHideFlags: 0

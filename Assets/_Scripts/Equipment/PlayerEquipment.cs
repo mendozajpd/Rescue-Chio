@@ -337,12 +337,6 @@ public class PlayerEquipment : MonoBehaviour
         //CalculateStats?.Invoke();
     }
 
-    //public void SetCurrentWeaponBaseDamage(float baseDamage)
-    //{
-
-    //    TotalCurrentWeaponDamage = baseDamage;
-    //}
-
     private float _getTotalWeaponBaseDamage()
     {
         CurrentWeaponBaseDamage = 0;

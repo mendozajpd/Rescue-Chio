@@ -32,11 +32,9 @@ public abstract class Spell : MonoBehaviour
         set => spellKnockback = value; 
     }
 
-    // Charge
-
     public virtual void CastSpell()
     {
-
+        Debug.Log("casted!");
     }
 
     public void SetSpellVariables(float defaultSpellDamage, float defaultSpellKB)

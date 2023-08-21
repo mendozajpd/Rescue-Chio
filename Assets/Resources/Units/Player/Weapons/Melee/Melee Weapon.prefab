@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f12dbe5d3115034dad9630e39601c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseDamage: 0
   UseTime: 0
   Fire:
     m_Name: Fire
@@ -66,7 +65,20 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  HoldFire:
+    m_Name: Hold Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f1e49e4c-4f0f-45fe-8e25-e503e4adf51e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   Sprite: {fileID: 0}
+  Anim: {fileID: 0}
+  equipment: {fileID: 0}
+  defaultWeaponDamage: 0
+  defaultWeaponKnockback: 0
   totalAtkSpeed: 35
   weaponAngle: 90
   thrustDistance: 1.5
@@ -74,7 +86,6 @@ MonoBehaviour:
   attackComboGraceTime: 0.7
   currentCombo: 0
   _attackComboTime: 0
-  isLookingLeft: 0
   _swinging: 0
   _thrusting: 0
   WeaponSwingAudio:
@@ -276,7 +287,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8541770210205479923}
-  - component: {fileID: 8541770210205479920}
+  - component: {fileID: 6550491288368411064}
+  - component: {fileID: 5405611510051978494}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -300,19 +312,44 @@ Transform:
   m_Father: {fileID: 8541770210068216694}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8541770210205479920
-BoxCollider:
+--- !u!114 &6550491288368411064
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8541770210205479922}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411ec5b9d3e98ad4794114fd0827b954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &5405611510051978494
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8541770210205479922}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.7}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.6, z: 0}
+  m_Size: {x: 0.8, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1001 &8541770209281732597
 PrefabInstance:
   m_ObjectHideFlags: 0
