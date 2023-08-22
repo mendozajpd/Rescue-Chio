@@ -21,7 +21,7 @@ public class Health : Gauge, IDamageable, IHealable
 
     [Header("Invincibility Variables")]
     public bool Invincible;
-    private float _invincibilityDuration = 0.15f;
+    private float _invincibilityDuration = 0.1f;
     private float _invincibilityTime;
 
     private UnitManager _unit;

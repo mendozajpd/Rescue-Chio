@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D))]
+public class BulletScript : AllyProjectile
 {
     [SerializeField] private ShootingScript muzzle;
 
     [SerializeField] private Vector3 rotation;
     [SerializeField] private float speed;
-    [SerializeField] private RangedWeapon pistol;
-    public Rigidbody2D Rb2D;
+    private RangedWeapon _gun;
+    private Collider2D _hitbox;
+    private Rigidbody2D _rb;
+    private StatsManager attackerStats;
 
     // Checks
     [SerializeField] private bool hasAlreadyInstantiated;
@@ -20,27 +23,24 @@ public class BulletScript : MonoBehaviour
     {
         _sendToPool = releaseToPool;
         muzzle = bulletSpawner;
+        _gun = muzzle.Pistol;
     }
 
-    private void OnEnable()
-    {
-
-    }
 
 
     private void Awake()
     {
-        Rb2D = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _hitbox = GetComponent<Collider2D>();
     }
 
-    void Start()
-    {
-    }
 
     public void ShootBullet(Vector2 bulletStartPos)
     {
+        _hitbox.enabled = true;
         transform.position = bulletStartPos;
-        Rb2D.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
+        attackerStats = muzzle.Pistol.equipment.playerStats;
+        _rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
         StartCoroutine(despawnSelf(1));
     }
 
@@ -50,13 +50,16 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // do bullet things
+        _hitbox.enabled = false;
+        _rb.velocity = Vector2.zero;
+        CollisionDamageKnocbackEnemy(collision, attackerStats, _gun.transform.position, 0, true);
         _sendToPool(this);
     }
 
     IEnumerator despawnSelf(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        _rb.velocity = Vector2.zero;
         _sendToPool(this);
     }
 

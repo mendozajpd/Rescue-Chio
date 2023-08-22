@@ -5,14 +5,16 @@ using UnityEngine.InputSystem;
 
 public class RangedWeapon : Weapon
 {
-
-    // Weapon Rotation Variables
-    [SerializeField] private float weaponAngle;
+    [Header("Weapon Variables")]
+    [SerializeField] private float defaultBaseDamage;
+    [SerializeField] private float defaultBaseKnockback;
+    
+    private float _weaponAngle = 90;
     private GameObject _anchor;
     private float _angle;
     private Vector2 _mousePos;
 
-    // Shoot Animation
+    [Header("Shooting Related Variables")]
     [SerializeField] private Quaternion targetRecoilPosition;
     [SerializeField] private float recoilAmount;
     [SerializeField] private float recoilRecoverySpeed;
@@ -20,11 +22,11 @@ public class RangedWeapon : Weapon
     [SerializeField] private float shoot;
     [SerializeField] private bool shooting;
 
-    // Ranged Weapon Variables
+    [Header("Ranged Weapon Variables")]
     [SerializeField] private float currentAmmo;
     [SerializeField] private float maxAmmo;
 
-    // Reload Variables
+    [Header("Reload Variables")]
     public float ReloadSpeed;
     [SerializeField] private float reloadTime;
     [SerializeField] private bool canPull;
@@ -41,8 +43,6 @@ public class RangedWeapon : Weapon
     // Weapon Event
     public System.Action shootTrigger;
     public System.Action reloadTrigger;
-    //public System.Action pullReloadNotEmpty;
-    //private System.Action releaseReload;
 
     // Input System Variables
     public InputAction Reload;
@@ -73,6 +73,8 @@ public class RangedWeapon : Weapon
 
         // Audio Variables
         audioSource = GetComponent<AudioSource>();
+
+        equipment = GetComponentInParent<PlayerEquipment>();
 
         // Weapon Sprite
         SetSpriteVariables();
@@ -109,7 +111,8 @@ public class RangedWeapon : Weapon
 
     void Start()
     {
-        
+        WeaponBaseDamage = defaultBaseDamage;
+        WeaponBaseKnockback = defaultBaseKnockback;
     }
 
     void Update()
@@ -234,7 +237,7 @@ public class RangedWeapon : Weapon
         {
             if (reloadTime < ReloadSpeed * 0.2f)
             {
-                Debug.Log("gun released");
+                //Debug.Log("gun released");
                 _releaseReloadAnim();
                 canRelease = false;
             }
@@ -277,7 +280,7 @@ public class RangedWeapon : Weapon
 
     private void _rotateWeaponAroundAnchor()
     {
-        _angle = (Mathf.Atan2(_mousePos.y, _mousePos.x) * Mathf.Rad2Deg) - weaponAngle;
+        _angle = (Mathf.Atan2(_mousePos.y, _mousePos.x) * Mathf.Rad2Deg) - _weaponAngle;
         Vector3 rotation = _anchor.transform.eulerAngles;
         rotation.z = _angle;
         _anchor.transform.eulerAngles = rotation;

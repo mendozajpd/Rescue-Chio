@@ -67,7 +67,6 @@ public class ShootingScript : MonoBehaviour
 
         }, bullet =>
         {
-            bullet.Rb2D.velocity = Vector2.zero;
             bullet.gameObject.SetActive(false);
         }, bullet =>
         {

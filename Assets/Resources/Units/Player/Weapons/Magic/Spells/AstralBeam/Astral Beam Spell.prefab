@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785b475e50a29404e945ecc421cba7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpellID: 
   SpellName: Astral Beam
-  SpellDamage: 0
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
@@ -61,7 +61,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  defaultSpellDamage: 8
+  defaultSpellDamage: 20
+  defaultSpellKnockback: 5
   isExplosive: 1
   laserSize: 0.1
   defaultExplosiveLaserDurationLength: 0.1

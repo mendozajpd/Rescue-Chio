@@ -91,7 +91,7 @@ public class PistolReload : MonoBehaviour
     {
         if (weaponPosition.x > _targetEjectPosition.x - 0.1f && _ejecting)
         {
-            Debug.Log("retracted!");
+            //Debug.Log("retracted!");
             _eject = 0;
             AudioHandler(1, true);
             magazineInserted.Invoke();

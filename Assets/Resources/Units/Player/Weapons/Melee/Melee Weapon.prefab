@@ -77,8 +77,8 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Anim: {fileID: 0}
   equipment: {fileID: 0}
-  defaultWeaponDamage: 0
-  defaultWeaponKnockback: 0
+  defaultWeaponDamage: 8
+  defaultWeaponKnockback: 1
   totalAtkSpeed: 35
   weaponAngle: 90
   thrustDistance: 1.5
