@@ -40,7 +40,8 @@ public class BulletScript : AllyProjectile
         _hitbox.enabled = true;
         transform.position = bulletStartPos;
         attackerStats = muzzle.Pistol.equipment.playerStats;
-        _rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
+        //_rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
+        _rb.AddForce(muzzle.BulletDirection * speed, ForceMode2D.Impulse);
         StartCoroutine(despawnSelf(1));
     }
 
@@ -50,9 +51,10 @@ public class BulletScript : AllyProjectile
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _hitbox.enabled = false;
         _rb.velocity = Vector2.zero;
+        _hitbox.enabled = false;
         CollisionDamageKnocbackEnemy(collision, attackerStats, _gun.transform.position, 0, true);
+        StopAllCoroutines();
         _sendToPool(this);
     }
 
@@ -61,7 +63,8 @@ public class BulletScript : AllyProjectile
         yield return new WaitForSeconds(seconds);
         _rb.velocity = Vector2.zero;
         _sendToPool(this);
-    }
+    }    
+
 
 
 }

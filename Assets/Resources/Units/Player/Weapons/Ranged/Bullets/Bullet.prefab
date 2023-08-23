@@ -4884,7 +4884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzle: {fileID: 0}
   rotation: {x: 0, y: 0, z: 0}
-  speed: 35
+  speed: 1
   hasAlreadyInstantiated: 0
 --- !u!50 &461358527682445600
 Rigidbody2D:
@@ -4906,7 +4906,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &-2501170295743669247
 BoxCollider2D:
   m_ObjectHideFlags: 0

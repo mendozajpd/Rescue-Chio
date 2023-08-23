@@ -26,8 +26,7 @@ public class ShootingScript : MonoBehaviour
     [SerializeField] private Vector3 bulletDirection;
     [SerializeField] private Vector3 mousePos;
 
-    public Vector3 BulletDirection { get => bulletDirection; }
-
+    public Vector3 BulletDirection { get => bulletDirection; set => bulletDirection = value; }
 
     private void OnEnable()
     {
@@ -64,7 +63,6 @@ public class ShootingScript : MonoBehaviour
         {
             bullet.gameObject.SetActive(true);
             bullet.ShootBullet(transform.position);
-
         }, bullet =>
         {
             bullet.gameObject.SetActive(false);
@@ -109,8 +107,9 @@ public class ShootingScript : MonoBehaviour
 
     private void getBulletDirection()
     {
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        bulletDirection = mousePos - transform.position;
+        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition) - Pistol.transform.position;
+        BulletDirection = mousePos - transform.position;
+        BulletDirection = BulletDirection.normalized;
     }
 
 }
