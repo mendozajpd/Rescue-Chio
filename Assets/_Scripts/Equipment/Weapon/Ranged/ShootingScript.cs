@@ -7,12 +7,10 @@ public class ShootingScript : MonoBehaviour
 {
     // Gun Related Variables
     public RangedWeapon Pistol;
-    private Transform _bulletSpawnPoint;
 
     // Temporary
-    [SerializeField] private BulletScript bulletPrefab;
     [SerializeField] private float bulletSpeed;
-
+    private BulletScript _bulletPrefab;
 
     // Camera Variable
     [SerializeField] private Camera mainCamera;
@@ -21,12 +19,13 @@ public class ShootingScript : MonoBehaviour
     // Object Pool Variables
     [SerializeField] private bool usePool;
     private ObjectPool<BulletScript> _pool;
+    private Transform _poolLocation;
 
     // Direction Variables
-    [SerializeField] private Vector3 bulletDirection;
-    [SerializeField] private Vector3 mousePos;
+    [SerializeField] private Vector2 bulletDirection;
+    [SerializeField] private Vector2 mousePos;
 
-    public Vector3 BulletDirection { get => bulletDirection; set => bulletDirection = value; }
+    public Vector2 BulletDirection { get => bulletDirection; set => bulletDirection = value; }
 
     private void OnEnable()
     {
@@ -47,17 +46,16 @@ public class ShootingScript : MonoBehaviour
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         Pistol = GetComponentInParent<RangedWeapon>();
-        _bulletSpawnPoint = transform;
-
+        _poolLocation = Pistol.GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<ProjectilesPool>().transform;
+        _bulletPrefab = Resources.Load<BulletScript>("Units/Player/Weapons/Ranged/Bullets/Bullet");
     }
+
     void Start()
     {
         _pool = new ObjectPool<BulletScript>(() =>
         {
-            Transform poolLocation = Pistol.GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<ProjectilesPool>().transform;
-            var bullet = Instantiate(bulletPrefab, poolLocation);
+            var bullet = Instantiate(_bulletPrefab, _poolLocation);
             bullet.Init(_releaseToPool, this);
-            bullet.ShootBullet(transform.position);
             return bullet;
         }, bullet =>
         {
@@ -69,7 +67,7 @@ public class ShootingScript : MonoBehaviour
         }, bullet =>
         {
             Destroy(bullet.gameObject);
-        }, false, 30, 60);
+        }, true, 30, 60);
 
     }
 
@@ -78,37 +76,20 @@ public class ShootingScript : MonoBehaviour
         getBulletDirection();
     }
 
-    private void _spawnBullet(BulletScript bullet)
-    {
-        if (usePool)
-        {
-            _pool.Get();
-            return;
-        }
-        var objectthing = Instantiate(bullet, _bulletSpawnPoint.position, Quaternion.identity);
-        objectthing.Init(_releaseToPool, this);
-    }
-
     private void _shootBullet()
     {
-        _spawnBullet(bulletPrefab);
+        _pool.Get();
     }
 
     private void _releaseToPool(BulletScript bullet)
     {
-        if (usePool)
-        {
-            _pool.Release(bullet);
-            return;
-        }
-        // changed this 
-        Destroy(bullet.gameObject);
+        _pool?.Release(bullet);
     }
 
     private void getBulletDirection()
     {
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition) - Pistol.transform.position;
-        BulletDirection = mousePos - transform.position;
+        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        BulletDirection = mousePos - (Vector2)transform.position;
         BulletDirection = BulletDirection.normalized;
     }
 

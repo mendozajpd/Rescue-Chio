@@ -3283,7 +3283,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 1
+  knockbackImmune: 0
   debugMode: 0
 --- !u!58 &1387974015
 CircleCollider2D:
@@ -3552,7 +3552,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 1
+  knockbackImmune: 0
   debugMode: 0
 --- !u!114 &1461599467
 MonoBehaviour:
@@ -3921,7 +3921,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 1
+  knockbackImmune: 0
   debugMode: 0
 --- !u!58 &1481844361
 CircleCollider2D:
@@ -4648,7 +4648,7 @@ MonoBehaviour:
   Knockbacked: 0
   Invincible: 0
   godMode: 1
-  knockbackImmune: 1
+  knockbackImmune: 0
   debugMode: 0
 --- !u!58 &1544696219
 CircleCollider2D:

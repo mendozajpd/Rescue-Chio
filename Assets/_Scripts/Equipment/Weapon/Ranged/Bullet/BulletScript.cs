@@ -6,18 +6,20 @@ using UnityEngine;
 public class BulletScript : AllyProjectile
 {
     [SerializeField] private ShootingScript muzzle;
-
+    private ParticleSystem.EmissionModule _emission;
     [SerializeField] private Vector3 rotation;
     [SerializeField] private float speed;
+    [SerializeField] private int pierceAmount = 1;
+    private int enemiesDamaged;
     private RangedWeapon _gun;
     private Collider2D _hitbox;
     private Rigidbody2D _rb;
     private StatsManager attackerStats;
 
-    // Checks
-    [SerializeField] private bool hasAlreadyInstantiated;
-    // Spawner stuff
+    [SerializeField] private float despawnDuration = 1;
+    private float despawnTime;
     private System.Action<BulletScript> _sendToPool;
+
 
     public void Init(System.Action<BulletScript> releaseToPool, ShootingScript bulletSpawner)
     {
@@ -26,45 +28,66 @@ public class BulletScript : AllyProjectile
         _gun = muzzle.Pistol;
     }
 
-
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _hitbox = GetComponent<Collider2D>();
+        _emission = GetComponent<ParticleSystem>().emission;
     }
 
 
     public void ShootBullet(Vector2 bulletStartPos)
     {
-        _hitbox.enabled = true;
-        transform.position = bulletStartPos;
-        attackerStats = muzzle.Pistol.equipment.playerStats;
-        //_rb.velocity = new Vector2(muzzle.BulletDirection.x, muzzle.BulletDirection.y).normalized * speed;
-        _rb.AddForce(muzzle.BulletDirection * speed, ForceMode2D.Impulse);
-        StartCoroutine(despawnSelf(1));
+            enemiesDamaged = 0;
+            _hitbox.enabled = true;
+            transform.position = bulletStartPos;
+            attackerStats = muzzle.Pistol.equipment.playerStats;
+            _rb.AddForce(muzzle.BulletDirection * speed, ForceMode2D.Impulse);
+            despawnTime = despawnDuration;
+            Debug.Log("1");
     }
 
     void Update()
     {
+        _despawnTimer();
+    }
+
+    private void _despawnTimer()
+    {
+        if (despawnTime > 0)
+        {
+            despawnTime -= Time.deltaTime;
+        }
+
+        if (despawnTime <= 0)
+        {
+            _sendToPool(this);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _rb.velocity = Vector2.zero;
-        _hitbox.enabled = false;
-        CollisionDamageKnocbackEnemy(collision, attackerStats, _gun.transform.position, 0, true);
-        StopAllCoroutines();
-        _sendToPool(this);
+        if (pierceAmount != enemiesDamaged)
+        {
+            CollisionDamageKnocbackEnemy(collision, attackerStats, _gun.transform.position, 0, true);
+            Debug.Log("2");
+            enemiesDamaged += 1;
+        }
+
+        if (pierceAmount == enemiesDamaged)
+        {
+            despawnTime = 10;
+            _hitbox.enabled = false;
+            _sendToPool(this);
+        }
     }
 
-    IEnumerator despawnSelf(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        _rb.velocity = Vector2.zero;
-        _sendToPool(this);
-    }    
 
-
+    //public void StopBullet()
+    //{
+    //    _rb.velocity = Vector2.zero;
+    //    _emission.enabled = false;
+    //    Debug.Log("3");
+    //}
 
 }
