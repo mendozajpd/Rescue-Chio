@@ -67,7 +67,7 @@ public class ShootingScript : MonoBehaviour
         }, bullet =>
         {
             Destroy(bullet.gameObject);
-        }, true, 30, 60);
+        }, false, 30, 60);
 
     }
 
@@ -83,7 +83,7 @@ public class ShootingScript : MonoBehaviour
 
     private void _releaseToPool(BulletScript bullet)
     {
-        _pool?.Release(bullet);
+        _pool.Release(bullet);
     }
 
     private void getBulletDirection()

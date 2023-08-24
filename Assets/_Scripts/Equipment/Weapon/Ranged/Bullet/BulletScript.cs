@@ -76,18 +76,12 @@ public class BulletScript : AllyProjectile
 
         if (pierceAmount == enemiesDamaged)
         {
-            despawnTime = 10;
-            _hitbox.enabled = false;
+            if (!_hitbox.enabled) return;
             _sendToPool(this);
+            _hitbox.enabled = false;
         }
     }
 
 
-    //public void StopBullet()
-    //{
-    //    _rb.velocity = Vector2.zero;
-    //    _emission.enabled = false;
-    //    Debug.Log("3");
-    //}
 
 }
