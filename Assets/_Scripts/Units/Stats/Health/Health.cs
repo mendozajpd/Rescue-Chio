@@ -34,6 +34,12 @@ public class Health : Gauge, IDamageable, IHealable
     [SerializeField] private bool debugMode;
     private float _damagePerSecondTime;
     private float _dps;
+
+    [SerializeField] private float adjustNum = 0.8f;
+    //[SerializeField] private float slowMultiplier = 0.01f;
+    //[SerializeField] private float exponentSlow = 1;
+    //[SerializeField] private float decreaseAmount;
+    //private float speedDecrease;
     public float InvincibilityTime
     {
         get => _invincibilityTime;
@@ -165,10 +171,13 @@ public class Health : Gauge, IDamageable, IHealable
 
     public void InflictKnocback(Vector2 knockbackSource, float knockbackAmt, bool crit)
     {
+        //_rb.isKinematic = true;
         if (!knockbackImmune)
         {
             if (float.IsNaN(knockbackAmt)) knockbackAmt = 0.1f;
-            _rb.velocity = _rb.velocity / 2;
+            //_rb.velocity = _rb.velocity / 2;
+            //speedDecrease = 0;
+            _rb.velocity = Vector2.zero;
             _setKnockbackTime();
             _rb.isKinematic = false;
             Knockbacked = true;
@@ -187,8 +196,8 @@ public class Health : Gauge, IDamageable, IHealable
     {
         if (Knockbacked)
         {
-            Vector2 halfedVelocity = (_rb.velocity * (1 + (KnockbackTime / _knockbackDuration)) / 1.75f);
-            _rb.velocity = halfedVelocity;
+            Vector2 newVelocity = _rb.velocity * adjustNum;
+            _rb.velocity = newVelocity;
         }
     }
     #endregion

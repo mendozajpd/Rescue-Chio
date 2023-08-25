@@ -578,7 +578,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1780311147127794296, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
       propertyPath: defaultBaseDamage
-      value: 5
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1780311147127794296, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
       propertyPath: defaultBaseKnockback
@@ -2108,6 +2108,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
+  slowMultiplier: 0.03
+  speedDecrease: 0
 --- !u!58 &1022017726
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2403,6 +2405,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
+  slowMultiplier: 0.03
+  speedDecrease: 0
 --- !u!58 &1091884866
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2645,6 +2649,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
+  slowMultiplier: 0.03
+  speedDecrease: 0
 --- !u!58 &1156153538
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3285,6 +3291,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
+  slowMultiplier: 0.01
+  speedDecrease: 0
 --- !u!58 &1387974015
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3554,6 +3562,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
+  slowMultiplier: 0.01
+  speedDecrease: 0
 --- !u!114 &1461599467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3923,6 +3933,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
+  slowMultiplier: 0.01
+  speedDecrease: 0
 --- !u!58 &1481844361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4239,6 +4251,8 @@ MonoBehaviour:
   godMode: 0
   knockbackImmune: 0
   debugMode: 0
+  slowMultiplier: 0.01
+  speedDecrease: 0
 --- !u!114 &1506409105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4650,6 +4664,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
+  slowMultiplier: 0.01
+  speedDecrease: 0
 --- !u!58 &1544696219
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4861,6 +4877,8 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
+  slowMultiplier: 0.03
+  speedDecrease: 0
 --- !u!58 &1651456729
 CircleCollider2D:
   m_ObjectHideFlags: 0
