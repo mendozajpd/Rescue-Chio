@@ -8,7 +8,7 @@ public class RangedWeapon : Weapon
     [Header("Weapon Variables")]
     [SerializeField] private float defaultBaseDamage;
     [SerializeField] private float defaultBaseKnockback;
-    
+
     private float _weaponAngle = 90;
     private GameObject _anchor;
     private float _angle;
@@ -16,7 +16,7 @@ public class RangedWeapon : Weapon
 
     [Header("Ranged Weapon Stats")]
     [SerializeField] private float maxAmmo;
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField] private float accuracy;
     [Range(0, 10)]
     [SerializeField] private float reloadSpeed;
@@ -37,6 +37,7 @@ public class RangedWeapon : Weapon
 
     [Header("Reload Variables")]
     [SerializeField] private float reloadTime;
+    [SerializeField] private float reloadSpeedDuration;
     [SerializeField] private bool canPull;
     [SerializeField] private bool canRelease;
     [SerializeField] private bool isReloading;
@@ -60,14 +61,14 @@ public class RangedWeapon : Weapon
     private AudioSource audioSource;
     [Range(0f, 0.5f)]
     public float volumeChangeMultiplier;
-    [Range(0f, 0.5f)] 
+    [Range(0f, 0.5f)]
     public float pitchChangeMultiplier;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float AudioVolume;
 
     public bool IsLookingLeft { get => isLookingLeft; }
     public float ReloadTime { get => reloadTime; }
-
+    public float ReloadSpeedDuration { get => reloadSpeedDuration; set => reloadSpeedDuration = value; }
 
     #region Gun Stats
     public float Accuracy { get => accuracy; set => accuracy = value; }
@@ -186,7 +187,7 @@ public class RangedWeapon : Weapon
         shoot = shoot == 0 ? 1 : 0;
         shootTrigger.Invoke();
         _triggerShootAnim();
-        rangedWeaponAudioHandler(1,true);
+        rangedWeaponAudioHandler(1, true);
         shooting = true;
         currentAmmo -= 1;
         if (currentAmmo == 0)
@@ -210,8 +211,10 @@ public class RangedWeapon : Weapon
         reloadTrigger.Invoke();
         reload = 1;
         isReloading = true;
-        rangedWeaponAudioHandler(0,false);
-        reloadTime = ReloadSpeed;
+        rangedWeaponAudioHandler(0, false);
+        ReloadSpeedDuration = (10 - (ReloadSpeed - 1)) * 0.1f;
+        reloadTime = ReloadSpeedDuration;
+        //reloadTime = ReloadSpeed;
     }
 
     private void _reloadTimer()
@@ -236,9 +239,9 @@ public class RangedWeapon : Weapon
 
     private void _reloadAnimatorHandler()
     {
-        if(canPull)
+        if (canPull)
         {
-            if (reloadTime < ReloadSpeed * 0.4f)
+            if (reloadTime < ReloadSpeedDuration * 0.4f)
             {
                 _pullReloadAnim();
                 canPull = false;
@@ -246,10 +249,10 @@ public class RangedWeapon : Weapon
             }
 
         }
-        
+
         if (canRelease)
         {
-            if (reloadTime < ReloadSpeed * 0.2f)
+            if (reloadTime < ReloadSpeedDuration * 0.2f)
             {
                 _releaseReloadAnim();
                 canRelease = false;
@@ -262,7 +265,7 @@ public class RangedWeapon : Weapon
 
     private void _pullReloadAnim()
     {
-        
+
         Anim.SetTrigger("reloadPull");
         rangedWeaponAudioHandler(2, true);
         reload = 0;

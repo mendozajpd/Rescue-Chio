@@ -66,7 +66,7 @@ public class PistolReload : MonoBehaviour
 
     IEnumerator setMagazineSpeed()
     {
-        ejectSpeed = Mathf.Lerp(3, 10, (_pistol.ReloadSpeed - 1) / (0.3f - 1)); // Maps the speed 
+        ejectSpeed = Mathf.Lerp(3, 10, (_pistol.ReloadSpeedDuration - 1) / (0.3f - 1)); // Maps the speed 
         yield return new WaitForSeconds(1);
         StartCoroutine(setMagazineSpeed());
     }
@@ -79,7 +79,7 @@ public class PistolReload : MonoBehaviour
         transform.localPosition = Vector2.Lerp(defaultEjectPosition, _targetEjectPosition, curve.Evaluate(_currentEjectPosition));
         Vector2 magazinePosition = transform.localPosition;
 
-        if (_pistol.ReloadTime < _pistol.ReloadSpeed * 0.8f && _eject != 0) _retractMagazine(magazinePosition);
+        if (_pistol.ReloadTime < _pistol.ReloadSpeedDuration * 0.8f && _eject != 0) _retractMagazine(magazinePosition);
 
         if (magazinePosition == defaultEjectPosition)
         {
