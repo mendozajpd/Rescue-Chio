@@ -4884,10 +4884,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzle: {fileID: 0}
   rotation: {x: 0, y: 0, z: 0}
-  speed: 3
+  speed: 2
   pierceAmount: 1
   despawnDuration: 1
-  hasAlreadyInstantiated: 0
 --- !u!50 &461358527682445600
 Rigidbody2D:
   serializedVersion: 4

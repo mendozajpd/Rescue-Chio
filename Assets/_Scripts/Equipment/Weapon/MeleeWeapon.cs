@@ -33,7 +33,7 @@ public class MeleeWeapon : Weapon
     [SerializeField] private float _attackComboTime;
 
     // Weapon Direction Variables
-    private bool _isLookingLeft;
+    [SerializeField] private bool _isLookingLeft;
 
     // Weapon Action Variables
     [SerializeField] private bool _swinging;
@@ -50,6 +50,9 @@ public class MeleeWeapon : Weapon
     // HITBOX
     private Collider2D _weaponHitbox;
 
+    [Header("Temporary")]
+    [SerializeField] private float spriteX;
+
     public bool Swinging
     {
         get => _swinging;
@@ -59,7 +62,8 @@ public class MeleeWeapon : Weapon
             if (_swinging)
             {
                 _weaponHitbox.enabled = true;
-            } else
+            }
+            else
             {
                 _weaponHitbox.enabled = false;
             }
@@ -74,7 +78,8 @@ public class MeleeWeapon : Weapon
             if (_thrusting)
             {
                 _weaponHitbox.enabled = true;
-            } else
+            }
+            else
             {
                 _weaponHitbox.enabled = false;
             }
@@ -241,8 +246,8 @@ public class MeleeWeapon : Weapon
 
     private void _setSwingingPosition()
     {
-        transform.localPosition = new Vector2(0, 0.5f);
-        Sprite.transform.localPosition = new Vector2(0.5f, 0.15f);
+        transform.localPosition = new Vector2(0, 0.4f);
+        Sprite.transform.localPosition = new Vector2(0.8f, 0.15f);
     }
 
     private void _swingWeapon()
@@ -288,7 +293,7 @@ public class MeleeWeapon : Weapon
         _setThrustSpeed();
         _swingAngle = 0;
         transform.localPosition = new Vector2(0, 0.3f);
-        Sprite.transform.localPosition = new Vector2(0, 0.3f);
+        Sprite.transform.localPosition = new Vector2(0, 0.5f);
     }
 
     private void _calculateWeaponThrustTrajectory()

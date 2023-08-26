@@ -538,6 +538,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &196977783 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+  m_PrefabInstance: {fileID: 1227170199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &224999126
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,71 +574,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &240945618
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 525410144}
-    m_Modifications:
-    - target: {fileID: 1780311147127794296, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: defaultBaseDamage
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794296, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: defaultBaseKnockback
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780311147127794298, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-      propertyPath: m_Name
-      value: Ranged Weapon
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
 --- !u!1 &277179355
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,11 +851,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &492178007 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
-  m_PrefabInstance: {fileID: 240945618}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506509939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,7 +1117,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 492178007}
+  - {fileID: 196977783}
   m_Father: {fileID: 1506409097}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2108,8 +2043,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
-  slowMultiplier: 0.03
-  speedDecrease: 0
 --- !u!58 &1022017726
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2405,8 +2338,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
-  slowMultiplier: 0.03
-  speedDecrease: 0
 --- !u!58 &1091884866
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2649,8 +2580,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
-  slowMultiplier: 0.03
-  speedDecrease: 0
 --- !u!58 &1156153538
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2754,6 +2683,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1227170199
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 525410144}
+    m_Modifications:
+    - target: {fileID: 8541770209942839092, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_Name
+      value: Melee Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541770209942839093, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
 --- !u!1 &1232094146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,8 +3277,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
-  slowMultiplier: 0.01
-  speedDecrease: 0
 --- !u!58 &1387974015
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3562,8 +3546,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
-  slowMultiplier: 0.01
-  speedDecrease: 0
 --- !u!114 &1461599467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3933,8 +3915,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
-  slowMultiplier: 0.01
-  speedDecrease: 0
 --- !u!58 &1481844361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4251,8 +4231,6 @@ MonoBehaviour:
   godMode: 0
   knockbackImmune: 0
   debugMode: 0
-  slowMultiplier: 0.01
-  speedDecrease: 0
 --- !u!114 &1506409105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4664,8 +4642,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 0
   debugMode: 0
-  slowMultiplier: 0.01
-  speedDecrease: 0
 --- !u!58 &1544696219
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4877,8 +4853,6 @@ MonoBehaviour:
   godMode: 1
   knockbackImmune: 1
   debugMode: 0
-  slowMultiplier: 0.03
-  speedDecrease: 0
 --- !u!58 &1651456729
 CircleCollider2D:
   m_ObjectHideFlags: 0

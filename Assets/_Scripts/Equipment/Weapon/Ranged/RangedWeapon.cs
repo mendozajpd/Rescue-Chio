@@ -14,6 +14,15 @@ public class RangedWeapon : Weapon
     private float _angle;
     private Vector2 _mousePos;
 
+    [Header("Ranged Weapon Stats")]
+    [SerializeField] private float maxAmmo;
+    [Range(0,10)]
+    [SerializeField] private float accuracy;
+    [Range(0, 10)]
+    [SerializeField] private float reloadSpeed;
+    [Range(0, 10)]
+    [SerializeField] private float firePower; // idk what this does
+
     [Header("Shooting Related Variables")]
     [SerializeField] private Quaternion targetRecoilPosition;
     [SerializeField] private float recoilAmount;
@@ -24,10 +33,9 @@ public class RangedWeapon : Weapon
 
     [Header("Ranged Weapon Variables")]
     [SerializeField] private float currentAmmo;
-    [SerializeField] private float maxAmmo;
+
 
     [Header("Reload Variables")]
-    public float ReloadSpeed;
     [SerializeField] private float reloadTime;
     [SerializeField] private bool canPull;
     [SerializeField] private bool canRelease;
@@ -59,6 +67,13 @@ public class RangedWeapon : Weapon
 
     public bool IsLookingLeft { get => isLookingLeft; }
     public float ReloadTime { get => reloadTime; }
+
+
+    #region Gun Stats
+    public float Accuracy { get => accuracy; set => accuracy = value; }
+    public float ReloadSpeed { get => reloadSpeed; set => reloadSpeed = value; }
+    public float FirePower { get => firePower; set => firePower = value; }
+    #endregion
 
     private void Awake()
     {
@@ -171,7 +186,7 @@ public class RangedWeapon : Weapon
         shoot = shoot == 0 ? 1 : 0;
         shootTrigger.Invoke();
         _triggerShootAnim();
-        rangedWeaponAudioHandler(1,true); // Reload clip will be at 0
+        rangedWeaponAudioHandler(1,true);
         shooting = true;
         currentAmmo -= 1;
         if (currentAmmo == 0)
@@ -192,7 +207,6 @@ public class RangedWeapon : Weapon
 
         if (currentAmmo == maxAmmo) return;
 
-        // Reloads weapon
         reloadTrigger.Invoke();
         reload = 1;
         isReloading = true;
@@ -237,7 +251,6 @@ public class RangedWeapon : Weapon
         {
             if (reloadTime < ReloadSpeed * 0.2f)
             {
-                //Debug.Log("gun released");
                 _releaseReloadAnim();
                 canRelease = false;
             }
@@ -342,13 +355,11 @@ public class RangedWeapon : Weapon
 
     private void Attack(InputAction.CallbackContext context)
     {
-        //Debug.Log("Pewpew");
         _attackHandler();
     }
 
     private void ReloadWeapon(InputAction.CallbackContext context)
     {
-        //Debug.Log("reloadin");
         _reloadHandler();
     }
 

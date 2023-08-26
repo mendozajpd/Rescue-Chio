@@ -5,27 +5,16 @@ using UnityEngine.Pool;
 
 public class ShootingScript : MonoBehaviour
 {
-    // Gun Related Variables
     public RangedWeapon Pistol;
-
-    // Temporary
     [SerializeField] private float bulletSpeed;
     private BulletScript _bulletPrefab;
-
-    // Camera Variable
-    [SerializeField] private Camera mainCamera;
-
-
-    // Object Pool Variables
-    [SerializeField] private bool usePool;
+    private Camera mainCamera;
     private ObjectPool<BulletScript> _pool;
     private Transform _poolLocation;
+    private Vector2 _bulletDirection;
+    private Vector2 _mousePos;
 
-    // Direction Variables
-    [SerializeField] private Vector2 bulletDirection;
-    [SerializeField] private Vector2 mousePos;
-
-    public Vector2 BulletDirection { get => bulletDirection; set => bulletDirection = value; }
+    public Vector2 BulletDirection { get => _bulletDirection; set => _bulletDirection = value; }
 
     private void OnEnable()
     {
@@ -88,9 +77,21 @@ public class ShootingScript : MonoBehaviour
 
     private void getBulletDirection()
     {
-        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        BulletDirection = mousePos - (Vector2)transform.position;
+        _mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        BulletDirection = _mousePos - (Vector2)transform.position;
+        calculateAccuracy(Pistol.Accuracy);
+
         BulletDirection = BulletDirection.normalized;
+    }
+
+    private void calculateAccuracy(float accuracyStat)
+    {
+        float accuracyValue = 10 - accuracyStat;
+        float offsetValue = (accuracyValue / 10) * 3; // 3 being the max offset
+        float randomX = Random.Range(-offsetValue, offsetValue);
+        float randomY = Random.Range(-offsetValue, offsetValue);
+        Vector2 calculatedAccuracy = new Vector2(BulletDirection.x + randomX, BulletDirection.y + randomY);
+        BulletDirection = calculatedAccuracy;
     }
 
 }

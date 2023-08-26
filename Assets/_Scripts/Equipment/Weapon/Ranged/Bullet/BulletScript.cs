@@ -44,7 +44,6 @@ public class BulletScript : AllyProjectile
             attackerStats = muzzle.Pistol.equipment.playerStats;
             _rb.AddForce(muzzle.BulletDirection * speed, ForceMode2D.Impulse);
             despawnTime = despawnDuration;
-            Debug.Log("1");
     }
 
     void Update()
@@ -70,7 +69,6 @@ public class BulletScript : AllyProjectile
         if (pierceAmount != enemiesDamaged)
         {
             CollisionDamageKnocbackEnemy(collision, attackerStats, _gun.transform.position, 0, true);
-            Debug.Log("2");
             enemiesDamaged += 1;
         }
 

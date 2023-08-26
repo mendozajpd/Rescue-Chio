@@ -10321,7 +10321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ead897f4784f24aa8c19a7663c4089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseDamage: 0
   UseTime: 0
   Fire:
     m_Name: Fire
@@ -10352,7 +10351,13 @@ MonoBehaviour:
     m_Flags: 0
   Sprite: {fileID: 1780311147204230706}
   Anim: {fileID: 1780311147204230705}
-  weaponAngle: 90
+  equipment: {fileID: 0}
+  defaultBaseDamage: 25
+  defaultBaseKnockback: 2
+  maxAmmo: 10
+  accuracy: 6
+  reloadSpeed: 1
+  firePower: 0
   targetRecoilPosition: {x: 0, y: 0, z: 0.25881904, w: 0.9659258}
   recoilAmount: 30
   recoilRecoverySpeed: 20
@@ -10360,8 +10365,6 @@ MonoBehaviour:
   shoot: 0
   shooting: 0
   currentAmmo: 0
-  maxAmmo: 10
-  ReloadSpeed: 1
   reloadTime: 0
   canPull: 0
   canRelease: 0
@@ -15522,9 +15525,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pistol: {fileID: 0}
-  bulletPrefab: {fileID: 5521732756100247489, guid: 47169e9d8a2be9e4584874cb0a19cc6b, type: 3}
   bulletSpeed: 0
-  mainCamera: {fileID: 0}
-  usePool: 1
-  bulletDirection: {x: 0, y: 0, z: 0}
-  mousePos: {x: 0, y: 0, z: 0}
