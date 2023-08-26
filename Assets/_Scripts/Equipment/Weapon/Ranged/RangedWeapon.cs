@@ -20,8 +20,6 @@ public class RangedWeapon : Weapon
     [SerializeField] private float accuracy;
     [Range(0, 10)]
     [SerializeField] private float reloadSpeed;
-    [Range(0, 10)]
-    [SerializeField] private float firePower; // idk what this does
 
     [Header("Shooting Related Variables")]
     [SerializeField] private Quaternion targetRecoilPosition;
@@ -73,7 +71,6 @@ public class RangedWeapon : Weapon
     #region Gun Stats
     public float Accuracy { get => accuracy; set => accuracy = value; }
     public float ReloadSpeed { get => reloadSpeed; set => reloadSpeed = value; }
-    public float FirePower { get => firePower; set => firePower = value; }
     #endregion
 
     private void Awake()
@@ -98,29 +95,33 @@ public class RangedWeapon : Weapon
         // Input Variables
         SetInputVariables();
         Reload = playerControls.Player.Special;
+
     }
 
     private void OnEnable()
     {
         Fire.Enable();
-        Fire.performed += Attack;
+        Fire.performed += _shootWeapon;
 
         Reload.Enable();
-        Reload.performed += ReloadWeapon;
+        Reload.performed += _reloadWeapon;
 
         magazine.magazineInserted += _pullReloadHandler;
 
-
-
+        HoldFire.Enable();
+        HoldFire.started += _autoFire;
     }
 
     private void OnDisable()
     {
-        Fire.performed -= Attack;
+        Fire.performed -= _shootWeapon;
         Fire.Disable();
 
-        Reload.performed -= ReloadWeapon;
+        Reload.performed -= _reloadWeapon;
         Reload.Disable();
+
+        HoldFire.started -= _autoFire;
+        HoldFire.Disable();
 
         magazine.magazineInserted -= _pullReloadHandler;
     }
@@ -138,6 +139,16 @@ public class RangedWeapon : Weapon
         _reloadTimer();
         _shootAnimationHandler();
         _rotateWeaponAroundAnchor();
+        UseTimer();
+    }
+
+    protected override void UseTimer()
+    {
+        StatsManager stats = equipment.playerStats;
+        if (useTime > 0)
+        {
+            useTime -= Time.deltaTime + (stats.TotalAttackSpeed * 0.01f);
+        }
     }
 
     private void _attackHandler()
@@ -208,11 +219,11 @@ public class RangedWeapon : Weapon
 
         if (currentAmmo == maxAmmo) return;
 
+        ReloadSpeedDuration = (10 - (ReloadSpeed - 1)) * 0.1f;
         reloadTrigger.Invoke();
         reload = 1;
         isReloading = true;
         rangedWeaponAudioHandler(0, false);
-        ReloadSpeedDuration = (10 - (ReloadSpeed - 1)) * 0.1f;
         reloadTime = ReloadSpeedDuration;
         //reloadTime = ReloadSpeed;
     }
@@ -356,12 +367,26 @@ public class RangedWeapon : Weapon
         audioSource.Play();
     }
 
-    private void Attack(InputAction.CallbackContext context)
+    private void _shootWeapon(InputAction.CallbackContext context)
     {
-        _attackHandler();
+        if (useTime <= 0)
+        {
+            _attackHandler();
+            useTime = UseTimeDuration;
+        }
     }
 
-    private void ReloadWeapon(InputAction.CallbackContext context)
+    private void _autoFire(InputAction.CallbackContext context)
+    {
+        if (useTime <= 0)
+        {
+            _attackHandler();
+            useTime = UseTimeDuration;
+        }
+        Debug.Log("AUTOFIRE!");
+    }
+
+    private void _reloadWeapon(InputAction.CallbackContext context)
     {
         _reloadHandler();
     }

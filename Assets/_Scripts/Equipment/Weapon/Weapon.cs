@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public abstract class Weapon : MonoBehaviour
 {
+    [Header("Common Weapon Stats")]
     private float _weaponBaseDamage;
     private float _weaponBaseKnockback;
     public float WeaponBaseDamage
@@ -26,7 +27,8 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    public float UseTime;
+    protected float useTime;
+    public float UseTimeDuration;
 
     #region Weapon Stats
 
@@ -288,11 +290,11 @@ public abstract class Weapon : MonoBehaviour
     // Equipment
     public PlayerEquipment equipment;
 
-    public void UseTimer()
+    protected virtual void UseTimer()
     {
-        if (UseTime > 0)
+        if (useTime > 0)
         {
-            UseTime -= Time.deltaTime;
+            useTime -= Time.deltaTime;
         }
     }
 

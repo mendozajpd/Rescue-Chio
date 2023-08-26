@@ -11,7 +11,7 @@ public class StatsManager : MonoBehaviour
 
     private UnitManager _unit;
 
-    #region Private Stats
+    #region PRIVATE STATS
     [Header("DEFAULT STATS")]
     [SerializeField] private float _defaultMaxHealth;
     [SerializeField] private float _defaultMaxMana;

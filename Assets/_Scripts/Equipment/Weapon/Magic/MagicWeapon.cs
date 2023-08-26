@@ -104,7 +104,6 @@ public class MagicWeapon : Weapon
 
         SetInputVariables();
         SetSpriteVariables();
-
     }
 
     void Start()
