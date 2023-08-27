@@ -328,10 +328,13 @@ public abstract class Weapon : MonoBehaviour
     {
         if (useTime > 0)
         {
-            useTime -= Time.deltaTime + (atkSpeed * 0.001f);
+            useTime -= Time.deltaTime + (atkSpeed * 0.0025f);
         }
 
-        InvokeAutoFire();
+        if (useTime <= 0)
+        {
+            InvokeAutoFire();
+        }
     }
 
     protected void ActivateAutoFire(System.Action attack)
@@ -352,28 +355,19 @@ public abstract class Weapon : MonoBehaviour
 
     protected void StartAutoFire(InputAction.CallbackContext context)
     {
-        //StartCoroutine(IActivateAutoFire(0.05f));
         Autofire = true;
         Debug.Log("Autofire activated!");
     }
 
     protected void StopAutoFire(InputAction.CallbackContext context)
     {
-        //StopAllCoroutines();
         Autofire = false;
         Debug.Log("Stopped Autofire!");
     }
 
-    IEnumerator IActivateAutoFire(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        InvokeAutoFire();
-        StartCoroutine(IActivateAutoFire(delay));
-    }
-
     protected void InvokeAutoFire()
     {
-        if(useTime <= 0 && Autofire) UseWeapon?.Invoke();
+        if (Autofire) UseWeapon?.Invoke();
     }
     #endregion
 

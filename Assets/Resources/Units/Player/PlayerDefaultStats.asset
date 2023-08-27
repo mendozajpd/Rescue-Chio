@@ -16,7 +16,7 @@ MonoBehaviour:
   DefaultMaxHealth: 3000
   DefaultMaxMana: 0
   DefaultAggro: 0
-  DefaultAttackSpeed: 50
+  DefaultAttackSpeed: 0
   DefaultCritHitChance: 4
   DefaultBaseDamage: 0
   DefaultDefense: 5

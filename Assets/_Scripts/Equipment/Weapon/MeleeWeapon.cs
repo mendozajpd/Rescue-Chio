@@ -95,6 +95,7 @@ public class MeleeWeapon : Weapon
         _weaponHitbox = GetComponentInChildren<Collider2D>();
         // Input System Variables
         SetInputVariables();
+
     }
 
     private void OnEnable()
@@ -102,12 +103,16 @@ public class MeleeWeapon : Weapon
         Fire.Enable();
         Fire.performed += Attack;
 
+        ActivateAutoFire(_useWeapon);
+
     }
 
     private void OnDisable()
     {
         Fire.performed -= Attack;
         Fire.Disable();
+
+        DisableAutoFire(_useWeapon);
     }
 
     void Start()
@@ -123,6 +128,11 @@ public class MeleeWeapon : Weapon
         _weaponSpriteFlipper();
         _weaponAttackHandler();
         _rotateWeaponAroundAnchor();
+    }
+
+    private void FixedUpdate()
+    {
+        UseTimer(equipment.playerStats.TotalAttackSpeed);
     }
 
     private void _weaponAttackHandler()
@@ -432,8 +442,15 @@ public class MeleeWeapon : Weapon
 
     private void Attack(InputAction.CallbackContext context)
     {
-        _attackComboHandler();
+        _useWeapon();
     }
 
+    private void _useWeapon()
+    {
+        if (useTime <= 0)
+        {
+            _attackComboHandler();
+        }
+    }
 
 }

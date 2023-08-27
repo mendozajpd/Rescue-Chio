@@ -102,27 +102,27 @@ public class RangedWeapon : Weapon
     private void OnEnable()
     {
         Fire.Enable();
-        Fire.performed += _shootWeapon;
+        Fire.performed += Attack;
 
         Reload.Enable();
         Reload.performed += _reloadWeapon;
 
         magazine.magazineInserted += _pullReloadHandler;
 
-        ActivateAutoFire(FireWeapon);
+        ActivateAutoFire(_fireWeapon);
     }
 
 
 
     private void OnDisable()
     {
-        Fire.performed -= _shootWeapon;
+        Fire.performed -= Attack;
         Fire.Disable();
 
         Reload.performed -= _reloadWeapon;
         Reload.Disable();
 
-        DisableAutoFire(FireWeapon);
+        DisableAutoFire(_fireWeapon);
 
         magazine.magazineInserted -= _pullReloadHandler;
     }
@@ -143,6 +143,10 @@ public class RangedWeapon : Weapon
         _reloadTimer();
         _shootAnimationHandler();
         _rotateWeaponAroundAnchor();
+    }
+
+    private void FixedUpdate()
+    {
         UseTimer(equipment.playerStats.TotalAttackSpeed);
     }
 
@@ -364,12 +368,12 @@ public class RangedWeapon : Weapon
         audioSource.Play();
     }
 
-    private void _shootWeapon(InputAction.CallbackContext context)
+    private void Attack(InputAction.CallbackContext context)
     {
-        FireWeapon();
+        _fireWeapon();
     }
 
-    private void FireWeapon()
+    private void _fireWeapon()
     {
         if (useTime <= 0)
         {

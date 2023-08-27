@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f12dbe5d3115034dad9630e39601c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseTime: 0
+  UseTimeDuration: 1
   Fire:
     m_Name: Fire
     m_Type: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   equipment: {fileID: 0}
   defaultWeaponDamage: 8
   defaultWeaponKnockback: 1
-  totalAtkSpeed: 35
+  defaultWeaponAttackSpeed: 15
   weaponAngle: 90
   thrustDistance: 2
   thrustSpeed: 15
@@ -182,7 +182,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 653d346b7eb9fcf4e9e54e9ed77e17c9, type: 3}
   volumeChangeMultiplier: 0.2
   pitchChangeMultiplier: 0.2
-  spriteX: 0
 --- !u!82 &8541770209942839083
 AudioSource:
   m_ObjectHideFlags: 0

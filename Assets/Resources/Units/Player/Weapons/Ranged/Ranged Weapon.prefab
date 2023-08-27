@@ -10321,7 +10321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ead897f4784f24aa8c19a7663c4089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseTimeDuration: 2
+  UseTimeDuration: 0.8
   Fire:
     m_Name: Fire
     m_Type: 1
@@ -10354,7 +10354,7 @@ MonoBehaviour:
   equipment: {fileID: 0}
   defaultBaseDamage: 25
   defaultBaseKnockback: 2
-  defaultFireRate: 1
+  defaultFireRate: 3
   maxAmmo: 10
   accuracy: 8
   reloadSpeed: 1
@@ -15526,4 +15526,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pistol: {fileID: 0}
-  bulletSpeed: 0
