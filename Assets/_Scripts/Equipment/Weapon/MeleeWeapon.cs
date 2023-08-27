@@ -170,6 +170,8 @@ public class MeleeWeapon : Weapon
                 _thrustWeapon();
                 break;
         }
+
+        useTime = UseTimeDuration;
     }
 
 

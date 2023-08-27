@@ -79,6 +79,7 @@ public class MagicWeapon : Weapon
 
         spellHandler.UpdateCurrentSpells += _handleSpells;
 
+        ActivateAutoFire(_castWeapon);
     }
 
     private void OnDisable()
@@ -92,6 +93,8 @@ public class MagicWeapon : Weapon
 
         Fire.performed -= CastMagic;
         Fire.Disable();
+
+        DisableAutoFire(_castWeapon);
     }
     private void Awake()
     {
@@ -113,13 +116,16 @@ public class MagicWeapon : Weapon
 
     void Update()
     {
-        GetMouseWorldPosition();
+        GetMouseAndPlayerWorldPosition();
         _weaponSpriteFlipper();
         _getSwingAngle();
         _calculateWeaponSwingTrajectory();
         _rotateWeaponAroundAnchor();
-        PlayerPos = GetComponentInParent<PlayerController>().transform.position;
+    }
 
+    private void FixedUpdate()
+    {
+        UseTimer(equipment.playerStats.TotalAttackSpeed);
     }
 
     private void _useWand()
@@ -136,6 +142,8 @@ public class MagicWeapon : Weapon
         {
             _castSpell();
         }
+
+        useTime = UseTimeDuration;
     }
 
 
@@ -151,7 +159,7 @@ public class MagicWeapon : Weapon
         }
         SetWandActions();
         _enableCurrentSpell();
-        Debug.Log("Updated current spells!");
+        //Debug.Log("Updated current spells!");
 
     }
 
@@ -166,7 +174,7 @@ public class MagicWeapon : Weapon
             else
             {
                 Spells[i].gameObject.SetActive(true);
-                AddSpellStatsToEquipment(i); 
+                AddSpellStatsToEquipment(i);
                 // This code will set the stats of the weapon to equipment
                 // but will not actually automatically update
             }
@@ -177,7 +185,7 @@ public class MagicWeapon : Weapon
     {
         WeaponBaseDamage = Spells[i].SpellDamage;
         WeaponBaseKnockback = Spells[i].SpellKnockback;
-        WeaponBaseAttackSpeed = Spells[i].SpellAttackSpeed;
+        WeaponBaseAttackSpeed = Spells[i].SpellCastSpeed;
         equipment.UpdateEquipmentStats();
     }
 
@@ -211,11 +219,11 @@ public class MagicWeapon : Weapon
         _mousePos = Input.mousePosition - Camera.main.WorldToScreenPoint(_anchor.transform.position);
     }
 
-    public Vector2 GetMouseWorldPosition()
+    public void GetMouseAndPlayerWorldPosition()
     {
         var mainCamera = Camera.main;
         MouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        return MouseWorldPosition;
+        PlayerPos = GetComponentInParent<PlayerController>().transform.position;
     }
 
     #endregion
@@ -323,9 +331,16 @@ public class MagicWeapon : Weapon
 
     private void CastMagic(InputAction.CallbackContext context)
     {
-        _useWand();
+        _castWeapon();
     }
 
+    private void _castWeapon()
+    {
+        if (useTime <= 0)
+        {
+            _useWand();
+        }
+    }
 
     public void SetWandActions()
     {
@@ -358,7 +373,6 @@ public class MagicWeapon : Weapon
     private void _cycleThroughSpells(InputAction.CallbackContext context)
     {
         CurrentSpellIndex += 1;
-
     }
 
 

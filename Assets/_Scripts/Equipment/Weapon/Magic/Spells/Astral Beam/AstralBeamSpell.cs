@@ -7,6 +7,7 @@ public class AstralBeamSpell : Spell
     [Header("Spell Settings")]
     [SerializeField] private float defaultSpellDamage;
     [SerializeField] private float defaultSpellKnockback;
+    [SerializeField] private float defaultSpellCastSpeed;
 
     private AstralBeamBehavior _laser;
     private Vector3 _laserStartPosition;
@@ -31,7 +32,7 @@ public class AstralBeamSpell : Spell
 
     private void Awake()
     {
-        SetSpellVariables(defaultSpellDamage, defaultSpellKnockback);
+        SetSpellVariables(defaultSpellDamage, defaultSpellKnockback, defaultSpellCastSpeed);
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _laser = Resources.Load<AstralBeamBehavior>("Units/Player/Weapons/Magic/Spells/AstralBeam/AstralBeamPrefab");
     }

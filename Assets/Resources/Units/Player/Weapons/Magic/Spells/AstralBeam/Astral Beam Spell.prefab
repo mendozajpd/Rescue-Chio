@@ -53,16 +53,17 @@ MonoBehaviour:
   WeaponAngle: 0
   CanRotate: 0
   Charging:
-    m_Name: 
+    m_Name: Charging
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: f47b8a66-87eb-4979-8235-b673b96672f3
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
   defaultSpellDamage: 20
   defaultSpellKnockback: 5
+  defaultSpellCastSpeed: 1
   isExplosive: 1
   laserSize: 0.1
   defaultExplosiveLaserDurationLength: 0.1

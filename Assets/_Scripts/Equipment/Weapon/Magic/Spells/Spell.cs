@@ -9,7 +9,7 @@ public abstract class Spell : MonoBehaviour
     public string SpellName;
     protected float spellDamage;
     protected float spellKnockback;
-    protected float spellAttackSpeed;
+    protected float spellCastSpeed;
     public SpellHandler spellHandler;
     public SpellChargeHandler spellCharge;
     public MagicWeapon wand;
@@ -32,21 +32,22 @@ public abstract class Spell : MonoBehaviour
         get => spellKnockback; 
         set => spellKnockback = value; 
     }
-    public float SpellAttackSpeed 
+    public float SpellCastSpeed 
     { 
-        get => spellAttackSpeed; 
-        set => spellAttackSpeed = value; 
+        get => spellCastSpeed; 
+        set => spellCastSpeed = value; 
     }
 
     public virtual void CastSpell()
     {
-        Debug.Log("casted!");
+        //Debug.Log("casted!");
     }
 
-    public void SetSpellVariables(float defaultSpellDamage, float defaultSpellKB)
+    public void SetSpellVariables(float defaultSpellDamage, float defaultSpellKB, float defaultCastSpeed)
     {
         SpellDamage = defaultSpellDamage;
         SpellKnockback = defaultSpellKB;
+        SpellCastSpeed = defaultCastSpeed;
         spellHandler = GetComponentInParent<SpellHandler>();
         wand = spellHandler.Wand;
     }
