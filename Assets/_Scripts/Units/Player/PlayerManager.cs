@@ -70,8 +70,9 @@ public class PlayerManager : UnitManager
     private void _addAllStats()
     {
         // Total stats = equipment stats + Powerups stats + status effects stats
-        UnitBaseDamage = UnitEquipment.CurrentWeaponBaseDamage;
-        UnitBaseKnockback = UnitEquipment.CurrentWeaponKnockback;
+        UnitWeaponDefaultDamage = UnitEquipment.CurrentWeaponBaseDamage;
+        UnitWeaponDefaultKnockback = UnitEquipment.CurrentWeaponKnockback;
+        UnitWeaponDefaultAttackSpeed = UnitEquipment.CurrentWeaponAttackSpeed;
 
         TotalBonusMaxHealth = UnitEquipment.TotalBonusMaxHealth;
         TotalBonusMaxMana = UnitEquipment.TotalBonusMaxMana;

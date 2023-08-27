@@ -8,7 +8,7 @@ public class MeleeWeapon : Weapon
     [Header("Weapon Settings")]
     [SerializeField] private float defaultWeaponDamage;
     [SerializeField] private float defaultWeaponKnockback;
-    [SerializeField] private float totalAtkSpeed;
+    [SerializeField] private float defaultWeaponAttackSpeed = 25;
     [SerializeField] private float weaponAngle;
     private float angleOfTheWeapon = 90;
     private GameObject _anchor;
@@ -50,8 +50,7 @@ public class MeleeWeapon : Weapon
     // HITBOX
     private Collider2D _weaponHitbox;
 
-    [Header("Temporary")]
-    [SerializeField] private float spriteX;
+    private StatsManager _playerStats;
 
     public bool Swinging
     {
@@ -92,6 +91,7 @@ public class MeleeWeapon : Weapon
         Sprite = GetComponentInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         equipment = GetComponentInParent<PlayerEquipment>();
+        _playerStats = equipment.playerStats;
         _weaponHitbox = GetComponentInChildren<Collider2D>();
         // Input System Variables
         SetInputVariables();
@@ -264,7 +264,7 @@ public class MeleeWeapon : Weapon
     {
         // Weapon Swing
         float t = _swing == 1 ? 0 : -225;
-        target.z = Mathf.Lerp(target.z, t, Time.deltaTime * totalAtkSpeed);
+        target.z = Mathf.Lerp(target.z, t, Time.deltaTime * _playerStats.TotalAttackSpeed);
         if (Mathf.Abs(t - target.z) < 1 && Swinging)
         {
             //_swing *= -1; // Double Swing
@@ -276,7 +276,7 @@ public class MeleeWeapon : Weapon
 
     private void _getSwingAngle()
     {
-        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * (currentCombo == 0 ? totalAtkSpeed * 0.1f : totalAtkSpeed));
+        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * (currentCombo == 0 ? _playerStats.TotalAttackSpeed * 0.1f : _playerStats.TotalAttackSpeed));
     }
 
     #endregion
@@ -285,7 +285,7 @@ public class MeleeWeapon : Weapon
 
     private void _setThrustSpeed()
     {
-        thrustSpeed = totalAtkSpeed / 2;
+        thrustSpeed = _playerStats.TotalAttackSpeed / 2;
     }
 
     private void _setThrustingPosition()
@@ -427,6 +427,7 @@ public class MeleeWeapon : Weapon
     {
         WeaponBaseDamage = defaultWeaponDamage;
         WeaponBaseKnockback = defaultWeaponKnockback;
+        WeaponBaseAttackSpeed = defaultWeaponAttackSpeed;
     }
 
     private void Attack(InputAction.CallbackContext context)

@@ -9,6 +9,7 @@ public abstract class Spell : MonoBehaviour
     public string SpellName;
     protected float spellDamage;
     protected float spellKnockback;
+    protected float spellAttackSpeed;
     public SpellHandler spellHandler;
     public SpellChargeHandler spellCharge;
     public MagicWeapon wand;
@@ -30,6 +31,11 @@ public abstract class Spell : MonoBehaviour
     { 
         get => spellKnockback; 
         set => spellKnockback = value; 
+    }
+    public float SpellAttackSpeed 
+    { 
+        get => spellAttackSpeed; 
+        set => spellAttackSpeed = value; 
     }
 
     public virtual void CastSpell()

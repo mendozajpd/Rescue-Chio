@@ -8,6 +8,8 @@ public abstract class Weapon : MonoBehaviour
     [Header("Common Weapon Stats")]
     private float _weaponBaseDamage;
     private float _weaponBaseKnockback;
+    private float _weaponBaseAttackSpeed;
+
     public float WeaponBaseDamage
     {
         get => _weaponBaseDamage;
@@ -26,6 +28,16 @@ public abstract class Weapon : MonoBehaviour
             equipment?.UpdateEquipmentStats();
         }
     }
+    public float WeaponBaseAttackSpeed
+    {
+        get => _weaponBaseAttackSpeed;
+        set
+        {
+            _weaponBaseAttackSpeed = value;
+            equipment?.UpdateEquipmentStats();
+        }
+    }
+
 
     protected float useTime;
     public float UseTimeDuration;
@@ -275,6 +287,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
+
     #endregion
 
     //Input System Variables
@@ -290,13 +303,10 @@ public abstract class Weapon : MonoBehaviour
     // Equipment
     public PlayerEquipment equipment;
 
-    protected virtual void UseTimer()
-    {
-        if (useTime > 0)
-        {
-            useTime -= Time.deltaTime;
-        }
-    }
+    // Autofire
+    protected System.Action UseWeapon;
+    protected bool Autofire;
+
 
     protected void SetInputVariables()
     {
@@ -313,5 +323,58 @@ public abstract class Weapon : MonoBehaviour
     }
 
 
+    #region Usetimer / Autofire
+    protected virtual void UseTimer(float atkSpeed)
+    {
+        if (useTime > 0)
+        {
+            useTime -= Time.deltaTime + (atkSpeed * 0.001f);
+        }
+
+        InvokeAutoFire();
+    }
+
+    protected void ActivateAutoFire(System.Action attack)
+    {
+        HoldFire.Enable();
+        HoldFire.started += StartAutoFire;
+        HoldFire.canceled += StopAutoFire;
+        UseWeapon += attack;
+    }
+
+    protected void DisableAutoFire(System.Action attack)
+    {
+        HoldFire.started -= StartAutoFire;
+        HoldFire.canceled -= StopAutoFire;
+        UseWeapon -= attack;
+        HoldFire.Disable();
+    }
+
+    protected void StartAutoFire(InputAction.CallbackContext context)
+    {
+        //StartCoroutine(IActivateAutoFire(0.05f));
+        Autofire = true;
+        Debug.Log("Autofire activated!");
+    }
+
+    protected void StopAutoFire(InputAction.CallbackContext context)
+    {
+        //StopAllCoroutines();
+        Autofire = false;
+        Debug.Log("Stopped Autofire!");
+    }
+
+    IEnumerator IActivateAutoFire(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        InvokeAutoFire();
+        StartCoroutine(IActivateAutoFire(delay));
+    }
+
+    protected void InvokeAutoFire()
+    {
+        if(useTime <= 0 && Autofire) UseWeapon?.Invoke();
+    }
+    #endregion
 
 }

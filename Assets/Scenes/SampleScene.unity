@@ -3092,7 +3092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1780311147127794296, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
       propertyPath: UseTimeDuration
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1780311147127794297, guid: b83a7af42df3c5840a4b997752725f63, type: 3}
       propertyPath: m_RootOrder

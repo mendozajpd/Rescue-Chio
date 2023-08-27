@@ -10321,7 +10321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ead897f4784f24aa8c19a7663c4089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseTime: 0
+  UseTimeDuration: 2
   Fire:
     m_Name: Fire
     m_Type: 1
@@ -10354,10 +10354,10 @@ MonoBehaviour:
   equipment: {fileID: 0}
   defaultBaseDamage: 25
   defaultBaseKnockback: 2
+  defaultFireRate: 1
   maxAmmo: 10
-  accuracy: 6
+  accuracy: 8
   reloadSpeed: 1
-  firePower: 0
   targetRecoilPosition: {x: 0, y: 0, z: 0.25881904, w: 0.9659258}
   recoilAmount: 30
   recoilRecoverySpeed: 20
@@ -10366,6 +10366,7 @@ MonoBehaviour:
   shooting: 0
   currentAmmo: 0
   reloadTime: 0
+  reloadSpeedDuration: 0
   canPull: 0
   canRelease: 0
   isReloading: 0

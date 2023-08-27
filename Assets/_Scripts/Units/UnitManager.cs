@@ -29,9 +29,9 @@ public abstract class UnitManager : MonoBehaviour
     #region STATS
     // BONUS STATS
 
-    public float UnitBaseDamage;
-    public float UnitBaseKnockback;
-    public float UnitBaseAttackSpeed;
+    public float UnitWeaponDefaultDamage;
+    public float UnitWeaponDefaultKnockback;
+    public float UnitWeaponDefaultAttackSpeed;
 
     public float TotalBonusMaxHealth { get; protected set; }
     public float TotalBonusMaxMana { get; protected set; }

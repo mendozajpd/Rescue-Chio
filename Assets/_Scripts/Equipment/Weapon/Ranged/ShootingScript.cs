@@ -6,7 +6,6 @@ using UnityEngine.Pool;
 public class ShootingScript : MonoBehaviour
 {
     public RangedWeapon Pistol;
-    [SerializeField] private float bulletSpeed;
     private BulletScript _bulletPrefab;
     private Camera mainCamera;
     private ObjectPool<BulletScript> _pool;

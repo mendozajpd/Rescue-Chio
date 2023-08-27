@@ -8,6 +8,7 @@ public class RangedWeapon : Weapon
     [Header("Weapon Variables")]
     [SerializeField] private float defaultBaseDamage;
     [SerializeField] private float defaultBaseKnockback;
+    [SerializeField] private float defaultFireRate;
 
     private float _weaponAngle = 90;
     private GameObject _anchor;
@@ -108,9 +109,10 @@ public class RangedWeapon : Weapon
 
         magazine.magazineInserted += _pullReloadHandler;
 
-        HoldFire.Enable();
-        HoldFire.started += _autoFire;
+        ActivateAutoFire(FireWeapon);
     }
+
+
 
     private void OnDisable()
     {
@@ -120,16 +122,18 @@ public class RangedWeapon : Weapon
         Reload.performed -= _reloadWeapon;
         Reload.Disable();
 
-        HoldFire.started -= _autoFire;
-        HoldFire.Disable();
+        DisableAutoFire(FireWeapon);
 
         magazine.magazineInserted -= _pullReloadHandler;
     }
+
+
 
     void Start()
     {
         WeaponBaseDamage = defaultBaseDamage;
         WeaponBaseKnockback = defaultBaseKnockback;
+        WeaponBaseAttackSpeed = defaultFireRate;
     }
 
     void Update()
@@ -139,17 +143,9 @@ public class RangedWeapon : Weapon
         _reloadTimer();
         _shootAnimationHandler();
         _rotateWeaponAroundAnchor();
-        UseTimer();
+        UseTimer(equipment.playerStats.TotalAttackSpeed);
     }
 
-    protected override void UseTimer()
-    {
-        StatsManager stats = equipment.playerStats;
-        if (useTime > 0)
-        {
-            useTime -= Time.deltaTime + (stats.TotalAttackSpeed * 0.01f);
-        }
-    }
 
     private void _attackHandler()
     {
@@ -162,6 +158,7 @@ public class RangedWeapon : Weapon
         }
 
         _shootWeapon();
+        useTime = UseTimeDuration;
         // this is where to code the bullet and ammo logic
     }
 
@@ -369,21 +366,15 @@ public class RangedWeapon : Weapon
 
     private void _shootWeapon(InputAction.CallbackContext context)
     {
-        if (useTime <= 0)
-        {
-            _attackHandler();
-            useTime = UseTimeDuration;
-        }
+        FireWeapon();
     }
 
-    private void _autoFire(InputAction.CallbackContext context)
+    private void FireWeapon()
     {
         if (useTime <= 0)
         {
             _attackHandler();
-            useTime = UseTimeDuration;
         }
-        Debug.Log("AUTOFIRE!");
     }
 
     private void _reloadWeapon(InputAction.CallbackContext context)

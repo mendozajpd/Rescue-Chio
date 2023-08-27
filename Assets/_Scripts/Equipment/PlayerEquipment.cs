@@ -12,6 +12,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private float _currentWeaponBaseDamage;
     private float _currentWeaponBaseKnockback;
+    private float _currentWeaponBaseAttackSpeed;
 
     #region Weapon Stats
     protected float _totalBonusMaxHealth;
@@ -277,7 +278,6 @@ public class PlayerEquipment : MonoBehaviour
         set 
         { 
             _currentWeaponBaseDamage = value;
-            //CalculateWeaponBasedStats();
         } 
     }
     public float CurrentWeaponKnockback 
@@ -286,14 +286,17 @@ public class PlayerEquipment : MonoBehaviour
         set 
         { 
             _currentWeaponBaseKnockback = value;
-            //CalculateWeaponBasedStats();
         }
     }
 
+    public float CurrentWeaponAttackSpeed 
+    { 
+        get => _currentWeaponBaseAttackSpeed; 
+        set => _currentWeaponBaseAttackSpeed = value; 
+    }
 
     private void OnEnable()
     {
-        //playerStats.CalculateStats += _calculateTotalStats;
     }
 
     private void OnDisable()
@@ -328,31 +331,6 @@ public class PlayerEquipment : MonoBehaviour
     }
 
 
-    public void CalculateWeaponBasedStats()
-    {
-        //playerStats.CalculateCurrentWeaponDamage(TotalCurrentWeaponDamage);
-        //playerStats.CalculateTrueKnockback(TotalWeaponKB);
-        //_getTotalWeaponBaseDamage();
-
-        //CalculateStats?.Invoke();
-    }
-
-    private float _getTotalWeaponBaseDamage()
-    {
-        CurrentWeaponBaseDamage = 0;
-
-        foreach(Weapon weapon in Weapons)
-        {
-            CurrentWeaponBaseDamage += weapon.WeaponBaseDamage;
-        }
-        return CurrentWeaponBaseDamage;
-    }
-
-    public void GetWeaponKnocback(float weaponKB)
-    {
-        CurrentWeaponKnockback = weaponKB;
-    }
-
     IEnumerator getNumberOfChildren(float numOfSecondsUntilUpdate)
     {
         yield return new WaitForSeconds(numOfSecondsUntilUpdate);
@@ -376,6 +354,7 @@ public class PlayerEquipment : MonoBehaviour
             // BONUS STATS
             CurrentWeaponBaseDamage = weapon.WeaponBaseDamage;
             CurrentWeaponKnockback = weapon.WeaponBaseKnockback;
+            CurrentWeaponAttackSpeed = weapon.WeaponBaseAttackSpeed;
             TotalBonusMaxHealth = weapon.TotalBonusMaxHealth;
             TotalBonusMaxMana = weapon.TotalBonusMaxMana;
             TotalBonusAggro = weapon.TotalBonusAggro;

@@ -177,6 +177,7 @@ public class MagicWeapon : Weapon
     {
         WeaponBaseDamage = Spells[i].SpellDamage;
         WeaponBaseKnockback = Spells[i].SpellKnockback;
+        WeaponBaseAttackSpeed = Spells[i].SpellAttackSpeed;
         equipment.UpdateEquipmentStats();
     }
 

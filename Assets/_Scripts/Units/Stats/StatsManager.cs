@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(StatusEffectsManager),typeof(PowerupsManager))]
+[RequireComponent(typeof(StatusEffectsManager), typeof(PowerupsManager))]
 public class StatsManager : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
@@ -13,6 +13,11 @@ public class StatsManager : MonoBehaviour
 
     #region PRIVATE STATS
     [Header("DEFAULT STATS")]
+    [SerializeField] private float _defaultWeaponDamage;
+    [SerializeField] private float _defaultWeaponKnockback;
+    [SerializeField] private float _defaultWeaponAttackSpeed;
+
+
     [SerializeField] private float _defaultMaxHealth;
     [SerializeField] private float _defaultMaxMana;
     [SerializeField] private float _defaultAggro;
@@ -62,11 +67,15 @@ public class StatsManager : MonoBehaviour
     [SerializeField] private float _totalHealthRegen;
     [SerializeField] private float _totalKnockback;
     [SerializeField] private float _totalKnockbackResistance;
-    [SerializeField] private float _totalMovementSpeed; 
+    [SerializeField] private float _totalMovementSpeed;
     #endregion
 
     #region DEFAULT STATS
     // DEFAULT STATS GETTERS
+
+    public float DefaultWeaponDamage { get => _defaultWeaponDamage; set => _defaultWeaponDamage = value; }
+    public float DefaultWeaponKnockback { get => _defaultWeaponKnockback; set => _defaultWeaponKnockback = value; }
+    public float DefaultWeaponAttackSpeed { get => _defaultWeaponAttackSpeed; set => _defaultWeaponAttackSpeed = value; }
     public float DefaultMaxHealth { get => _defaultMaxHealth; }
     public float DefaultMaxMana { get => _defaultMaxMana; }
     public float DefaultAggro { get => _defaultAggro; }
@@ -184,17 +193,17 @@ public class StatsManager : MonoBehaviour
     }
 
     public float PenaltyKnockbackResistance // Making character weaker to knockback
-    { 
-        get => _penaltyKnockbackResistance; 
-        set => _penaltyKnockbackResistance = value; 
+    {
+        get => _penaltyKnockbackResistance;
+        set => _penaltyKnockbackResistance = value;
     }
     public float PenaltyMoveSpeed // SLOWNESS
     {
         get => _penaltyCurrentMoveSpeed;
-        set 
-        { 
+        set
+        {
             _penaltyCurrentMoveSpeed = value;
-        } 
+        }
     }
     #endregion
 
@@ -203,13 +212,13 @@ public class StatsManager : MonoBehaviour
     public float TotalMaxHealth
     {
         get => _totalMaxHealth;
-        set 
+        set
         {
             if (_totalMaxHealth == value) return;
             _totalMaxHealth = value;
             var health = _unit.UnitHealth;
             health?.SetMaxValue(_totalMaxHealth);
-        } 
+        }
     }
     public float TotalMaxMana
     {
@@ -259,6 +268,7 @@ public class StatsManager : MonoBehaviour
         get => _totalMovementSpeed;
         set => _totalMovementSpeed = value;
     }
+
     #endregion
 
 
@@ -301,7 +311,7 @@ public class StatsManager : MonoBehaviour
     #region Attack Speed Calculator
     public void CalculateTotalAttackSpeed()
     {
-        TotalAttackSpeed = TotalAttackSpeed <= 1 ? 1 : DefaultAttackSpeed * (1 + (BonusAttackSpeed - PenaltyAttackSpeed) / 100);
+        TotalAttackSpeed = (DefaultAttackSpeed + DefaultWeaponAttackSpeed) * (1 + (BonusAttackSpeed - PenaltyAttackSpeed) / 100);
     }
 
     #endregion
@@ -380,14 +390,14 @@ public class StatsManager : MonoBehaviour
     #region Knockback Calculator
     public float CalculateTrueKnockback()
     {
-        TotalKnockback = DefaultKnockback * (1 + (BonusKnockback - PenaltyKnockback) / 100);
+        TotalKnockback = (DefaultKnockback + DefaultWeaponKnockback) * (1 + (BonusKnockback - PenaltyKnockback) / 100);
         return TotalKnockback;
     }
 
     public float CalculateTotalKnockback(float receiverKnockbackResistance)
     {
-        float netKb = TotalKnockback - ( TotalKnockback * (receiverKnockbackResistance/TotalKnockback));
-        if(debugMode) Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
+        float netKb = TotalKnockback - (TotalKnockback * (receiverKnockbackResistance / TotalKnockback));
+        if (debugMode) Debug.Log("Total Knockback Received: " + TotalKnockback + " Total Knocback Dealt After Calculations: " + netKb);
         return netKb < 0 ? 0 : netKb;
     }
     #endregion
@@ -395,7 +405,7 @@ public class StatsManager : MonoBehaviour
     #region Movement Speed Calculator
     private void CalculateTotalMovementSpeed()
     {
-        TotalMoveSpeed = TotalMoveSpeed < 0 ? 0.1f :DefaultMoveSpeed * (1 + (BonusMoveSpeed - PenaltyMoveSpeed) / 100);
+        TotalMoveSpeed = TotalMoveSpeed < 0 ? 0.1f : DefaultMoveSpeed * (1 + (BonusMoveSpeed - PenaltyMoveSpeed) / 100);
     }
     #endregion
 
@@ -428,9 +438,9 @@ public class StatsManager : MonoBehaviour
 
     private void _getStatsfromUnit()
     {
-        DefaultDamage = _unit.UnitBaseDamage;
-        DefaultKnockback = _unit.UnitBaseKnockback;
-        DefaultAttackSpeed = _unit.UnitBaseAttackSpeed;
+        DefaultWeaponDamage = _unit.UnitWeaponDefaultDamage;
+        DefaultWeaponKnockback = _unit.UnitWeaponDefaultKnockback;
+        DefaultWeaponAttackSpeed = _unit.UnitWeaponDefaultAttackSpeed;
 
         // BONUS STATS
         BonusMaxHealth = _unit.TotalBonusMaxHealth;
@@ -464,7 +474,7 @@ public class StatsManager : MonoBehaviour
         CalculateTotalMaxHealth();
         CalculateTotalMaxMana();
         CalculateTotalAttackSpeed();
-        TotalDamage = CalculateTrueDamage(DefaultDamage);
+        TotalDamage = CalculateTrueDamage(DefaultDamage + DefaultWeaponDamage);
         CalculateTotalDefense();
         CalculateTotalCritChance();
         TotalKnockback = CalculateTrueKnockback();
