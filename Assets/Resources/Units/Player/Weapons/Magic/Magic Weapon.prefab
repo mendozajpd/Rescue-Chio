@@ -4935,7 +4935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab587bb21fca04946afaac1ba9bc7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseTime: 0
+  UseTimeDuration: 1
   Fire:
     m_Name: Fire
     m_Type: 0

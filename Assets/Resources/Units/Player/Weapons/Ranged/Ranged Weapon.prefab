@@ -15526,3 +15526,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pistol: {fileID: 0}
+  accuracyOffset: 0.4

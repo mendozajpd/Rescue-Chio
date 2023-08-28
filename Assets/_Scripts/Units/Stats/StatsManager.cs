@@ -484,7 +484,7 @@ public class StatsManager : MonoBehaviour
 
     private void _calculateAllStats()
     {
-        _unit.CalculateExtraStats();
+        _unit.CalculateTotalStats();
         _getStatsfromUnit();
         _calculateTotalStats();
     }

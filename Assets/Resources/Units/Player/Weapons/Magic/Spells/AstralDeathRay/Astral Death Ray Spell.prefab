@@ -65,6 +65,7 @@ MonoBehaviour:
     m_Flags: 0
   defaultSpellDamage: 5
   defaultSpellKnockback: 0
+  defaultSpellCastSpeed: 0
   inflictsKnockback: 1
   isCharging: 0
   currentCharge: 0

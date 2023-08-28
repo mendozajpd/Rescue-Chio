@@ -21,8 +21,5 @@ public class Doppelganger : EnemyManager
         
     }
 
-    public override void CalculateExtraStats()
-    {
-        base.CalculateExtraStats();
-    }
+
 }

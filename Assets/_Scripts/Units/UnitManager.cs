@@ -88,14 +88,72 @@ public abstract class UnitManager : MonoBehaviour
         }
     }
 
-    public virtual void CalculateExtraStats()
+    protected void _clearTotalStats()
     {
-        UnitStatusEffects.CalculateStats();
-        UnitPowerups.CalculateStats();
+        // BONUS STATS
+        TotalBonusMaxHealth = 0;
+        TotalBonusMaxMana = 0;
+        TotalBonusAggro = 0;
+        TotalBonusAttackSpeed = 0;
+        TotalBonusCritHitChance = 0;
+        TotalBonusDamage = 0;
+        TotalBonusDefense = 0;
+        TotalBonusHealthRegen = 0;
+        TotalBonusKnockback = 0;
+        TotalBonusKnockbackResistance = 0;
+        TotalBonusMoveSpeed = 0;
+
+        // PENALTY STATS
+        TotalPenaltyMaxHealth = 0;
+        TotalPenaltyMaxMana = 0;
+        TotalPenaltyAggro = 0;
+        TotalPenaltyAttackSpeed = 0;
+        TotalPenaltyCritHitChance = 0;
+        TotalPenaltyDamage = 0;
+        TotalPenaltyDefense = 0;
+        TotalPenaltyHealthRegen = 0;
+        TotalPenaltyKnockback = 0;
+        TotalPenaltyKnockbackResistance = 0;
+        TotalPenaltyMoveSpeed = 0;
     }
+    
+    protected virtual void _addAllStats()
+    {
+        TotalBonusMaxHealth = UnitPowerups.TotalBonusMaxHealth + UnitStatusEffects.TotalBonusMaxHealth; ;
+        TotalBonusMaxMana = UnitPowerups.TotalBonusMaxMana + UnitStatusEffects.TotalBonusMaxMana; ;
+        TotalBonusAggro = UnitPowerups.TotalBonusAggro + UnitStatusEffects.TotalBonusAggro;
+        TotalBonusAttackSpeed = UnitPowerups.TotalBonusAttackSpeed + UnitStatusEffects.TotalBonusAttackSpeed;
+        TotalBonusCritHitChance = UnitPowerups.TotalBonusCritHitChance + UnitStatusEffects.TotalBonusCritHitChance;
+        TotalBonusDamage = UnitPowerups.TotalBonusDamage + UnitStatusEffects.TotalBonusDamage;
+        TotalBonusDefense = UnitPowerups.TotalBonusDefense + UnitStatusEffects.TotalBonusDefense;
+        TotalBonusHealthRegen = UnitPowerups.TotalBonusHealthRegen + UnitStatusEffects.TotalBonusHealthRegen;
+        TotalBonusKnockback = UnitPowerups.TotalBonusKnockback + UnitStatusEffects.TotalBonusKnockback;
+        TotalBonusKnockbackResistance = UnitPowerups.TotalBonusKnockbackResistance + UnitStatusEffects.TotalBonusKnockbackResistance; ;
+        TotalBonusMoveSpeed = UnitPowerups.TotalBonusMovementSpeed + UnitStatusEffects.TotalBonusMovementSpeed;
+
+        TotalPenaltyMaxHealth = UnitPowerups.TotalPenaltyMaxHealth + UnitStatusEffects.TotalPenaltyMaxHealth; ;
+        TotalPenaltyMaxMana = UnitPowerups.TotalPenaltyMaxMana + UnitStatusEffects.TotalPenaltyMaxMana;
+        TotalPenaltyAggro = UnitPowerups.TotalPenaltyAggro + UnitStatusEffects.TotalPenaltyAggro;
+        TotalPenaltyAttackSpeed = UnitPowerups.TotalPenaltyAttackSpeed + UnitStatusEffects.TotalPenaltyAttackSpeed; ;
+        TotalPenaltyCritHitChance = UnitPowerups.TotalPenaltyCritHitChance + UnitStatusEffects.TotalPenaltyCritHitChance;
+        TotalPenaltyDamage = UnitPowerups.TotalPenaltyDamage + UnitStatusEffects.TotalPenaltyDamage;
+        TotalPenaltyDefense = UnitPowerups.TotalPenaltyDefense + UnitStatusEffects.TotalPenaltyDefense;
+        TotalPenaltyHealthRegen = UnitPowerups.TotalPenaltyHealthRegen + UnitStatusEffects.TotalPenaltyHealthRegen;
+        TotalPenaltyKnockback = UnitPowerups.TotalPenaltyKnockback + UnitStatusEffects.TotalPenaltyKnockback;
+        TotalPenaltyKnockbackResistance = UnitPowerups.TotalPenaltyKnockbackResistance + UnitStatusEffects.TotalPenaltyKnockbackResistance;
+        TotalPenaltyMoveSpeed = UnitPowerups.TotalPenaltyMoveSpeed + UnitStatusEffects.TotalPenaltyMoveSpeed; ;
+    }
+
+    public virtual void CalculateTotalStats()
+    {
+        _clearTotalStats();
+        _addAllStats();
+    }
+
 
     public virtual void UpdateStats()
     {
         StatUpdate.Invoke();
     }
+
 }

@@ -82,7 +82,7 @@ public class Health : Gauge, IDamageable, IHealable
     {
         _invincibilityTimer();
         _knockbackTimer();
-        _damageReceivedTimer();
+         if (debugMode) _damageReceivedTimer();
     }
 
     private void _knockbackTimer()
@@ -111,10 +111,7 @@ public class Health : Gauge, IDamageable, IHealable
 
         if (_damagePerSecondTime <= 0)
         {
-            if (debugMode)
-            {
-                Debug.Log("damge dealt in 1 second: " + _dps);
-            }
+            Debug.Log("damge dealt in 1 second: " + _dps);
             _dps = 0;
             _damagePerSecondTime = 1;
         }

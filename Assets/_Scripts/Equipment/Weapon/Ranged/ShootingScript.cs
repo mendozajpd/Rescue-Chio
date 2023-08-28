@@ -13,6 +13,8 @@ public class ShootingScript : MonoBehaviour
     private Vector2 _bulletDirection;
     private Vector2 _mousePos;
 
+    [SerializeField] private float accuracyOffset = 0.5f;
+
     public Vector2 BulletDirection { get => _bulletDirection; set => _bulletDirection = value; }
 
     private void OnEnable()
@@ -86,7 +88,7 @@ public class ShootingScript : MonoBehaviour
     private void calculateAccuracy(float accuracyStat)
     {
         float accuracyValue = 10 - accuracyStat;
-        float offsetValue = (accuracyValue / 10) * 3; // 3 being the max offset
+        float offsetValue = (accuracyValue / 10) * (accuracyOffset * Vector2.Distance(_mousePos,transform.position)); // 3 being the max offset
         float randomX = Random.Range(-offsetValue, offsetValue);
         float randomY = Random.Range(-offsetValue, offsetValue);
         Vector2 calculatedAccuracy = new Vector2(BulletDirection.x + randomX, BulletDirection.y + randomY);

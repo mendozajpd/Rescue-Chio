@@ -22,54 +22,20 @@ public class PlayerManager : UnitManager
         SetDefaultStats("Units/Player/PlayerDefaultStats");
         UnitEquipment = GetComponentInChildren<PlayerEquipment>();
         UnitController = GetComponent<PlayerController>();
-        //UnitEquipment.CalculateStats += CalculateBonusPenaltyStats;
     }
 
     private void Start()
     {
-        //_overwriteStatlist();
     }
 
-    private void _clearTotalStats()
+    public override void CalculateTotalStats()
     {
-        // BONUS STATS
-        TotalBonusMaxHealth = 0;
-        TotalBonusMaxMana = 0;
-        TotalBonusAggro = 0;
-        TotalBonusAttackSpeed = 0;
-        TotalBonusCritHitChance = 0;
-        TotalBonusDamage = 0;
-        TotalBonusDefense = 0;
-        TotalBonusHealthRegen = 0;
-        TotalBonusKnockback = 0;
-        TotalBonusKnockbackResistance = 0;
-        TotalBonusMoveSpeed = 0;
-
-        // PENALTY STATS
-        TotalPenaltyMaxHealth = 0;
-        TotalPenaltyMaxMana = 0;
-        TotalPenaltyAggro = 0;
-        TotalPenaltyAttackSpeed = 0;
-        TotalPenaltyCritHitChance = 0;
-        TotalPenaltyDamage = 0;
-        TotalPenaltyDefense = 0;
-        TotalPenaltyHealthRegen = 0;
-        TotalPenaltyKnockback = 0;
-        TotalPenaltyKnockbackResistance = 0;
-        TotalPenaltyMoveSpeed = 0;
-    }
-
-    public override void CalculateExtraStats()
-    {
-        base.CalculateExtraStats();
         _clearTotalStats();
         _addAllStats();
     }
 
-    // ADD THIS TO UNITMANAGER AND THEN MAKE IT VIRTUAL
-    private void _addAllStats()
+    protected override void _addAllStats()
     {
-        // Total stats = equipment stats + Powerups stats + status effects stats
         UnitWeaponDefaultDamage = UnitEquipment.CurrentWeaponBaseDamage;
         UnitWeaponDefaultKnockback = UnitEquipment.CurrentWeaponKnockback;
         UnitWeaponDefaultAttackSpeed = UnitEquipment.CurrentWeaponAttackSpeed;
@@ -97,6 +63,8 @@ public class PlayerManager : UnitManager
         TotalPenaltyKnockback = UnitEquipment.TotalPenaltyKnockback;
         TotalPenaltyKnockbackResistance = UnitEquipment.TotalPenaltyKnockbackResistance;
         TotalPenaltyMoveSpeed = UnitEquipment.TotalPenaltyMoveSpeed;
+
+        base._addAllStats();
     }
 
 }
