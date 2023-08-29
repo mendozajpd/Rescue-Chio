@@ -47,7 +47,6 @@ public class PlayerManager : UnitManager
         TotalBonusCritHitChance = UnitEquipment.TotalBonusCritHitChance;
         TotalBonusDamage = UnitEquipment.TotalBonusDamage;
         TotalBonusDefense = UnitEquipment.TotalBonusDefense;
-        TotalBonusHealthRegen = UnitEquipment.TotalBonusHealthRegen;
         TotalBonusKnockback = UnitEquipment.TotalBonusKnockback;
         TotalBonusKnockbackResistance = UnitEquipment.TotalBonusKnockbackResistance;
         TotalBonusMoveSpeed = UnitEquipment.TotalBonusMoveSpeed;
@@ -59,7 +58,6 @@ public class PlayerManager : UnitManager
         TotalPenaltyCritHitChance = UnitEquipment.TotalPenaltyCritHitChance;
         TotalPenaltyDamage = UnitEquipment.TotalPenaltyDamage;
         TotalPenaltyDefense = UnitEquipment.TotalPenaltyDefense;
-        TotalPenaltyHealthRegen = UnitEquipment.TotalPenaltyHealthRegen;
         TotalPenaltyKnockback = UnitEquipment.TotalPenaltyKnockback;
         TotalPenaltyKnockbackResistance = UnitEquipment.TotalPenaltyKnockbackResistance;
         TotalPenaltyMoveSpeed = UnitEquipment.TotalPenaltyMoveSpeed;

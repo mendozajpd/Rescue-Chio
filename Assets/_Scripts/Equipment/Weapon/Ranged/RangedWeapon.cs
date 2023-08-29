@@ -172,6 +172,7 @@ public class RangedWeapon : Weapon
     {
         targetRecoilPosition = Quaternion.Euler(0, 0, recoilAmount);
         Quaternion defaultGunPosition = Quaternion.Euler(Vector3.zero);
+        recoilRecoverySpeed = 20 + (equipment.playerStats.TotalAttackSpeed * 0.25f);
         if (!isReloading) currentGunPosition = Mathf.MoveTowards(currentGunPosition, shoot, recoilRecoverySpeed < 3 ? 3 : recoilRecoverySpeed * Time.deltaTime);
         Sprite.gameObject.transform.localRotation = Quaternion.Lerp(defaultGunPosition, targetRecoilPosition, currentGunPosition);
         Quaternion gunPositon = Sprite.gameObject.transform.localRotation;

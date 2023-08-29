@@ -22,7 +22,6 @@ public class PowerupsManager : MonoBehaviour
     [SerializeField] private float _totalBonusCritHitChance;
     [SerializeField] private float _totalBonusDamage;
     [SerializeField] private float _totalBonusDefense;
-    [SerializeField] private float _totalBonusHealthRegen;
     [SerializeField] private float _totalBonusKnockback;
     [SerializeField] private float _totalBonusKnockbackResistance;
     [SerializeField] private float _totalBonusMovementSpeed;
@@ -35,7 +34,6 @@ public class PowerupsManager : MonoBehaviour
     [SerializeField] private float _totalPenaltyCritHitChance;
     [SerializeField] private float _totalPenaltyDamage;
     [SerializeField] private float _totalPenaltyDefense;
-    [SerializeField] private float _totalPenaltyHealthRegen;
     [SerializeField] private float _totalPenaltyKnockback;
     [SerializeField] private float _totalPenaltyKnockbackResistance;
     [SerializeField] private float _totalPenaltyMoveSpeed;
@@ -107,16 +105,6 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusDefense = value;
-            _unit.UpdateStats();
-        }
-    }
-
-    public float TotalBonusHealthRegen
-    {
-        get => _totalBonusHealthRegen;
-        set
-        {
-            _totalBonusHealthRegen = value;
             _unit.UpdateStats();
         }
     }
@@ -218,16 +206,6 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyDefense = value;
-            _unit.UpdateStats();
-        }
-    }
-
-    public float TotalPenaltyHealthRegen
-    {
-        get => _totalPenaltyHealthRegen;
-        set
-        {
-            _totalPenaltyHealthRegen = value;
             _unit.UpdateStats();
         }
     }

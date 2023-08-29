@@ -14,7 +14,6 @@ public class DefaultStatsSO : ScriptableObject
     public float DefaultCritHitChance;
     public float DefaultBaseDamage; // idk about this, change in the future maybe
     public float DefaultDefense;
-    public float DefaultHealthRegen; // idk about this too, i just placed it here just in case
     public float DefaultKnockback;
     public float DefaultKnockbackResistance;
     public float DefaultMoveSpeed;

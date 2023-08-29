@@ -40,7 +40,6 @@ public abstract class UnitManager : MonoBehaviour
     public float TotalBonusCritHitChance { get; protected set; }
     public float TotalBonusDamage { get; protected set; }
     public float TotalBonusDefense { get; protected set; }
-    public float TotalBonusHealthRegen { get; protected set; }
     public float TotalBonusKnockback { get; protected set; }
     public float TotalBonusKnockbackResistance { get; protected set; }
     public float TotalBonusMoveSpeed { get; protected set; }
@@ -53,7 +52,6 @@ public abstract class UnitManager : MonoBehaviour
     public float TotalPenaltyCritHitChance { get; protected set; }
     public float TotalPenaltyDamage { get; protected set; }
     public float TotalPenaltyDefense { get; protected set; }
-    public float TotalPenaltyHealthRegen { get; protected set; }
     public float TotalPenaltyKnockback { get; protected set; }
     public float TotalPenaltyKnockbackResistance { get; protected set; }
     public float TotalPenaltyMoveSpeed { get; protected set; }
@@ -98,7 +96,6 @@ public abstract class UnitManager : MonoBehaviour
         TotalBonusCritHitChance = 0;
         TotalBonusDamage = 0;
         TotalBonusDefense = 0;
-        TotalBonusHealthRegen = 0;
         TotalBonusKnockback = 0;
         TotalBonusKnockbackResistance = 0;
         TotalBonusMoveSpeed = 0;
@@ -111,7 +108,6 @@ public abstract class UnitManager : MonoBehaviour
         TotalPenaltyCritHitChance = 0;
         TotalPenaltyDamage = 0;
         TotalPenaltyDefense = 0;
-        TotalPenaltyHealthRegen = 0;
         TotalPenaltyKnockback = 0;
         TotalPenaltyKnockbackResistance = 0;
         TotalPenaltyMoveSpeed = 0;
@@ -126,7 +122,6 @@ public abstract class UnitManager : MonoBehaviour
         TotalBonusCritHitChance = UnitPowerups.TotalBonusCritHitChance + UnitStatusEffects.TotalBonusCritHitChance;
         TotalBonusDamage = UnitPowerups.TotalBonusDamage + UnitStatusEffects.TotalBonusDamage;
         TotalBonusDefense = UnitPowerups.TotalBonusDefense + UnitStatusEffects.TotalBonusDefense;
-        TotalBonusHealthRegen = UnitPowerups.TotalBonusHealthRegen + UnitStatusEffects.TotalBonusHealthRegen;
         TotalBonusKnockback = UnitPowerups.TotalBonusKnockback + UnitStatusEffects.TotalBonusKnockback;
         TotalBonusKnockbackResistance = UnitPowerups.TotalBonusKnockbackResistance + UnitStatusEffects.TotalBonusKnockbackResistance; ;
         TotalBonusMoveSpeed = UnitPowerups.TotalBonusMovementSpeed + UnitStatusEffects.TotalBonusMovementSpeed;
@@ -138,7 +133,6 @@ public abstract class UnitManager : MonoBehaviour
         TotalPenaltyCritHitChance = UnitPowerups.TotalPenaltyCritHitChance + UnitStatusEffects.TotalPenaltyCritHitChance;
         TotalPenaltyDamage = UnitPowerups.TotalPenaltyDamage + UnitStatusEffects.TotalPenaltyDamage;
         TotalPenaltyDefense = UnitPowerups.TotalPenaltyDefense + UnitStatusEffects.TotalPenaltyDefense;
-        TotalPenaltyHealthRegen = UnitPowerups.TotalPenaltyHealthRegen + UnitStatusEffects.TotalPenaltyHealthRegen;
         TotalPenaltyKnockback = UnitPowerups.TotalPenaltyKnockback + UnitStatusEffects.TotalPenaltyKnockback;
         TotalPenaltyKnockbackResistance = UnitPowerups.TotalPenaltyKnockbackResistance + UnitStatusEffects.TotalPenaltyKnockbackResistance;
         TotalPenaltyMoveSpeed = UnitPowerups.TotalPenaltyMoveSpeed + UnitStatusEffects.TotalPenaltyMoveSpeed; ;

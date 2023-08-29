@@ -38,7 +38,6 @@ public class StatsManager : MonoBehaviour
     [SerializeField] private float _bonusCritHitChance;
     [SerializeField] private float _bonusDamage;
     [SerializeField] private float _bonusDefense;
-    [SerializeField] private float _bonusHealthRegen;
     [SerializeField] private float _bonusKnockback;
     [SerializeField] private float _bonusKnockbackResistance;
     [SerializeField] private float _bonusCurrentMoveSpeed;
@@ -51,7 +50,6 @@ public class StatsManager : MonoBehaviour
     [SerializeField] private float _penaltyCritHitChance;
     [SerializeField] private float _penaltyDamage;
     [SerializeField] private float _penaltyDefense;
-    [SerializeField] private float _penaltyHealthRegen;
     [SerializeField] private float _penaltyKnockback;
     [SerializeField] private float _penaltyKnockbackResistance;
     [SerializeField] private float _penaltyCurrentMoveSpeed;
@@ -64,7 +62,6 @@ public class StatsManager : MonoBehaviour
     [SerializeField] private float _totalCritHitChance;
     [SerializeField] private float _totalDamage;
     [SerializeField] private float _totalDefense;
-    [SerializeField] private float _totalHealthRegen;
     [SerializeField] private float _totalKnockback;
     [SerializeField] private float _totalKnockbackResistance;
     [SerializeField] private float _totalMovementSpeed;
@@ -83,7 +80,6 @@ public class StatsManager : MonoBehaviour
     public float DefaultCritHitChance { get => _defaultCritHitChance; }
     public float DefaultDamage { get => _defaultDamage; set => _defaultDamage = value; }
     public float DefaultDefense { get => _defaultDefense; }
-    public float DefaultHealthRegen { get => _defaultHealthRegen; }
     public float DefaultKnockback { get => _defaultKnockback; set => _defaultKnockback = value; }
     public float DefaultKnockbackResistance { get => _defaultKnockbackResistance; set => _defaultKnockbackResistance = value; }
     public float DefaultMoveSpeed { get => _defaultMoveSpeed; }
@@ -125,11 +121,6 @@ public class StatsManager : MonoBehaviour
     {
         get => _bonusDefense;
         set => _bonusDefense = value;
-    }
-    public float BonusHealthRegen
-    {
-        get => _bonusHealthRegen;
-        set => _bonusHealthRegen = value;
     }
     public float BonusKnockbackResistance { get => _bonusKnockbackResistance; set => _bonusKnockbackResistance = value; }
     public float BonusKnockback
@@ -180,11 +171,6 @@ public class StatsManager : MonoBehaviour
     {
         get => _penaltyDefense;
         set => _penaltyDefense = value;
-    }
-    public float PenaltyHealthRegen
-    {
-        get => _penaltyHealthRegen;
-        set => _penaltyHealthRegen = value;
     }
     public float PenaltyKnockback // Making knockback weaker
     {
@@ -251,11 +237,6 @@ public class StatsManager : MonoBehaviour
     {
         get => _totalDefense;
         set => _totalDefense = value;
-    }
-    public float TotalHealthRegen
-    {
-        get => _totalHealthRegen;
-        set => _totalHealthRegen = value;
     }
     public float TotalKnockback
     {
@@ -429,7 +410,6 @@ public class StatsManager : MonoBehaviour
             _defaultCritHitChance = defaultStats.DefaultCritHitChance;
             _defaultDamage = defaultStats.DefaultBaseDamage; // For enemies
             _defaultDefense = defaultStats.DefaultDefense;
-            _defaultHealthRegen = defaultStats.DefaultHealthRegen;
             _defaultKnockback = defaultStats.DefaultKnockback;
             _defaultKnockbackResistance = defaultStats.DefaultKnockbackResistance;
             _defaultMoveSpeed = defaultStats.DefaultMoveSpeed;
@@ -450,7 +430,6 @@ public class StatsManager : MonoBehaviour
         BonusCritHitChance = _unit.TotalBonusCritHitChance;
         BonusDamage = _unit.TotalBonusDamage;
         BonusDefense = _unit.TotalBonusDefense;
-        BonusHealthRegen = _unit.TotalBonusHealthRegen;
         BonusKnockback = _unit.TotalBonusKnockback;
         BonusKnockbackResistance = _unit.TotalBonusKnockbackResistance;
         BonusMoveSpeed = _unit.TotalBonusMoveSpeed;
@@ -463,7 +442,6 @@ public class StatsManager : MonoBehaviour
         PenaltyCritHitChance = _unit.TotalPenaltyCritHitChance;
         PenaltyDamage = _unit.TotalPenaltyDamage;
         PenaltyDefense = _unit.TotalPenaltyDefense;
-        PenaltyHealthRegen = _unit.TotalPenaltyHealthRegen;
         PenaltyKnockback = _unit.TotalPenaltyKnockback;
         PenaltyKnockbackResistance = _unit.TotalPenaltyKnockbackResistance;
         PenaltyMoveSpeed = _unit.TotalPenaltyMoveSpeed;

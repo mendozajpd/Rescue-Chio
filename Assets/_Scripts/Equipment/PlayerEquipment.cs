@@ -92,17 +92,6 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
-    protected float _totalBonusHealthRegen;
-    public float TotalBonusHealthRegen
-    {
-        get => _totalBonusHealthRegen;
-        protected set
-        {
-            _totalBonusHealthRegen = value;
-            Unit.UpdateStats();
-        }
-    }
-
     protected float _totalBonusKnockback;
     public float TotalBonusKnockback
     {
@@ -210,17 +199,6 @@ public class PlayerEquipment : MonoBehaviour
         protected set
         {
             _totalPenaltyDefense = value;
-            Unit.UpdateStats();
-        }
-    }
-
-    protected float _totalPenaltyHealthRegen;
-    public float TotalPenaltyHealthRegen
-    {
-        get => _totalPenaltyHealthRegen;
-        protected set
-        {
-            _totalPenaltyHealthRegen = value;
             Unit.UpdateStats();
         }
     }
@@ -362,7 +340,6 @@ public class PlayerEquipment : MonoBehaviour
             TotalBonusCritHitChance = weapon.TotalBonusCritHitChance;
             TotalBonusDamage = weapon.TotalBonusDamage;
             TotalBonusDefense = weapon.TotalBonusDefense;
-            TotalBonusHealthRegen = weapon.TotalBonusHealthRegen;
             TotalBonusKnockback = weapon.TotalBonusKnockback;
             TotalBonusKnockbackResistance = weapon.TotalBonusKnockbackResistance;
             TotalBonusMoveSpeed = weapon.TotalBonusMoveSpeed;
@@ -375,7 +352,6 @@ public class PlayerEquipment : MonoBehaviour
             TotalPenaltyCritHitChance = weapon.TotalPenaltyCritHitChance;
             TotalPenaltyDamage = weapon.TotalPenaltyDamage;
             TotalPenaltyDefense = weapon.TotalPenaltyDefense;
-            TotalPenaltyHealthRegen = weapon.TotalPenaltyHealthRegen;
             TotalPenaltyKnockback = weapon.TotalPenaltyKnockback;
             TotalPenaltyKnockbackResistance = weapon.TotalPenaltyKnockbackResistance;
             TotalPenaltyMoveSpeed = weapon.TotalPenaltyMoveSpeed;
@@ -392,7 +368,6 @@ public class PlayerEquipment : MonoBehaviour
         TotalBonusCritHitChance = 0;
         TotalBonusDamage = 0;
         TotalBonusDefense = 0;
-        TotalBonusHealthRegen = 0;
         TotalBonusKnockback = 0;
         TotalBonusKnockbackResistance = 0;
         TotalBonusMoveSpeed = 0;
@@ -405,7 +380,6 @@ public class PlayerEquipment : MonoBehaviour
         TotalPenaltyCritHitChance = 0;
         TotalPenaltyDamage = 0;
         TotalPenaltyDefense = 0;
-        TotalPenaltyHealthRegen = 0;
         TotalPenaltyKnockback = 0;
         TotalPenaltyKnockbackResistance = 0;
         TotalPenaltyMoveSpeed = 0;

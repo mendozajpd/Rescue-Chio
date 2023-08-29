@@ -121,17 +121,6 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    protected float _totalBonusHealthRegen;
-    public float TotalBonusHealthRegen
-    {
-        get => _totalBonusHealthRegen;
-        set
-        {
-            _totalBonusHealthRegen = value;
-            equipment.UpdateEquipmentStats();
-        }
-    }
-
     protected float _totalBonusKnockback;
     public float TotalBonusKnockback
     {
@@ -243,17 +232,6 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    protected float _totalPenaltyHealthRegen;
-    public float TotalPenaltyHealthRegen
-    {
-        get => _totalPenaltyHealthRegen;
-        set
-        {
-            _totalPenaltyHealthRegen = value;
-            equipment.UpdateEquipmentStats();
-        }
-    }
-
     protected float _totalPenaltyKnockback;
     public float TotalPenaltyKnockback
     {
@@ -356,13 +334,13 @@ public abstract class Weapon : MonoBehaviour
     protected void StartAutoFire(InputAction.CallbackContext context)
     {
         Autofire = true;
-        Debug.Log("Autofire activated!");
+        //Debug.Log("Autofire activated!");
     }
 
     protected void StopAutoFire(InputAction.CallbackContext context)
     {
         Autofire = false;
-        Debug.Log("Stopped Autofire!");
+        //Debug.Log("Stopped Autofire!");
     }
 
     protected void InvokeAutoFire()
