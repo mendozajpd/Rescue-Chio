@@ -11,7 +11,7 @@ public class Health : Gauge, IDamageable, IHealable
     private HealthBar _healthBarPrefab;
     private Color32 normalAttackColor = Color.white;
     private Color32 critAttackColor = Color.red;
-    private DamagePopUpPool _damagePopUpPool;
+    private TextPopupPool _popupTextPool;
 
     [Header("Knockback Variables")]
     private Rigidbody2D _rb;
@@ -62,7 +62,7 @@ public class Health : Gauge, IDamageable, IHealable
 
     private void Awake()
     {
-        _damagePopUpPool = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<DamagePopUpPool>();
+        _popupTextPool = GetComponentInParent<UnitsManager>().ObjectPools.GetComponentInChildren<TextPopupPool>();
         _rb = GetComponent<Rigidbody2D>();
         _spawnHealthBar();
     }
@@ -122,7 +122,7 @@ public class Health : Gauge, IDamageable, IHealable
     // Can be used to inflict debuff if there is
     public void Damage(float damageAmount, bool isCrit, float invincibilityTime, Attack attack)
     {
-        _damagePopUpPool.SpawnDamageText(transform.position, isCrit, damageAmount.ToString(), normalAttackColor, critAttackColor);
+        _popupTextPool.SpawnDamageText(transform.position, isCrit, damageAmount.ToString(), normalAttackColor, critAttackColor);
 
         if (CurrentValue - damageAmount <= 0)
         {
@@ -154,6 +154,7 @@ public class Health : Gauge, IDamageable, IHealable
         }
 
         CurrentValue += healAmount;
+        _popupTextPool.SpawnHealText(transform.position, healAmount.ToString());
     }
     #endregion
 

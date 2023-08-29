@@ -40,6 +40,7 @@ public class UnknownPowerup : Powerup
 
 public class DamagePowerup : Powerup
 {
+    private float _statAmount = 5;
     public override string GiveName()
     {
         return "Damage Powerup";
@@ -47,29 +48,34 @@ public class DamagePowerup : Powerup
 
     public override void OnPickUp(PowerupsManager unit, int stack)
     {
-        unit.TotalBonusDamage += 5;
+        unit.TotalBonusDamage += _statAmount;
     }
-
-    //public override void OnStatUpdate(PowerupsManager unit, int stack)
-    //{
-    //    unit.TotalBonusDamage += 5;
-    //}
 
     public override void OnRemove(PowerupsManager unit, int stack)
     {
-        unit.TotalBonusDamage -= 5;
+        // Add the function that would destroy this
+        // Remove the stat
+        unit.TotalBonusDamage -= _statAmount;
     }
 }
 
 public class HealthRegenPowerup : Powerup
 {
+    private float _regenAmount = 1;
+    private Health _unitHealth;
+
     public override string GiveName()
     {
         return "Health Regen Powerup";
     }
 
+    public override void OnPickUp(PowerupsManager unit, int stack)
+    {
+        _unitHealth = unit.GetComponent<Health>();
+    }
+
     public override void Update(PowerupsManager unit, int stack)
     {
-        // do regen stuff here
+        _unitHealth.Heal(_regenAmount * stack);
     }
 }

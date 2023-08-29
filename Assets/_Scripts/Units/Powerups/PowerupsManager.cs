@@ -10,7 +10,7 @@ public class PowerupsManager : MonoBehaviour
     // Player Variables
 
     // Variables for powerups
-    private UnitManager _unit;
+    public UnitManager Unit;
 
     #region STATS
 
@@ -45,7 +45,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusMaxHealth = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -55,7 +55,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusMaxMana = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -65,7 +65,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusAggro = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -75,7 +75,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusAttackSpeed = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -85,7 +85,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusCritHitChance = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -95,7 +95,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusDamage = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -105,7 +105,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusDefense = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -115,7 +115,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusKnockback = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -125,7 +125,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusKnockbackResistance = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -135,7 +135,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalBonusMovementSpeed = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -146,7 +146,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyMaxHealth = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -156,7 +156,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyMaxMana = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -166,7 +166,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyAggro = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -176,7 +176,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyAttackSpeed = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -186,7 +186,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyCritHitChance = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -196,7 +196,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyDamage = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -206,7 +206,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyDefense = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -216,7 +216,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyKnockback = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -226,7 +226,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyKnockbackResistance = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
 
@@ -236,7 +236,7 @@ public class PowerupsManager : MonoBehaviour
         set
         {
             _totalPenaltyMoveSpeed = value;
-            _unit.UpdateStats();
+            Unit.UpdateStats();
         }
     }
     #endregion
@@ -254,7 +254,7 @@ public class PowerupsManager : MonoBehaviour
 
     private void Awake()
     {
-        _unit = GetComponent<UnitManager>();
+        Unit = GetComponent<UnitManager>();
     }
 
     void Start()
@@ -308,13 +308,6 @@ public class PowerupsManager : MonoBehaviour
         }
     }
     
-    //private void _callPowerupStatUpdate()
-    //{
-    //    foreach (PowerupList p in powerups)
-    //    {
-    //        p.powerups.
-    //    }
-    //}
     #endregion
 
 

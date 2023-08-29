@@ -68,7 +68,7 @@ public class PopUpTextScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);
     }
 
-    public void SetPopUpText(string text, bool isCrit, Color32 normalAttack, Color32 critAttack)
+    public void SetDamagePopUpText(string text, bool isCrit, Color32 normalAttack, Color32 critAttack)
     {
         float fontSize = _tmp.fontSize;
         float offSetRNGx = Random.Range(-offSetAmount, offSetAmount);
@@ -79,6 +79,22 @@ public class PopUpTextScript : MonoBehaviour
         _tmp.color = isCrit ? critAttack : normalAttack;
         _timeUntilDestruction = isCrit ? (_timeUntilDestruction + Mathf.Abs(offSetRNGx * 0.1f)) * 1.5f : _timeUntilDestruction + offSetRNGx * 0.1f;
         _tmp.sortingOrder = isCrit ? 1 : 0;
+        transform.position = new Vector3(transform.position.x + offSetRNGx * 0.1f, transform.position.y + offSetRNGy * 0.1f, 1);
+        transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);
+    }
+
+    public void SetHealPopUpText(string text)
+    {
+        Color32 healColor = new Color32(85, 185, 104, 255);
+        float fontSize = _tmp.fontSize - 0.5f;
+        float offSetRNGx = Random.Range(-offSetAmount, offSetAmount);
+        float offSetRNGy = Random.Range(-offSetAmount, offSetAmount);
+        float fontSizeRNG = Random.Range(fontSize - 0.5f, fontSize + 0.5f);
+        _tmp.text = text;
+        _tmp.fontSize = fontSizeRNG;
+        _tmp.color = healColor;
+        _timeUntilDestruction = _timeUntilDestruction + offSetRNGx * 0.08f;
+        _tmp.sortingOrder = 1;
         transform.position = new Vector3(transform.position.x + offSetRNGx * 0.1f, transform.position.y + offSetRNGy * 0.1f, 1);
         transform.rotation = Quaternion.Euler(0, 0, -offSetRNGx * 0.8f);
     }
