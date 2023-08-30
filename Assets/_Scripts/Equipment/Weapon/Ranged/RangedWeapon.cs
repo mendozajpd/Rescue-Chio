@@ -79,7 +79,7 @@ public class RangedWeapon : Weapon
         // Weapon Rotation Variable
         _anchor = transform.gameObject;
 
-        // Weapon Variables
+        // Weapon Ammo
         currentAmmo = maxAmmo;
 
         // Magazine Variable
@@ -131,6 +131,11 @@ public class RangedWeapon : Weapon
 
     void Start()
     {
+        SetDefaultWeaponStats();
+    }
+
+    private void SetDefaultWeaponStats()
+    {
         WeaponBaseDamage = defaultBaseDamage;
         WeaponBaseKnockback = defaultBaseKnockback;
         WeaponBaseAttackSpeed = defaultFireRate;
@@ -157,7 +162,7 @@ public class RangedWeapon : Weapon
 
         if (currentAmmo == 0)
         {
-            _reloadHandler();
+            _reloadWeapon();
             return;
         }
 
@@ -213,14 +218,14 @@ public class RangedWeapon : Weapon
 
     #region Reload Functions
 
-    private void _reloadHandler()
+    private void _reloadWeapon()
     {
         if (isReloading) return;
 
         if (shooting) return;
 
         if (currentAmmo == maxAmmo) return;
-
+        
         ReloadSpeedDuration = (10 - (ReloadSpeed - 1)) * 0.1f;
         reloadTrigger.Invoke();
         reload = 1;
@@ -384,7 +389,7 @@ public class RangedWeapon : Weapon
 
     private void _reloadWeapon(InputAction.CallbackContext context)
     {
-        _reloadHandler();
+        _reloadWeapon();
     }
 
 

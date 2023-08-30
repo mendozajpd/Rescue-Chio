@@ -131,7 +131,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9e76e3efda864714f93297c8ec419f72, type: 3}
   volumeChangeMultiplier: 0
   pitchChangeMultiplier: 0
-  AudioVolume: 0.5
+  AudioVolume: 0.25
 --- !u!82 &1780311146183857672
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10388,7 +10388,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2c6b661d05ceb984e9446d28f43e939d, type: 3}
   volumeChangeMultiplier: 0.1
   pitchChangeMultiplier: 0.05
-  AudioVolume: 0.5
+  AudioVolume: 0.25
 --- !u!82 &1780311147127794295
 AudioSource:
   m_ObjectHideFlags: 0

@@ -17,9 +17,6 @@ public class PistolReload : MonoBehaviour
     private float _eject;
     private bool _ejecting;
 
-
-
-
     // Audio Variables
     public AudioClip[] magazineAudio;
     private AudioSource audioSource;
@@ -33,8 +30,6 @@ public class PistolReload : MonoBehaviour
     // Actions
     public System.Action magazineInserted;
 
-    public float EjectSpeed { get => ejectSpeed; }
-
     private void Awake()
     {
         _pistol = GetComponentInParent<RangedWeapon>();
@@ -47,16 +42,17 @@ public class PistolReload : MonoBehaviour
     private void OnEnable()
     {
         _pistol.reloadTrigger += _ejectMagazine;
+        _pistol.reloadTrigger += _setMagazineSpeed;
     }
 
     private void OnDisable()
     {
         _pistol.reloadTrigger -= _ejectMagazine;
+        _pistol.reloadTrigger -= _setMagazineSpeed;
     }
 
     void Start()
     {
-        StartCoroutine(setMagazineSpeed());
     }
 
     void Update()
@@ -64,11 +60,9 @@ public class PistolReload : MonoBehaviour
         _calculateEjectTrajectory();
     }
 
-    IEnumerator setMagazineSpeed()
+    private void _setMagazineSpeed()
     {
-        ejectSpeed = Mathf.Lerp(3, 10, (_pistol.ReloadSpeedDuration - 1) / (0.3f - 1)); // Maps the speed 
-        yield return new WaitForSeconds(1);
-        StartCoroutine(setMagazineSpeed());
+        ejectSpeed = Mathf.Lerp(3, 10, (_pistol.ReloadSpeedDuration - 1) / (0.3f - 1)); 
     }
 
     private void _calculateEjectTrajectory()
