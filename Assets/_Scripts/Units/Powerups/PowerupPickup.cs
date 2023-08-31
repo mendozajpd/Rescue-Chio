@@ -28,7 +28,7 @@ public class PowerupPickup : MonoBehaviour
             if (playerPowerupManager != null)
             {
                 AddPowerup(playerPowerupManager);
-                playerPowerupManager.CallItemOnPickup();
+                playerPowerupManager.CallPowerupOnPickup();
                 Destroy(gameObject);
             }
         }
@@ -41,7 +41,7 @@ public class PowerupPickup : MonoBehaviour
             if (p.name == powerup.GiveName())
             {
                 p.stack += 1;
-                return; // Will prevent the code from running the code below
+                return;
             }
         }
         unit.powerups.Add(new PowerupList(powerup, powerup.GiveName(), 1));
@@ -56,6 +56,8 @@ public class PowerupPickup : MonoBehaviour
                 return new HealthRegenPowerup();
             case Powerups.DamagePowerup:
                 return new DamagePowerup();
+            case Powerups.DefensePowerup:
+                return new DefensePowerup();
             default:
                 return new UnknownPowerup();
         }
@@ -67,4 +69,5 @@ public enum Powerups
     UnknownPowerup,
     HealthRegenPowerup,
     DamagePowerup,
+    DefensePowerup,
 }

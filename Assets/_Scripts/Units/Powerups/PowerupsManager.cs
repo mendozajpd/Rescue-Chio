@@ -300,7 +300,7 @@ public class PowerupsManager : MonoBehaviour
         StartCoroutine(ICallPowerupUpdate());
     }
 
-    public void CallItemOnPickup()
+    public void CallPowerupOnPickup()
     {
         foreach (PowerupList p in powerups)
         {

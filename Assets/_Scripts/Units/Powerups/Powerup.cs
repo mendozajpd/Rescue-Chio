@@ -22,10 +22,10 @@ public abstract class Powerup
     {
     }
 
-    //public virtual void AddStats(PowerupsManager unit, int stack)
-    //{
-
-    //}
+    public virtual float GiveStatAmount()
+    {
+        return 0;
+    }
 }
 
 public class UnknownPowerup : Powerup
@@ -76,6 +76,32 @@ public class HealthRegenPowerup : Powerup
 
     public override void Update(PowerupsManager unit, int stack)
     {
-        _unitHealth.Heal(_regenAmount * stack);
+        _unitHealth.Heal(_regenAmount * stack, false);
+    }
+}
+
+public class DefensePowerup : Powerup
+{
+    private float _statAmount = 3;
+    public override string GiveName()
+    {
+        return "Defense Powerup";
+    }
+
+    //public override void OnPickUp(PowerupsManager unit, int stack)
+    //{
+    //    unit.TotalBonusDefense += _statAmount;
+    //}
+
+    //public override float GiveStatAmount()
+    //{
+        
+    //}
+
+    public override void OnRemove(PowerupsManager unit, int stack)
+    {
+        // Add the function that would destroy this
+        // Remove the stat
+        unit.TotalBonusDefense -= _statAmount;
     }
 }

@@ -145,7 +145,7 @@ public class Health : Gauge, IDamageable, IHealable
     #endregion
 
     #region HEAL FUNCTIONS
-    public void Heal(float healAmount)
+    public void Heal(float healAmount, bool usePopup)
     {
         if (CurrentValue + healAmount > MaxValue)
         {
@@ -154,7 +154,7 @@ public class Health : Gauge, IDamageable, IHealable
         }
 
         CurrentValue += healAmount;
-        _popupTextPool.SpawnHealText(transform.position, healAmount.ToString());
+        if(usePopup) _popupTextPool.SpawnHealText(transform.position, healAmount.ToString());
     }
     #endregion
 
