@@ -29,6 +29,7 @@ public class PowerupPickup : MonoBehaviour
             {
                 AddPowerup(playerPowerupManager);
                 playerPowerupManager.CallPowerupOnPickup();
+                playerPowerupManager.CalculateStatsFromPowerups();
                 Destroy(gameObject);
             }
         }

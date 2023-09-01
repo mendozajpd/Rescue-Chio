@@ -10,21 +10,22 @@ public abstract class Powerup
     {
     }
 
-    public virtual void OnPickUp(PowerupsManager unit, int stack)
+    public virtual void OnPowerupPickup(PowerupsManager unit, int stack)
     {
+
     }
 
     public virtual void OnRemove(PowerupsManager unit, int stack)
     {
     }
 
-    public virtual void OnStatUpdate(PowerupsManager unit, int stack)
+    public virtual void GetStatsFromPowerups(PowerupsManager unit, int stack)
     {
     }
 
-    public virtual float GiveStatAmount()
+    public virtual float GiveStatAmount(float statAmount)
     {
-        return 0;
+        return statAmount;
     }
 }
 
@@ -46,15 +47,13 @@ public class DamagePowerup : Powerup
         return "Damage Powerup";
     }
 
-    public override void OnPickUp(PowerupsManager unit, int stack)
+    public override void GetStatsFromPowerups(PowerupsManager unit, int stack)
     {
-        unit.TotalBonusDamage += _statAmount;
+        unit.TotalBonusDamage += _statAmount * stack;
     }
 
     public override void OnRemove(PowerupsManager unit, int stack)
     {
-        // Add the function that would destroy this
-        // Remove the stat
         unit.TotalBonusDamage -= _statAmount;
     }
 }
@@ -63,13 +62,12 @@ public class HealthRegenPowerup : Powerup
 {
     private float _regenAmount = 1;
     private Health _unitHealth;
-
     public override string GiveName()
     {
         return "Health Regen Powerup";
     }
 
-    public override void OnPickUp(PowerupsManager unit, int stack)
+    public override void OnPowerupPickup(PowerupsManager unit, int stack)
     {
         _unitHealth = unit.GetComponent<Health>();
     }
@@ -88,20 +86,13 @@ public class DefensePowerup : Powerup
         return "Defense Powerup";
     }
 
-    //public override void OnPickUp(PowerupsManager unit, int stack)
-    //{
-    //    unit.TotalBonusDefense += _statAmount;
-    //}
-
-    //public override float GiveStatAmount()
-    //{
-        
-    //}
+    public override void GetStatsFromPowerups(PowerupsManager unit, int stack)
+    {
+        unit.TotalBonusDefense += _statAmount * stack;
+    }
 
     public override void OnRemove(PowerupsManager unit, int stack)
     {
-        // Add the function that would destroy this
-        // Remove the stat
         unit.TotalBonusDefense -= _statAmount;
     }
 }
