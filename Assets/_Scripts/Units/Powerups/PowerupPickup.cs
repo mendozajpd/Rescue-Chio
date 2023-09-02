@@ -27,12 +27,23 @@ public class PowerupPickup : MonoBehaviour
 
             if (playerPowerupManager != null)
             {
+                Collider2D col = GetComponent<Collider2D>();
+                col.enabled = false;
+                ParticleSystem particlesPrefab = Resources.Load<ParticleSystem>("Powerups/PowerupParticles");
+                Instantiate(particlesPrefab, transform);
+                StartCoroutine(destroyGameobject());
                 AddPowerup(playerPowerupManager);
-                playerPowerupManager.CallPowerupOnPickup();
-                playerPowerupManager.CalculateStatsFromPowerups();
-                Destroy(gameObject);
+                powerup.OnPowerupPickup(playerPowerupManager);
             }
         }
+    }
+
+    IEnumerator destroyGameobject()
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer?.gameObject?.SetActive(false);
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 
     public void AddPowerup(PowerupsManager unit)
@@ -59,6 +70,10 @@ public class PowerupPickup : MonoBehaviour
                 return new DamagePowerup();
             case Powerups.DefensePowerup:
                 return new DefensePowerup();
+            case Powerups.AttackSpeedPowerup:
+                return new AttackSpeedPowerup();
+            case Powerups.MoveSpeedPowerup:
+                return new MoveSpeedPowerup();
             default:
                 return new UnknownPowerup();
         }
@@ -71,4 +86,6 @@ public enum Powerups
     HealthRegenPowerup,
     DamagePowerup,
     DefensePowerup,
+    AttackSpeedPowerup,
+    MoveSpeedPowerup
 }

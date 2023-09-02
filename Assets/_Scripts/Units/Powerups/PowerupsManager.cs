@@ -300,52 +300,6 @@ public class PowerupsManager : MonoBehaviour
         StartCoroutine(ICallPowerupUpdate());
     }
 
-    public void CallPowerupOnPickup()
-    {
-        foreach (PowerupList p in powerups)
-        {
-            p.powerups.OnPowerupPickup(this, p.stack);
-        }
-    }
-
     #endregion
 
-    #region Calculate Stats
-    // Clear stats
-    private void _resetAllBonusesAndPenalties()
-    {
-        TotalBonusMaxHealth = 0;
-        TotalBonusMaxMana = 0;
-        TotalBonusAggro = 0;
-        TotalBonusAttackSpeed = 0;
-        TotalBonusCritHitChance = 0;
-        TotalBonusDamage = 0;
-        TotalBonusDefense = 0;
-        TotalBonusKnockback = 0;
-        TotalBonusKnockbackResistance = 0;
-        TotalBonusMovementSpeed = 0;
-
-        TotalPenaltyMaxHealth = 0;
-        TotalPenaltyMaxMana = 0;
-        TotalPenaltyAggro = 0;
-        TotalPenaltyAttackSpeed = 0;
-        TotalPenaltyCritHitChance = 0;
-        TotalPenaltyDamage = 0;
-        TotalPenaltyDefense = 0;
-        TotalPenaltyKnockback = 0;
-        TotalPenaltyKnockbackResistance = 0;
-        TotalPenaltyMoveSpeed = 0;
-    }
-    // Add stats
-
-    public void CalculateStatsFromPowerups()
-    {
-        _resetAllBonusesAndPenalties();
-        foreach (PowerupList p in powerups)
-        {
-            p.powerups.GetStatsFromPowerups(this, p.stack);
-        }
-    }
-
-    #endregion
 }

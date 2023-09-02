@@ -10,16 +10,11 @@ public abstract class Powerup
     {
     }
 
-    public virtual void OnPowerupPickup(PowerupsManager unit, int stack)
-    {
-
-    }
-
     public virtual void OnRemove(PowerupsManager unit, int stack)
     {
     }
 
-    public virtual void GetStatsFromPowerups(PowerupsManager unit, int stack)
+    public virtual void OnPowerupPickup(PowerupsManager unit)
     {
     }
 
@@ -38,26 +33,6 @@ public class UnknownPowerup : Powerup
 
     // this does nothing
 }
-
-public class DamagePowerup : Powerup
-{
-    private float _statAmount = 5;
-    public override string GiveName()
-    {
-        return "Damage Powerup";
-    }
-
-    public override void GetStatsFromPowerups(PowerupsManager unit, int stack)
-    {
-        unit.TotalBonusDamage += _statAmount * stack;
-    }
-
-    public override void OnRemove(PowerupsManager unit, int stack)
-    {
-        unit.TotalBonusDamage -= _statAmount;
-    }
-}
-
 public class HealthRegenPowerup : Powerup
 {
     private float _regenAmount = 1;
@@ -67,7 +42,7 @@ public class HealthRegenPowerup : Powerup
         return "Health Regen Powerup";
     }
 
-    public override void OnPowerupPickup(PowerupsManager unit, int stack)
+    public override void OnPowerupPickup(PowerupsManager unit)
     {
         _unitHealth = unit.GetComponent<Health>();
     }
@@ -78,6 +53,27 @@ public class HealthRegenPowerup : Powerup
     }
 }
 
+public class DamagePowerup : Powerup
+{
+    private float _statAmount = 5;
+    public override string GiveName()
+    {
+        return "Damage Powerup";
+    }
+
+    public override void OnPowerupPickup(PowerupsManager unit)
+    {
+        unit.TotalBonusDamage += _statAmount;
+    }
+
+
+    public override void OnRemove(PowerupsManager unit, int stack)
+    {
+        unit.TotalBonusDamage -= _statAmount;
+    }
+}
+
+
 public class DefensePowerup : Powerup
 {
     private float _statAmount = 3;
@@ -86,13 +82,52 @@ public class DefensePowerup : Powerup
         return "Defense Powerup";
     }
 
-    public override void GetStatsFromPowerups(PowerupsManager unit, int stack)
+    public override void OnPowerupPickup(PowerupsManager unit)
     {
-        unit.TotalBonusDefense += _statAmount * stack;
+        unit.TotalBonusDefense += _statAmount;
     }
 
     public override void OnRemove(PowerupsManager unit, int stack)
     {
         unit.TotalBonusDefense -= _statAmount;
+    }
+}
+
+public class AttackSpeedPowerup : Powerup
+{
+    private float _statAmount = 50;
+
+    public override string GiveName()
+    {
+        return "Attack Speed Powerup";
+    }
+
+    public override void OnPowerupPickup(PowerupsManager unit)
+    {
+        unit.TotalBonusAttackSpeed += _statAmount;
+    }
+
+    public override void OnRemove(PowerupsManager unit, int stack)
+    {
+        unit.TotalBonusAttackSpeed -= _statAmount;
+    }
+}
+public class MoveSpeedPowerup : Powerup
+{
+    private float _statAmount = 10;
+
+    public override string GiveName()
+    {
+        return "Move Speed Powerup";
+    }
+
+    public override void OnPowerupPickup(PowerupsManager unit)
+    {
+        unit.TotalBonusMovementSpeed += _statAmount;
+    }
+
+    public override void OnRemove(PowerupsManager unit, int stack)
+    {
+        unit.TotalBonusMovementSpeed -= _statAmount;
     }
 }
