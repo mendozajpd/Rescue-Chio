@@ -114,7 +114,7 @@ public class AttackSpeedPowerup : Powerup
 }
 public class MoveSpeedPowerup : Powerup
 {
-    private float _statAmount = 10;
+    private float _statAmount = 5;
 
     public override string GiveName()
     {
