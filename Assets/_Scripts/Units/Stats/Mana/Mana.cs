@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mana : MonoBehaviour
+
+public class Mana : Gauge, IManaConsumeable, IRestoreMana
 {
     void Start()
     {
@@ -12,5 +13,15 @@ public class Mana : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ConsumeMana(float amt)
+    {
+
+    }
+
+    public void RestoreMana(float amt)
+    {
+
     }
 }

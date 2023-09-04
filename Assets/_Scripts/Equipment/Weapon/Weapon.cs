@@ -9,7 +9,7 @@ public abstract class Weapon : MonoBehaviour
     private float _weaponBaseDamage;
     private float _weaponBaseKnockback;
     private float _weaponBaseAttackSpeed;
-
+    private float _weaponBaseMana;
     public float WeaponBaseDamage
     {
         get => _weaponBaseDamage;
@@ -37,6 +37,16 @@ public abstract class Weapon : MonoBehaviour
             equipment?.UpdateEquipmentStats();
         }
     }
+    public float WeaponBaseMana
+    {
+        get => _weaponBaseMana;
+        set
+        {
+            _weaponBaseMana = value;
+            equipment?.UpdateEquipmentStats();
+        }
+    }
+
 
 
     protected float useTime;

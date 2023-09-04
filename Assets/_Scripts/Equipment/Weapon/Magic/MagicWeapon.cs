@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class MagicWeapon : Weapon
 {
+    [Header("Magic Weapon Variables")]
+    [SerializeField] private float defaultWeaponMana;
+
+
     [Header("Spells")]
     private SpellHandler spellHandler;
     public List<Spell> Spells = new List<Spell>();
@@ -62,6 +66,7 @@ public class MagicWeapon : Weapon
         }
     }
 
+
     // Temp
     private InputAction _changeSpell;
 
@@ -86,7 +91,6 @@ public class MagicWeapon : Weapon
     {
         spellHandler.UpdateCurrentSpells -= _handleSpells;
 
-
         // Cycle through spells
         _changeSpell.performed -= _cycleThroughSpells;
         _changeSpell.Disable();
@@ -100,6 +104,7 @@ public class MagicWeapon : Weapon
     {
         _anchor = gameObject;
         equipment = GetComponentInParent<PlayerEquipment>(); // This gets 
+        WeaponBaseMana = defaultWeaponMana;
 
         // Spell Handler
         spellHandler = GetComponentInChildren<SpellHandler>();
@@ -372,7 +377,10 @@ public class MagicWeapon : Weapon
 
     private void _cycleThroughSpells(InputAction.CallbackContext context)
     {
-        CurrentSpellIndex += 1;
+        if (Spells.Count > 0) 
+        { 
+            CurrentSpellIndex += 1;
+        }
     }
 
 

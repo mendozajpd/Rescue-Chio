@@ -13,6 +13,7 @@ public class PlayerEquipment : MonoBehaviour
     private float _currentWeaponBaseDamage;
     private float _currentWeaponBaseKnockback;
     private float _currentWeaponBaseAttackSpeed;
+    private float _currentWeaponMana;
 
     #region Weapon Stats
     protected float _totalBonusMaxHealth;
@@ -237,7 +238,6 @@ public class PlayerEquipment : MonoBehaviour
     }
     #endregion
 
-    //public System.Action CalculateStats;
     public int NumberOfChildren 
     { 
         get => _numberOfChildren; 
@@ -246,32 +246,39 @@ public class PlayerEquipment : MonoBehaviour
             if (value == _numberOfChildren) return;
             _numberOfChildren = value;
             _listWeaponsInEquipment();
-            //CalculateWeaponBasedStats();
         }
     }
 
-    public float CurrentWeaponBaseDamage 
-    { 
+    #region Current Weapon Stats
+    public float CurrentWeaponBaseDamage
+    {
         get => _currentWeaponBaseDamage;
-        set 
-        { 
+        set
+        {
             _currentWeaponBaseDamage = value;
-        } 
+        }
     }
-    public float CurrentWeaponKnockback 
-    { 
+    public float CurrentWeaponKnockback
+    {
         get => _currentWeaponBaseKnockback;
-        set 
-        { 
+        set
+        {
             _currentWeaponBaseKnockback = value;
         }
     }
 
-    public float CurrentWeaponAttackSpeed 
-    { 
-        get => _currentWeaponBaseAttackSpeed; 
-        set => _currentWeaponBaseAttackSpeed = value; 
+    public float CurrentWeaponAttackSpeed
+    {
+        get => _currentWeaponBaseAttackSpeed;
+        set => _currentWeaponBaseAttackSpeed = value;
     }
+    public float CurrentWeaponMana
+    {
+        get => _currentWeaponMana;
+        set => _currentWeaponMana = value;
+    }
+
+    #endregion
 
     private void OnEnable()
     {
@@ -333,8 +340,9 @@ public class PlayerEquipment : MonoBehaviour
             CurrentWeaponBaseDamage = weapon.WeaponBaseDamage;
             CurrentWeaponKnockback = weapon.WeaponBaseKnockback;
             CurrentWeaponAttackSpeed = weapon.WeaponBaseAttackSpeed;
+            CurrentWeaponMana = weapon.WeaponBaseMana;
             TotalBonusMaxHealth = weapon.TotalBonusMaxHealth;
-            TotalBonusMaxMana = weapon.TotalBonusMaxMana;
+            TotalBonusMaxMana = weapon.TotalBonusMaxMana + CurrentWeaponMana;
             TotalBonusAggro = weapon.TotalBonusAggro;
             TotalBonusAttackSpeed = weapon.TotalBonusAttackSpeed;
             TotalBonusCritHitChance = weapon.TotalBonusCritHitChance;

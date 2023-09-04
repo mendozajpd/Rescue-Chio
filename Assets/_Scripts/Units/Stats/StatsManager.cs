@@ -202,14 +202,19 @@ public class StatsManager : MonoBehaviour
         {
             if (_totalMaxHealth == value) return;
             _totalMaxHealth = value;
-            var health = _unit.UnitHealth;
+            Health health = _unit.UnitHealth;
             health?.SetMaxValue(_totalMaxHealth);
         }
     }
     public float TotalMaxMana
     {
         get => _totalMaxMana;
-        set => _totalMaxMana = value;
+        set
+        {
+            _totalMaxMana = value;
+            Mana mana = _unit.UnitMana;
+            mana?.SetMaxValue(_totalMaxMana);
+        }
     }
 
     public float TotalAggro

@@ -115,27 +115,27 @@ public abstract class UnitManager : MonoBehaviour
     
     protected virtual void _addAllStats()
     {
-        TotalBonusMaxHealth = UnitPowerups.TotalBonusMaxHealth + UnitStatusEffects.TotalBonusMaxHealth; ;
-        TotalBonusMaxMana = UnitPowerups.TotalBonusMaxMana + UnitStatusEffects.TotalBonusMaxMana; ;
-        TotalBonusAggro = UnitPowerups.TotalBonusAggro + UnitStatusEffects.TotalBonusAggro;
-        TotalBonusAttackSpeed = UnitPowerups.TotalBonusAttackSpeed + UnitStatusEffects.TotalBonusAttackSpeed;
-        TotalBonusCritHitChance = UnitPowerups.TotalBonusCritHitChance + UnitStatusEffects.TotalBonusCritHitChance;
-        TotalBonusDamage = UnitPowerups.TotalBonusDamage + UnitStatusEffects.TotalBonusDamage;
-        TotalBonusDefense = UnitPowerups.TotalBonusDefense + UnitStatusEffects.TotalBonusDefense;
-        TotalBonusKnockback = UnitPowerups.TotalBonusKnockback + UnitStatusEffects.TotalBonusKnockback;
-        TotalBonusKnockbackResistance = UnitPowerups.TotalBonusKnockbackResistance + UnitStatusEffects.TotalBonusKnockbackResistance; ;
-        TotalBonusMoveSpeed = UnitPowerups.TotalBonusMovementSpeed + UnitStatusEffects.TotalBonusMovementSpeed;
+        TotalBonusMaxHealth += UnitPowerups.TotalBonusMaxHealth + UnitStatusEffects.TotalBonusMaxHealth; ;
+        TotalBonusMaxMana += UnitPowerups.TotalBonusMaxMana + UnitStatusEffects.TotalBonusMaxMana; ;
+        TotalBonusAggro += UnitPowerups.TotalBonusAggro + UnitStatusEffects.TotalBonusAggro;
+        TotalBonusAttackSpeed += UnitPowerups.TotalBonusAttackSpeed + UnitStatusEffects.TotalBonusAttackSpeed;
+        TotalBonusCritHitChance += UnitPowerups.TotalBonusCritHitChance + UnitStatusEffects.TotalBonusCritHitChance;
+        TotalBonusDamage += UnitPowerups.TotalBonusDamage + UnitStatusEffects.TotalBonusDamage;
+        TotalBonusDefense += UnitPowerups.TotalBonusDefense + UnitStatusEffects.TotalBonusDefense;
+        TotalBonusKnockback += UnitPowerups.TotalBonusKnockback + UnitStatusEffects.TotalBonusKnockback;
+        TotalBonusKnockbackResistance += UnitPowerups.TotalBonusKnockbackResistance + UnitStatusEffects.TotalBonusKnockbackResistance; ;
+        TotalBonusMoveSpeed += UnitPowerups.TotalBonusMovementSpeed + UnitStatusEffects.TotalBonusMovementSpeed;
 
-        TotalPenaltyMaxHealth = UnitPowerups.TotalPenaltyMaxHealth + UnitStatusEffects.TotalPenaltyMaxHealth; ;
-        TotalPenaltyMaxMana = UnitPowerups.TotalPenaltyMaxMana + UnitStatusEffects.TotalPenaltyMaxMana;
-        TotalPenaltyAggro = UnitPowerups.TotalPenaltyAggro + UnitStatusEffects.TotalPenaltyAggro;
-        TotalPenaltyAttackSpeed = UnitPowerups.TotalPenaltyAttackSpeed + UnitStatusEffects.TotalPenaltyAttackSpeed; ;
-        TotalPenaltyCritHitChance = UnitPowerups.TotalPenaltyCritHitChance + UnitStatusEffects.TotalPenaltyCritHitChance;
-        TotalPenaltyDamage = UnitPowerups.TotalPenaltyDamage + UnitStatusEffects.TotalPenaltyDamage;
-        TotalPenaltyDefense = UnitPowerups.TotalPenaltyDefense + UnitStatusEffects.TotalPenaltyDefense;
-        TotalPenaltyKnockback = UnitPowerups.TotalPenaltyKnockback + UnitStatusEffects.TotalPenaltyKnockback;
-        TotalPenaltyKnockbackResistance = UnitPowerups.TotalPenaltyKnockbackResistance + UnitStatusEffects.TotalPenaltyKnockbackResistance;
-        TotalPenaltyMoveSpeed = UnitPowerups.TotalPenaltyMoveSpeed + UnitStatusEffects.TotalPenaltyMoveSpeed; ;
+        TotalPenaltyMaxHealth += UnitPowerups.TotalPenaltyMaxHealth + UnitStatusEffects.TotalPenaltyMaxHealth; ;
+        TotalPenaltyMaxMana += UnitPowerups.TotalPenaltyMaxMana + UnitStatusEffects.TotalPenaltyMaxMana;
+        TotalPenaltyAggro += UnitPowerups.TotalPenaltyAggro + UnitStatusEffects.TotalPenaltyAggro;
+        TotalPenaltyAttackSpeed += UnitPowerups.TotalPenaltyAttackSpeed + UnitStatusEffects.TotalPenaltyAttackSpeed; ;
+        TotalPenaltyCritHitChance += UnitPowerups.TotalPenaltyCritHitChance + UnitStatusEffects.TotalPenaltyCritHitChance;
+        TotalPenaltyDamage += UnitPowerups.TotalPenaltyDamage + UnitStatusEffects.TotalPenaltyDamage;
+        TotalPenaltyDefense += UnitPowerups.TotalPenaltyDefense + UnitStatusEffects.TotalPenaltyDefense;
+        TotalPenaltyKnockback += UnitPowerups.TotalPenaltyKnockback + UnitStatusEffects.TotalPenaltyKnockback;
+        TotalPenaltyKnockbackResistance += UnitPowerups.TotalPenaltyKnockbackResistance + UnitStatusEffects.TotalPenaltyKnockbackResistance;
+        TotalPenaltyMoveSpeed += UnitPowerups.TotalPenaltyMoveSpeed + UnitStatusEffects.TotalPenaltyMoveSpeed; ;
     }
 
     public virtual void CalculateTotalStats()

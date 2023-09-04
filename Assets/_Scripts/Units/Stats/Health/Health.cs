@@ -28,7 +28,7 @@ public class Health : Gauge, IDamageable, IHealable
     [SerializeField] private bool knockbackImmune;
 
 
-    // TEMPORARY
+    [Header("DEBUG")]
     [SerializeField] private bool debugMode;
     private float _damagePerSecondTime;
     private float _dps;
