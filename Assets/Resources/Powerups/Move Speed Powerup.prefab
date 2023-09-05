@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6816024712828425817}
   - component: {fileID: 4182315658467322557}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8281270943138030358}
   - component: {fileID: 2219150790603539512}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4743903437557484318}
   - component: {fileID: 7219503674878241610}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6927064427550240712}
   - component: {fileID: 494381771167537021}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4163453127748549831}
   - component: {fileID: 4163453127748549830}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4163453127900635435}
   - component: {fileID: 4163453127900635434}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,7 +514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4163453128753958196}
   - component: {fileID: 4163453128753958195}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4163453128871861246}
   - component: {fileID: 4163453128871861245}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 4163453129282792355}
   - component: {fileID: 4163453129282792356}
   - component: {fileID: 4163453129282792357}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Move Speed Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -756,7 +756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4163453129651185245}
   - component: {fileID: 4163453129651185244}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 82717364241311996}
   - component: {fileID: 1546857763345419727}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -924,7 +924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4073569100463044021}
   - component: {fileID: 5813582471957662991}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1008,7 +1008,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2042248192848739402}
   - component: {fileID: 8611826038888816830}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

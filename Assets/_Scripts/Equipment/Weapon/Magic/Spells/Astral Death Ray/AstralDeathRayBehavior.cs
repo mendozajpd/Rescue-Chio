@@ -157,7 +157,7 @@ public class AstralDeathRayBehavior : Attack
     {
         Vector2 mousePosition = _spell.wand.MouseWorldPosition - (Vector2)_spell.transform.position; // Direction to the target
         Vector2 laserDirection = LaserTip.transform.position - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, laserDirection.normalized, LaserDistance, GetIgnoreLayerMask("Player", "AllyProjectiles", "Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, laserDirection.normalized, LaserDistance, GetIgnoreLayerMask("Player", "AllyProjectiles", "Enemy", "Powerups"));
         float distanceBetweenStartEnd = Vector3.Distance(transform.position, hit.point);
         Vector3 newLaserLength = new Vector3(0, distanceBetweenStartEnd, 0);
 

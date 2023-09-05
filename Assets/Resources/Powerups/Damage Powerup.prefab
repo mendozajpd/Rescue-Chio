@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5119264954893311572}
   - component: {fileID: 6799630494211860026}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7991856963118441665}
   - component: {fileID: 6132405797111004594}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4515924600663809169}
   - component: {fileID: 3375564430426000137}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Isometric Diamond (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8618338515494722705}
   - component: {fileID: 4722509975183844371}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 5549948223154526226}
   - component: {fileID: 5549948223154526229}
   - component: {fileID: 5549948223154526228}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Damage Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5549948223345878202}
   - component: {fileID: 5549948223345878203}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5549948224955877975}
   - component: {fileID: 5549948224955877972}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1945571106427832474}
   - component: {fileID: 295011140634378293}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Isometric Diamond (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3795329172025092237}
   - component: {fileID: 4258048351054339905}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Isometric Diamond
   m_TagString: Untagged
   m_Icon: {fileID: 0}

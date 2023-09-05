@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 801601453795170547}
   - component: {fileID: 6712221246348980593}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7841315412387384549}
   - component: {fileID: 7087473440710750586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5932097596887967359}
   - component: {fileID: 913472255171499429}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 41301528415139280}
   - component: {fileID: 6053937312249950376}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2363476112005398142}
   - component: {fileID: 3817312742061573314}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4159681619981201545}
   - component: {fileID: 1032238733967810900}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,7 +514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5626226104020235902}
   - component: {fileID: 5626226104020235901}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5626226104558590099}
   - component: {fileID: 5626226104558590098}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,7 +693,7 @@ GameObject:
   - component: {fileID: 5626226104898839611}
   - component: {fileID: 5626226104898839612}
   - component: {fileID: 5626226104898839613}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Health Regen Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -755,7 +755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6727234109810639867}
   - component: {fileID: 75822321745506787}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7938923057299856235}
   - component: {fileID: 3202908801296249266}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -923,7 +923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 797695485830353901}
   - component: {fileID: 8918310068428259599}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

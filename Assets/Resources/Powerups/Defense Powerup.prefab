@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1333098424409548380}
   - component: {fileID: 8543051771140571285}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Isometric Diamond (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5096725515013352379}
   - component: {fileID: 4843940489187252576}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Isometric Diamond
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4529392203459466387}
   - component: {fileID: 4529392203459466384}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 4529392204858361558}
   - component: {fileID: 4529392204858361553}
   - component: {fileID: 4529392204858361552}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Defense Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4529392205071743614}
   - component: {fileID: 4529392205071743615}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4198146131652260760}
   - component: {fileID: 4419535403647857763}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 537882718180433118}
   - component: {fileID: 7613085521687085489}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

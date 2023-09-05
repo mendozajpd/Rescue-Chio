@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3452075082929676416}
   - component: {fileID: 3452075082929676419}
   - component: {fileID: 3452075082929676418}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 3452075082975081282}
   - component: {fileID: 3452075082975081285}
   - component: {fileID: 3452075082975081284}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Unknown Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3452075083361457406}
   - component: {fileID: 3452075083361457407}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 3452075083853373380}
   - component: {fileID: 3452075083853373378}
   - component: {fileID: 3452075083853373381}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3452075084910555588}
   - component: {fileID: 3452075084910555589}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -90,7 +90,7 @@ public class AstralBeamBehavior : MonoBehaviour
     {
         float distance = Vector2.Distance(startPoint, endPoint);
         Vector2 direction = endPoint - startPoint;
-        RaycastHit2D hit = Physics2D.Raycast(startPoint, direction.normalized, distance, GetIgnoreLayerMask("Player", "AllyProjectiles"));
+        RaycastHit2D hit = Physics2D.Raycast(startPoint, direction.normalized, distance, GetIgnoreLayerMask("Player", "AllyProjectiles","Powerups"));
         Vector3[] positions = new Vector3[]
         {
             startPoint,
