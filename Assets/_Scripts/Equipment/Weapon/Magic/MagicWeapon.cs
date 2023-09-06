@@ -43,7 +43,7 @@ public class MagicWeapon : Weapon
     private bool _canSwingWeapon = false;
     [SerializeField] private bool _canRotateWeapon;
 
-
+    private Mana _unitMana;
     public System.Action castTrigger;
 
     public float Swing { get => _swing; }
@@ -112,6 +112,9 @@ public class MagicWeapon : Weapon
 
         SetInputVariables();
         SetSpriteVariables();
+
+        // Mana
+        _unitMana = equipment.Unit.UnitMana;
     }
 
     void Start()
@@ -200,7 +203,11 @@ public class MagicWeapon : Weapon
         {
             for (int i = 0; i < numberOfCasts; i++)
             {
-                Spells[currentSpellIndex]?.CastSpell();
+                if(_unitMana.CurrentValue >= Spells[currentSpellIndex].SpellManaCost)
+                {
+                    Spells[currentSpellIndex]?.CastSpell();
+                    _unitMana.ConsumeMana(Spells[currentSpellIndex].SpellManaCost);
+                }
                 castTrigger?.Invoke();
             }
         }

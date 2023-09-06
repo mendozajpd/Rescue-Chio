@@ -10,6 +10,7 @@ public class AstralDeathRaySpell : Spell
     [SerializeField] private float defaultSpellDamage = 0.5f;
     [SerializeField] private float defaultSpellKnockback;
     [SerializeField] private float defaultSpellCastSpeed;
+    [SerializeField] private float defaultManaCost;
     [SerializeField] private bool inflictsKnockback;
 
     [Header("Charging Settings/Variables")]
@@ -140,7 +141,7 @@ public class AstralDeathRaySpell : Spell
 
     private void Awake()
     {
-        SetSpellVariables(defaultSpellDamage, defaultSpellKnockback, defaultSpellCastSpeed);
+        SetSpellVariables(defaultSpellDamage, defaultSpellKnockback, defaultSpellCastSpeed, defaultManaCost);
         SetChargingInputActions(this);
         SetMagicWeaponActions(canSwing, wandAngle, canRotate);
         _spawnLaser();
