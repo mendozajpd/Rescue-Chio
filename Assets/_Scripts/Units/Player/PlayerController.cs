@@ -12,9 +12,6 @@ public class PlayerController : Controller
     private Animator anim;
     private SpriteRenderer sprite;
 
-    // KNOCKBACKED variables
-    private bool _knockbacked;
-
     // Input System Variables
     private PlayerInputActions playerControls;
     private InputAction move;
@@ -88,7 +85,6 @@ public class PlayerController : Controller
         audioSource = GetComponent<AudioSource>();
         _unit = GetComponent<PlayerManager>();
         _stats = GetComponent<StatsManager>();
-        //afterimages = PS_afterimages.emission;
 
         if (dashStats != null) _setDashStats(dashStats);
     }
@@ -106,7 +102,7 @@ public class PlayerController : Controller
         {
             _dashHandler();
         }
-        _knockbacked = _unit.UnitHealth.Knockbacked;
+        IsKnockbacked = _unit.UnitHealth.Knockbacked;
     }
 
 
@@ -117,12 +113,14 @@ public class PlayerController : Controller
         if (moveDirection.magnitude > 0)
         {
             if(_rb.isKinematic) _rb.isKinematic = false;
+            if (!IsMoving) IsMoving = true;
             anim.speed = _stats.TotalMoveSpeed <= _stats.DefaultMoveSpeed ? _stats.TotalMoveSpeed/ _stats.DefaultMoveSpeed : _stats.TotalMoveSpeed * (_stats.DefaultMoveSpeed/_stats.TotalMoveSpeed) / _stats.DefaultMoveSpeed;
             anim.SetBool("isRunning", true);
         }
         else
         {
             _rb.isKinematic = true;
+            if (IsMoving) IsMoving = false;
             anim.speed = _stats.TotalMoveSpeed / _stats.TotalMoveSpeed;
             anim.SetBool("isRunning", false);
         }
@@ -148,12 +146,12 @@ public class PlayerController : Controller
 
     private void FixedUpdate()
     {
-        if (!Dashing && !_knockbacked)
+        if (!Dashing && !IsKnockbacked)
         {
             _moveCharacter();
         }
 
-        if (Dashing && !_knockbacked)
+        if (Dashing && !IsKnockbacked)
         {
             if (_rb.isKinematic) _rb.isKinematic = false;
             _dashMovement();
