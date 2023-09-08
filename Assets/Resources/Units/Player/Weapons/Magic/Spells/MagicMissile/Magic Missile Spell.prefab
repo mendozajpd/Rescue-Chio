@@ -49,6 +49,7 @@ MonoBehaviour:
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
+  AutoCast: 1
   CanSwing: 1
   WeaponAngle: 0
   CanRotate: 0
@@ -64,6 +65,7 @@ MonoBehaviour:
   defaultSpellDamage: 5
   defaultSpellKnockback: 1
   defaultSpellCastSpeed: 10
+  defaultManaCost: 0
   missileTravelSpeed: 30
   heightDividend: 8
   offsetX: 1

@@ -51,6 +51,7 @@ MonoBehaviour:
   spellHandler: {fileID: 0}
   spellCharge: {fileID: 0}
   wand: {fileID: 0}
+  AutoCast: 0
   CanSwing: 0
   WeaponAngle: 0
   CanRotate: 0
@@ -66,6 +67,7 @@ MonoBehaviour:
   defaultSpellDamage: 5
   defaultSpellKnockback: 0
   defaultSpellCastSpeed: 0
+  defaultManaCost: 0
   inflictsKnockback: 1
   isCharging: 0
   currentCharge: 0

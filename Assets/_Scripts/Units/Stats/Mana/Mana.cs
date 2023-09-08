@@ -10,8 +10,8 @@ public class Mana : Gauge, IManaConsumeable, IRestoreMana
 
     // Mana Regen Delay
     [SerializeField] private float _manaRegenDelayTime;
-    [SerializeField] private float delayMultiplier = 240;
-    [SerializeField] private float delayAdd = 45;
+    private float delayMultiplier = 1;
+    private float delayAdd = 1.5f;
 
     private void Awake()
     {

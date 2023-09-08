@@ -40,6 +40,11 @@ public class AstralDeathRaySpell : Spell
     [SerializeField] private float wandAngle = 0;
     [SerializeField] private bool canRotate = false;
 
+
+    // Player
+    private StatsManager _unitStats;
+    private Mana _unitMana;
+
     public float CurrentCharge
     {
         get => currentCharge;
@@ -147,6 +152,9 @@ public class AstralDeathRaySpell : Spell
         _spawnLaser();
         _exhaust = GetComponentInChildren<ParticleSystem>();
         light2D = GetComponent<Light2D>();
+        _unitMana = wand.equipment.Unit.UnitMana;
+        _unitStats = wand.equipment.playerStats;
+
     }
 
 
@@ -160,6 +168,11 @@ public class AstralDeathRaySpell : Spell
     {
         _chargeHandler();
         _lightTimeHandler();
+    }
+
+    private void FixedUpdate()
+    {
+        if (_laserActivated) _unitMana.ConsumeMana(SpellManaCost);
     }
 
     #region Laser Settings/Laser Spawn
@@ -183,8 +196,12 @@ public class AstralDeathRaySpell : Spell
     {
         if (isCharging)
         {
-            StatsManager unitStats = wand.equipment.playerStats;
-            float atkSpeed = unitStats.TotalAttackSpeed;
+            if(_unitMana.CurrentValue < spellManaCost)
+            {
+                disableLaser();
+                return;
+            }
+            float atkSpeed = _unitStats.TotalAttackSpeed;
             _slowDownPlayer(movementspeedReduction);
             CurrentCharge += Time.deltaTime * (chargeSpeed + (atkSpeed * 0.1f));
         }
@@ -206,6 +223,7 @@ public class AstralDeathRaySpell : Spell
     private void EndCharge(InputAction.CallbackContext context)
     {
         // Release Charging
+        if (!_laserActivated) return;
         disableLaser();
     }
     #endregion

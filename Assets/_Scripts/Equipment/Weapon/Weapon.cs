@@ -312,6 +312,7 @@ public abstract class Weapon : MonoBehaviour
 
 
     #region Usetimer / Autofire
+
     protected virtual void UseTimer(float atkSpeed)
     {
         if (useTime > 0)

@@ -73,7 +73,7 @@ public class MagicWeapon : Weapon
     private void OnEnable()
     {
         Fire.Enable();
-        Fire.performed += CastMagic;
+        Fire.performed += AutoCastMagic;
 
 
 
@@ -95,11 +95,12 @@ public class MagicWeapon : Weapon
         _changeSpell.performed -= _cycleThroughSpells;
         _changeSpell.Disable();
 
-        Fire.performed -= CastMagic;
+        Fire.performed -= AutoCastMagic; 
         Fire.Disable();
 
         DisableAutoFire(_castWeapon);
     }
+
     private void Awake()
     {
         _anchor = gameObject;
@@ -182,6 +183,16 @@ public class MagicWeapon : Weapon
             else
             {
                 Spells[i].gameObject.SetActive(true);
+                switch (Spells[i].AutoCast)
+                {
+                    case true:
+                        ActivateAutoFire(_castWeapon);
+                        break;
+                    case false:
+                        DisableAutoFire(_castWeapon);
+                        break;
+                }
+
                 AddSpellStatsToEquipment(i);
                 // This code will set the stats of the weapon to equipment
                 // but will not actually automatically update
@@ -203,7 +214,7 @@ public class MagicWeapon : Weapon
         {
             for (int i = 0; i < numberOfCasts; i++)
             {
-                if(_unitMana.CurrentValue >= Spells[currentSpellIndex].SpellManaCost)
+                if (_unitMana.CurrentValue >= Spells[currentSpellIndex].SpellManaCost)
                 {
                     Spells[currentSpellIndex]?.CastSpell();
                     _unitMana.ConsumeMana(Spells[currentSpellIndex].SpellManaCost);
@@ -339,9 +350,12 @@ public class MagicWeapon : Weapon
 
     #endregion
 
+    private void CastMagicOnce(InputAction.CallbackContext context)
+    {
+        _useWand();
+    }
 
-
-    private void CastMagic(InputAction.CallbackContext context)
+    private void AutoCastMagic(InputAction.CallbackContext context)
     {
         _castWeapon();
     }

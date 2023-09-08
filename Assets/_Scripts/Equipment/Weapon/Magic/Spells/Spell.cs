@@ -14,6 +14,7 @@ public abstract class Spell : MonoBehaviour
     public SpellHandler spellHandler;
     public SpellChargeHandler spellCharge;
     public MagicWeapon wand;
+    public bool AutoCast;
 
     [Header("Wand Settings")]
     public bool CanSwing;
