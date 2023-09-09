@@ -65,7 +65,7 @@ MonoBehaviour:
   defaultSpellDamage: 5
   defaultSpellKnockback: 1
   defaultSpellCastSpeed: 10
-  defaultManaCost: 0
+  defaultManaCost: 3
   missileTravelSpeed: 30
   heightDividend: 8
   offsetX: 1

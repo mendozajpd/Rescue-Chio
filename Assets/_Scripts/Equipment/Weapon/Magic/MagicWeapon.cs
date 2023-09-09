@@ -76,7 +76,6 @@ public class MagicWeapon : Weapon
         Fire.performed += AutoCastMagic;
 
 
-
         // Cycle through spells
         _changeSpell = playerControls.Player.Special;
         _changeSpell.Enable();
@@ -189,6 +188,7 @@ public class MagicWeapon : Weapon
                         ActivateAutoFire(_castWeapon);
                         break;
                     case false:
+                        
                         DisableAutoFire(_castWeapon);
                         break;
                 }
@@ -350,10 +350,6 @@ public class MagicWeapon : Weapon
 
     #endregion
 
-    private void CastMagicOnce(InputAction.CallbackContext context)
-    {
-        _useWand();
-    }
 
     private void AutoCastMagic(InputAction.CallbackContext context)
     {

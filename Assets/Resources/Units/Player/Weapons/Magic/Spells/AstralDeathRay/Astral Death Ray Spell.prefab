@@ -64,10 +64,10 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  defaultSpellDamage: 5
-  defaultSpellKnockback: 0
+  defaultSpellDamage: 25
+  defaultSpellKnockback: 1
   defaultSpellCastSpeed: 0
-  defaultManaCost: 0
+  defaultManaCost: 0.5
   inflictsKnockback: 1
   isCharging: 0
   currentCharge: 0

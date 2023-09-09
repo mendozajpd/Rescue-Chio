@@ -276,7 +276,7 @@ public class MeleeWeapon : Weapon
     {
         // Weapon Swing
         float t = _swing == 1 ? 0 : -225;
-        target.z = Mathf.Lerp(target.z, t, Time.deltaTime * _playerStats.TotalAttackSpeed);
+        target.z = Mathf.Lerp(target.z, t, Time.deltaTime * (_playerStats.TotalAttackSpeed + defaultWeaponAttackSpeed * 2));
         if (Mathf.Abs(t - target.z) < 1 && Swinging)
         {
             //_swing *= -1; // Double Swing
@@ -288,7 +288,7 @@ public class MeleeWeapon : Weapon
 
     private void _getSwingAngle()
     {
-        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * (currentCombo == 0 ? _playerStats.TotalAttackSpeed * 0.1f : _playerStats.TotalAttackSpeed));
+        _swingAngle = Mathf.Lerp(_swingAngle, _swing * (angleOfTheWeapon), Time.deltaTime * (currentCombo == 0 ? (_playerStats.TotalAttackSpeed + defaultWeaponAttackSpeed * 2) * 0.1f : (_playerStats.TotalAttackSpeed + defaultWeaponAttackSpeed * 2)));
     }
 
     #endregion
@@ -297,7 +297,7 @@ public class MeleeWeapon : Weapon
 
     private void _setThrustSpeed()
     {
-        thrustSpeed = _playerStats.TotalAttackSpeed / 2;
+        thrustSpeed = (_playerStats.TotalAttackSpeed + defaultWeaponAttackSpeed * 2) / 2;
     }
 
     private void _setThrustingPosition()

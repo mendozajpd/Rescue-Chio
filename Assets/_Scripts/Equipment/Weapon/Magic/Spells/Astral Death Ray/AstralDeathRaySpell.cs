@@ -222,8 +222,6 @@ public class AstralDeathRaySpell : Spell
 
     private void EndCharge(InputAction.CallbackContext context)
     {
-        // Release Charging
-        if (!_laserActivated) return;
         disableLaser();
     }
     #endregion
@@ -231,10 +229,10 @@ public class AstralDeathRaySpell : Spell
     #region Activate/Deactivate Laser Functions
     private void disableLaser()
     {
+        if (_laserActivated) _exhaust.Play();
         isCharging = false;
         CurrentCharge = defaultCharge;
         spellCharge.DisableSpellCharge();
-        _exhaust.Play();
         _slowDownPlayer(0);
     }
 
