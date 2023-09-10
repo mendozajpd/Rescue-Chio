@@ -2,15 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StatusEffect : MonoBehaviour
+[System.Serializable]
+public abstract class StatusEffect 
 {
-    void Start()
-    {
-        
-    }
+    public abstract string GiveName();
 
-    void Update()
+}
+
+public class BurningStatus : StatusEffect
+{
+    public override string GiveName()
     {
-        
+        return "Burning";
+    }
+}
+
+public class FreezingStatus : StatusEffect
+{
+    public override string GiveName()
+    {
+        return "Freezing";
     }
 }

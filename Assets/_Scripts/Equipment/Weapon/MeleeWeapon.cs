@@ -259,7 +259,7 @@ public class MeleeWeapon : Weapon
     private void _setSwingingPosition()
     {
         transform.localPosition = new Vector2(0, 0.4f);
-        Sprite.transform.localPosition = new Vector2(0.8f, 0.15f);
+        Sprite.transform.localPosition = new Vector2(.9f, 0.2f);
     }
 
     private void _swingWeapon()
@@ -268,7 +268,7 @@ public class MeleeWeapon : Weapon
 
         // Attack
         _swing *= -1;
-        playRandomMeleeSwing();
+        playRandomMeleeSwing(false);
         Swinging = true;
     }
 
@@ -338,7 +338,7 @@ public class MeleeWeapon : Weapon
         if (Thrusting) return;
 
         _thrust = _thrust == 0f ? 1 : 0f;
-        playRandomMeleeSwing();
+        playRandomMeleeSwing(true);
         Thrusting = true;
     }
 
@@ -425,11 +425,12 @@ public class MeleeWeapon : Weapon
     #endregion
 
     #region Audio Functions
-    private void playRandomMeleeSwing()
+    private void playRandomMeleeSwing(bool highPitch)
     {
         audioSource.clip = WeaponSwingAudio[Random.Range(0, WeaponSwingAudio.Length)];
         audioSource.volume = Random.Range(1 - volumeChangeMultiplier, 1);
         audioSource.pitch = Random.Range(1 - pitchChangeMultiplier, 1 + pitchChangeMultiplier);
+        if(highPitch) audioSource.pitch =  1.3f + pitchChangeMultiplier;
         audioSource.Play();
     }
 

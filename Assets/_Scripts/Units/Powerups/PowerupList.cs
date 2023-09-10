@@ -15,4 +15,4 @@ public class PowerupList
         name = powerupName;
         stack = newStack;
     }
-}
+}   

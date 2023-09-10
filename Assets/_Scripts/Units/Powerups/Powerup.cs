@@ -129,5 +129,6 @@ public class MoveSpeedPowerup : Powerup
     public override void OnRemove(PowerupsManager unit, int stack)
     {
         unit.TotalBonusMovementSpeed -= _statAmount;
+        
     }
 }

@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(StatusEffectApplier))]
 public abstract class Attack : MonoBehaviour
 {
+
+    public List<StatusEffectList> statuseffects = new List<StatusEffectList>();
+
     public virtual void OnEnemyDeath(Health health)
     {
         Debug.Log("death message");
