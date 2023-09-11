@@ -34,6 +34,8 @@ public class StatusEffectApplier : MonoBehaviour
                 case StatusEffects.Burning:
                     s.statusEffect = new BurningStatus();
                     s.name = s.statusEffect.GiveName();
+                    s.tier = s.statusEffect.StartingTier();
+                    s.duration = s.statusEffect.DefaultDuration();
                     break;
                 case StatusEffects.Freezing:
                     s.statusEffect = new FreezingStatus();
@@ -52,6 +54,7 @@ public class StatusEffectApplier : MonoBehaviour
         {
             if (s.effect == effect)
             {
+                s.tier += 1;
                 return;
             }
         }

@@ -245,14 +245,14 @@ public class StatusEffectsManager : MonoBehaviour
         set
         {
             _burningStatusTime = value;
-            
+
         }
     }
 
     private int _burningStatusTier;
     private float _burningDamageDelayDuration = .4f;
     private float _burningDamageDelayTime;
-    private Color32 _burningDamagePopupColor = new Color32(214,133,102,0);
+    private Color32 _burningDamagePopupColor = new Color32(214, 133, 102, 0);
     private ParticleSystem firePrefab;
     private ParticleSystem fireObject;
     private Light2D fireLights;
@@ -291,12 +291,12 @@ public class StatusEffectsManager : MonoBehaviour
     {
         _burningStatusTimer();
 
-        if(BurningStatusTime > 0)
+        if (BurningStatusTime > 0)
         {
             if (!fireLights.enabled) fireLights.enabled = true;
             if (!fireEmission.enabled) fireEmission.enabled = true;
 
-            if (_burningDamageDelayTime < 0 )
+            if (_burningDamageDelayTime < 0)
             {
                 burnUnit();
                 fireLights.intensity += Random.Range(.1f, .2f);
@@ -309,11 +309,11 @@ public class StatusEffectsManager : MonoBehaviour
 
     private void burnUnit()
     {
+        fireAmount = 10 * _burningStatusTier;
+        fireEmission.rateOverTime = fireAmount;
         _unitHealth.Damage(1 * _burningStatusTier, false, 0, null, _burningDamagePopupColor);
         _burningDamageDelayTime = _burningDamageDelayDuration;
         fireLights.intensity = fireIntensity * _burningStatusTier;
-        fireAmount = 10 * _burningStatusTier;
-        fireEmission.rateOverTime = fireAmount;
 
     }
     private void _burningStatusTimer()
@@ -326,8 +326,15 @@ public class StatusEffectsManager : MonoBehaviour
 
         if (BurningStatusTime <= 0)
         {
-            if (fireEmission.enabled) fireEmission.enabled = false;
-            if (fireLights.enabled) fireLights.enabled = false;
+            if (fireEmission.enabled)
+            {
+                fireEmission.enabled = false;
+            }
+            if (fireLights.enabled)
+            {
+                fireLights.enabled = false;
+            }
+
         }
     }
     private void SpawnFireParticles()

@@ -19,7 +19,7 @@ public abstract class Attack : MonoBehaviour
 
         foreach(StatusEffectList s in statuseffects)
         {
-            s.statusEffect.InflictStatusEffect(statusReceiver);
+            s.statusEffect.InflictStatusEffect(statusReceiver, s.duration, s.tier);
         }
     }
 
