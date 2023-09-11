@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class StatusEffectsManager : MonoBehaviour
 {
@@ -249,16 +250,26 @@ public class StatusEffectsManager : MonoBehaviour
     }
 
     private int _burningStatusTier;
-    private float _burningDamageDelayDuration = .3f;
+    private float _burningDamageDelayDuration = .4f;
     private float _burningDamageDelayTime;
-
     private Color32 _burningDamagePopupColor = new Color32(214,133,102,0);
+    private ParticleSystem firePrefab;
+    private ParticleSystem fireObject;
+    private Light2D fireLights;
+    private ParticleSystem.EmissionModule fireEmission;
+    private float fireIntensity = 1;
+    private float fireAmount = 10;
     #endregion
 
     private void Awake()
     {
         _unit = GetComponent<UnitManager>();
+
+        // Burning Variables
+        SpawnFireParticles();
     }
+
+
 
     void Start()
     {
@@ -282,9 +293,16 @@ public class StatusEffectsManager : MonoBehaviour
 
         if(BurningStatusTime > 0)
         {
+            if (!fireLights.enabled) fireLights.enabled = true;
+            if (!fireEmission.enabled) fireEmission.enabled = true;
+
             if (_burningDamageDelayTime < 0 )
             {
                 burnUnit();
+                fireLights.intensity += Random.Range(.1f, .2f);
+                fireLights.intensity -= Random.Range(.1f, .3f);
+                fireAmount -= 1;
+                fireEmission.rateOverTime = fireAmount;
             }
         }
     }
@@ -293,6 +311,9 @@ public class StatusEffectsManager : MonoBehaviour
     {
         _unitHealth.Damage(1 * _burningStatusTier, false, 0, null, _burningDamagePopupColor);
         _burningDamageDelayTime = _burningDamageDelayDuration;
+        fireLights.intensity = fireIntensity * _burningStatusTier;
+        fireAmount = 10 * _burningStatusTier;
+        fireEmission.rateOverTime = fireAmount;
 
     }
     private void _burningStatusTimer()
@@ -302,7 +323,20 @@ public class StatusEffectsManager : MonoBehaviour
             BurningStatusTime -= Time.deltaTime;
             _burningDamageDelayTime -= Time.deltaTime;
         }
-    } 
+
+        if (BurningStatusTime <= 0)
+        {
+            if (fireEmission.enabled) fireEmission.enabled = false;
+            if (fireLights.enabled) fireLights.enabled = false;
+        }
+    }
+    private void SpawnFireParticles()
+    {
+        firePrefab = Resources.Load<ParticleSystem>("Fire");
+        fireObject = Instantiate(firePrefab, transform);
+        fireEmission = fireObject.emission;
+        fireLights = fireObject.GetComponent<Light2D>();
+    }
 
     public void InflictBurningStatus(float duration, int tier)
     {

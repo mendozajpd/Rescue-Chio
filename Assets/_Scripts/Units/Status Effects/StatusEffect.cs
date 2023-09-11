@@ -23,7 +23,7 @@ public class BurningStatus : StatusEffect
 
     public override void InflictStatusEffect(StatusEffectsManager unit)
     {
-        unit.InflictBurningStatus(5, 1);
+        unit.InflictBurningStatus(3.5f, 1);
     }
 }
 
