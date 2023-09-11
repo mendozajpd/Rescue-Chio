@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatusEffectsManager : MonoBehaviour
 {
     private UnitManager _unit;
+    private Health _unitHealth;
     #region STATS
 
     [Header("BONUS STATS")]
@@ -232,22 +233,82 @@ public class StatusEffectsManager : MonoBehaviour
         }
     }
 
+
+    #endregion
+
+    #region Burning Status Effect
+    private float _burningStatusTime;
+    public float BurningStatusTime
+    {
+        get => _burningStatusTime;
+        set
+        {
+            _burningStatusTime = value;
+            
+        }
+    }
+
+    private int _burningStatusTier;
+    private float _burningDamageDelayDuration = .3f;
+    private float _burningDamageDelayTime;
+
+    private Color32 _burningDamagePopupColor = new Color32(214,133,102,0);
     #endregion
 
     private void Awake()
     {
         _unit = GetComponent<UnitManager>();
     }
+
     void Start()
     {
-        
+        _unitHealth = _unit.UnitHealth;
+
     }
 
     void Update()
     {
-        
+
+    }
+    private void FixedUpdate()
+    {
+        _burningStatusHandler();
+
+    }
+    #region Burning Status Effect
+    private void _burningStatusHandler()
+    {
+        _burningStatusTimer();
+
+        if(BurningStatusTime > 0)
+        {
+            if (_burningDamageDelayTime < 0 )
+            {
+                burnUnit();
+            }
+        }
     }
 
+    private void burnUnit()
+    {
+        _unitHealth.Damage(1 * _burningStatusTier, false, 0, null, _burningDamagePopupColor);
+        _burningDamageDelayTime = _burningDamageDelayDuration;
 
+    }
+    private void _burningStatusTimer()
+    {
+        if (BurningStatusTime > 0)
+        {
+            BurningStatusTime -= Time.deltaTime;
+            _burningDamageDelayTime -= Time.deltaTime;
+        }
+    } 
+
+    public void InflictBurningStatus(float duration, int tier)
+    {
+        BurningStatusTime = duration;
+        _burningStatusTier = tier;
+    }
+    #endregion
 
 }

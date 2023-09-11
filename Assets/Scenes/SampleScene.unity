@@ -1954,6 +1954,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 525410144}
     m_Modifications:
+    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: statuseffects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: statuseffects.Array.data[0].name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: statuseffects.Array.data[1].effect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
+      propertyPath: statuseffects.Array.data[2].effect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8541770209942839082, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
       propertyPath: WeaponSwingAudio.Array.size
       value: 1
@@ -2533,6 +2549,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -2874,6 +2896,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -3162,6 +3190,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -4019,6 +4053,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -4391,6 +4431,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -4806,6 +4852,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -5167,6 +5219,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 0
@@ -5684,6 +5742,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1
@@ -5998,6 +6062,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxValue: 0
   currentValue: 0
+  NormalAttackColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  CritAttackColor:
+    serializedVersion: 2
+    rgba: 4278190335
   Knockbacked: 0
   Invincible: 0
   godMode: 1

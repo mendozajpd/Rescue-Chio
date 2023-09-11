@@ -7,6 +7,11 @@ public abstract class StatusEffect
 {
     public abstract string GiveName();
 
+    public virtual void InflictStatusEffect(StatusEffectsManager unit)
+    {
+
+    }
+
 }
 
 public class BurningStatus : StatusEffect
@@ -14,6 +19,11 @@ public class BurningStatus : StatusEffect
     public override string GiveName()
     {
         return "Burning";
+    }
+
+    public override void InflictStatusEffect(StatusEffectsManager unit)
+    {
+        unit.InflictBurningStatus(5, 1);
     }
 }
 

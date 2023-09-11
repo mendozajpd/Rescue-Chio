@@ -9,8 +9,8 @@ public class Health : Gauge, IDamageable, IHealable
     public delegate void DeathHandler();
     public event DeathHandler hasDied;
     private HealthBar _healthBarPrefab;
-    private Color32 normalAttackColor = Color.white;
-    private Color32 critAttackColor = Color.red;
+    public Color32 NormalAttackColor = Color.white;
+    public Color32 CritAttackColor = Color.red;
     private TextPopupPool _popupTextPool;
 
     [Header("Knockback Variables")]
@@ -120,14 +120,14 @@ public class Health : Gauge, IDamageable, IHealable
 
     #region DAMAGE/INVINCIBILITY FUNCTIONS
     // Can be used to inflict debuff if there is
-    public void Damage(float damageAmount, bool isCrit, float invincibilityTime, Attack attack)
+    public void Damage(float damageAmount, bool isCrit, float invincibilityTime, Attack attack, Color32 attackColor)
     {
-        _popupTextPool.SpawnDamageText(transform.position, isCrit, damageAmount.ToString(), normalAttackColor, critAttackColor);
+        _popupTextPool.SpawnDamageText(transform.position, isCrit, damageAmount.ToString(), attackColor, CritAttackColor);
 
         if (CurrentValue - damageAmount <= 0)
         {
             hasDied?.Invoke();
-            attack.OnEnemyDeath(this);
+            attack?.OnEnemyDeath(this);
             Destroy(gameObject);
             return;
         }
