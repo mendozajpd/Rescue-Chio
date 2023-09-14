@@ -1618,7 +1618,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.6
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 0000000021047afd
@@ -1899,18 +1899,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
       propertyPath: statuseffects.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
-      propertyPath: statuseffects.Array.data[0].name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
-      propertyPath: statuseffects.Array.data[1].effect
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6550491288368411064, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}
-      propertyPath: statuseffects.Array.data[2].effect
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8541770209942839082, guid: 151db9a7251200a44a07a40f3192c8e0, type: 3}

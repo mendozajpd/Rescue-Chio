@@ -250,7 +250,7 @@ public class StatusEffectsManager : MonoBehaviour
     }
 
     private int _burningStatusTier;
-    private float _burningDamageDelayDuration = .4f;
+    private float _burningDamageDelayDuration = .3f;
     private float _burningDamageDelayTime;
     private Color32 _burningDamagePopupColor = new Color32(214, 133, 102, 0);
     private ParticleSystem firePrefab;
@@ -279,7 +279,11 @@ public class StatusEffectsManager : MonoBehaviour
 
     void Update()
     {
+        if(BurningStatusTime > 0)
+        {
+            fireLights.intensity += Random.Range(-.05f, .05f);
 
+        }
     }
     private void FixedUpdate()
     {
@@ -299,10 +303,6 @@ public class StatusEffectsManager : MonoBehaviour
             if (_burningDamageDelayTime < 0)
             {
                 burnUnit();
-                fireLights.intensity += Random.Range(.1f, .2f);
-                fireLights.intensity -= Random.Range(.1f, .3f);
-                fireAmount -= 1;
-                fireEmission.rateOverTime = fireAmount;
             }
         }
     }

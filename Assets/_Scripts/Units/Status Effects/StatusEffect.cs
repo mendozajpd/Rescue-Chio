@@ -41,7 +41,7 @@ public class BurningStatus : StatusEffect
 
 public class FreezingStatus : StatusEffect
 {
-    private float _duration = 3.5f;
+    private float _duration = 2.5f;
     private int _tier = 1;
 
     public override string GiveName()
