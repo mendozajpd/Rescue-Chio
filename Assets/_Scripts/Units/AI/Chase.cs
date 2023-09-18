@@ -5,6 +5,7 @@ using UnityEngine;
 public class Chase : AIBehavior
 {
     public List<Targets> TargetList = new List<Targets>();
+
     void Start()
     {
         

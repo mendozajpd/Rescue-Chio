@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class EnemyController : AIController
 {
-    public List<AIBehavior> Behaviors = new List<AIBehavior>();
+    private void Awake()
+    {
+        SetUnitAIManager(gameObject);
+    }
     void Start()
     {
         
