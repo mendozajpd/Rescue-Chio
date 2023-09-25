@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DistanceToTarget : Transition
+public abstract class TargetHandler : Transition
 {
     private Transform _origin;
-    private UnitManager _target;
+    private GameObject _target;
 
     protected const float maxDistance = 8f;
     protected float attackRange = 3f;
 
     protected float _distance => Vector2.Distance(_origin.position, _target.transform.position);
 
-    protected DistanceToTarget(Transform origin, UnitManager target) 
+    protected TargetHandler(Transform origin, GameObject target) 
     {
         _origin = origin;
         _target = target;
@@ -20,23 +20,23 @@ public abstract class DistanceToTarget : Transition
 
 }
 
-public class TargetIsFar : DistanceToTarget
+public class TargetIsFar : TargetHandler
 {
-    public TargetIsFar(Transform origin, UnitManager target) : base(origin, target) { }
+    public TargetIsFar(Transform origin, GameObject target) : base(origin, target) { }
 
     public override bool CheckCondition() => _distance > maxDistance;
 }
 
-public class TargetIsNear : DistanceToTarget
+public class TargetIsNear : TargetHandler
 {
-    public TargetIsNear(Transform origin, UnitManager target) : base(origin, target) { }
+    public TargetIsNear(Transform origin, GameObject target) : base(origin, target) { }
 
     public override bool CheckCondition() => _distance <= maxDistance && _distance > attackRange;
 }
 
-public class TargetIsInRange : DistanceToTarget
+public class TargetIsInRange : TargetHandler
 {
-    public TargetIsInRange(Transform origin, UnitManager target) : base(origin, target) { }
+    public TargetIsInRange(Transform origin, GameObject target) : base(origin, target) { }
 
     public override bool CheckCondition() => _distance <= attackRange;
 }

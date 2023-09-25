@@ -20,9 +20,3 @@ public class Chase : AIBehavior
     // E.G. Target Player = PlayerManager
 }
 
-
-public enum Targets
-{
-    Player,
-    Enemy,
-}

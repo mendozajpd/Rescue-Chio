@@ -2,45 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CombatMode : State
+public abstract class Combat : State
 {
-    protected StateMachine _stateMachine;
-
-    protected CombatMode(StateMachine machine) => _stateMachine = machine;
+    protected Combat(StateMachine machine) : base(machine) { }
 }
 
-public class AttackState : CombatMode
+public class AttackState : Combat
 {
     public AttackState(StateMachine machine) : base(machine) { }
 
     public override void Enter()
     {
         base.Enter();
-        //_stateMachine.CurrentState = this.ToString();
         Debug.Log("In Attack mode");
     }
 }
 
-public class ChaseState : CombatMode
+public class ChaseState : Combat
 {
     public ChaseState(StateMachine machine) : base(machine) { }
     public override void Enter()
     {
         base.Enter();
-        //_stateMachine.CurrentState = this.ToString();
         Debug.Log("In Chase mode");
     }
 
 }
 
-public class PassiveState : CombatMode
+public class PassiveState : Combat
 {
     public PassiveState(StateMachine machine) : base(machine) { }
 
     public override void Enter()
     {
         base.Enter();
-        //_stateMachine.CurrentState = this.ToString();
         Debug.Log("In Passive mode");
     }
 }

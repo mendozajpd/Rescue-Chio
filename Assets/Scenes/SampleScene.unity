@@ -2586,51 +2586,6 @@ MonoBehaviour:
   _totalPenaltyKnockbackResistance: 0
   _totalPenaltyMoveSpeed: 0
   powerups: []
---- !u!1 &1070197033
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1070197034}
-  - component: {fileID: 1070197035}
-  m_Layer: 9
-  m_Name: Chase Behavior
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1070197034
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070197033}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1361173304}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1070197035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070197033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919c11d44bc44564ba8c73a87b3a6641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetList: 00000000
 --- !u!1 &1081050998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3726,6 +3681,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361173304}
   - component: {fileID: 1361173305}
+  - component: {fileID: 1361173306}
   m_Layer: 9
   m_Name: AI
   m_TagString: Untagged
@@ -3744,9 +3700,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1070197034}
-  - {fileID: 1522602165}
+  m_Children: []
   m_Father: {fileID: 1461599459}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3763,7 +3717,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnitController: {fileID: 0}
-  Behaviors: []
+  FriendlyTowards: 01000000
+  HostileTowards: 00000000
+  _aiType: 0
+--- !u!114 &1361173306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361173303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735319b2bf207814e8fbcc8262e151cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentState: 
+  target: {fileID: 0}
 --- !u!1 &1387974009
 GameObject:
   m_ObjectHideFlags: 0
@@ -5337,51 +5307,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4163453129282792355, guid: 21d985aac463f85439a6bf1f05a6f73c, type: 3}
   m_PrefabInstance: {fileID: 428555886}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1522602164
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1522602165}
-  - component: {fileID: 1522602166}
-  m_Layer: 9
-  m_Name: Flee Behavior
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1522602165
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522602164}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1361173304}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1522602166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522602164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a281e9e6df2291a40af84ec80e79f687, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TypeOfFlee: 0
 --- !u!1 &1524962369
 GameObject:
   m_ObjectHideFlags: 0
