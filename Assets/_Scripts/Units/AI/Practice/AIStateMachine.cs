@@ -14,6 +14,14 @@ public class AIStateMachine : StateMachine
     private List<float> targetDistanceList = new List<float>();
 
     public System.Action UpdateTargetList;
+
+    //State attackState;
+    //State chaseState;
+    //State passiveState;
+
+    //Transition targetIsFar;
+    //Transition targetIsNear;
+    //Transition targetIsInRange;
     private void Awake()
     {
         _aiManager = GetComponent<AIManager>();
@@ -32,21 +40,22 @@ public class AIStateMachine : StateMachine
                 if (debugMode) Debug.Log(gameObject.transform.parent.name + " has no AI.");
                 return;
             case AI.Fighter:
+                SetFighterAI();
                 return;
             default:
                 return;
         }
     }
 
-    // foreach target make a switch statement that
-
-    // Find Target
-    // Look around to find a target
-    // Filter it out by its Aggro stat and distance to the enemy
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // Adds to the target list
+        AddToTargetList(collision);
+
+    }
+
+    private void AddToTargetList(Collider2D collision)
+    {
         foreach (Targets t in _aiManager.HostileTowards)
         {
             switch (t)
@@ -59,7 +68,6 @@ public class AIStateMachine : StateMachine
                         {
                             targetList.Add(collision.gameObject);
                             if (debugMode) Debug.Log("Added: " + collision.gameObject.name);
-                            //UpdateTargetList.Invoke();
                         }
                         else
                         {
@@ -78,8 +86,7 @@ public class AIStateMachine : StateMachine
                         if (!targetList.Contains(collision.gameObject))
                         {
                             targetList.Add(collision.gameObject);
-                            if(debugMode) Debug.Log("Added: " + collision.gameObject.name);
-                            //UpdateTargetList.Invoke();
+                            if (debugMode) Debug.Log("Added: " + collision.gameObject.name);
                         }
                         else
                         {
@@ -95,21 +102,15 @@ public class AIStateMachine : StateMachine
                     break;
             }
         }
-
-
-
         UpdateTargetList.Invoke();
-        SetFighterAI();
-
     }
 
     private void GetClosestTarget()
     {
-        float closestDistance = circleCollider.radius; // radius
+        float closestDistance = circleCollider.radius; 
         _closestTarget = null;
         foreach (GameObject go in targetList)
         {
-            // check distance
             float distance = Vector2.Distance(this.transform.position, go.transform.position);
             if (distance < closestDistance)
             {
@@ -117,8 +118,14 @@ public class AIStateMachine : StateMachine
                 _closestTarget = go;
             }
         }
-        target = null;
-        target = _closestTarget;
+
+        if (_closestTarget != target)
+        {
+            target = null;
+            target = _closestTarget;
+            SetFighterAI();
+            //Debug.Log("Changed target");
+        }
     }
 
     private void FindTarget(GameObject gobject)
@@ -138,16 +145,17 @@ public class AIStateMachine : StateMachine
         State chaseState = new ChaseState(this);
         State passiveState = new PassiveState(this);
 
-        Transition targetIsFar = new TargetIsFar(transform, target);
-        Transition targetIsNear = new TargetIsNear(transform, target);
-        Transition targetIsInRange = new TargetIsInRange(transform, target);
+        Transition targetIsFar = new TargetIsFar(transform, target, circleCollider.radius);
+        Transition targetIsNear = new TargetIsNear(transform, target, circleCollider.radius);
+        Transition targetIsInRange = new TargetIsInRange(transform, target, circleCollider.radius);
 
         Init(initialState: passiveState, states: new()
         {
-            { passiveState, new() { { targetIsNear, chaseState } } },
+            { passiveState, new() { { targetIsNear, chaseState }, { targetIsInRange, chaseState } } },
             { chaseState, new() { { targetIsInRange, attackState }, { targetIsFar, passiveState } } },
             { attackState, new() { { targetIsNear, chaseState } } },
         });
+        Debug.Log("set fighter");
     }
 }
 

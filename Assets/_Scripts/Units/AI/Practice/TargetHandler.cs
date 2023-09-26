@@ -7,52 +7,80 @@ public abstract class TargetHandler : Transition
     protected Transform _origin;
     protected GameObject _target;
 
-    protected const float maxDistance = 8f;
-    protected float attackRange = 3f;
+    protected float _maxDistance;
+    protected float attackRange = 1.5f;
 
     protected float _distance => Vector2.Distance(_origin.position, _target.transform.position);
 
-    protected TargetHandler(Transform origin, GameObject target) 
+    protected TargetHandler(Transform origin, GameObject target, float aggroDistance) 
     {
         _origin = origin;
         _target = target;
+        _maxDistance = aggroDistance;
     }
 
 }
 
 public class TargetIsFar : TargetHandler
 {
-    public TargetIsFar(Transform origin, GameObject target) : base(origin, target) { }
+    public TargetIsFar(Transform origin, GameObject target, float aggroDistance) : base(origin, target, aggroDistance) { }
 
     public override bool CheckCondition() 
     {
-        Debug.Log("target is :" + _target.name);
+        //if (_target != null) Debug.Log("target is :" + _target.name);
 
-        return _target != null ? _distance > maxDistance : false;
+        if (_target == null)
+        {
+            //Debug.Log("There is no target");
+            return false;
+        }
+        else
+        {
+            //Debug.Log("Target is far");
+            return _distance > _maxDistance;
+        }
+
     }
 }
 
 public class TargetIsNear : TargetHandler
 {
-    public TargetIsNear(Transform origin, GameObject target) : base(origin, target) { }
+    public TargetIsNear(Transform origin, GameObject target, float aggroDistance) : base(origin, target, aggroDistance) { }
 
     public override bool CheckCondition() 
     {
-        Debug.Log("target is :" + _target.name);
+        //if (_target != null) Debug.Log("target is :" + _target.name);
+        if (_target == null)
+        {
+            Debug.Log("There is no target");
+            return false;
+        }
+        else
+        {
+            //Debug.Log("Target is near");
+            return _distance <= _maxDistance && _distance > attackRange;
+        }
 
-        return _target != null ? _distance <= maxDistance && _distance > attackRange : false;
     }
 }
 
 public class TargetIsInRange : TargetHandler
 {
-    public TargetIsInRange(Transform origin, GameObject target) : base(origin, target) { }
+    public TargetIsInRange(Transform origin, GameObject target, float aggroDistance) : base(origin, target, aggroDistance) { }
 
-    public override bool CheckCondition() 
+    public override bool CheckCondition()
     {
-        Debug.Log("target is :" + _target.name);
+        if (_target == null) 
+        {
+            //Debug.Log("There is no target");
+            return false;
+        } else
+        {
+            //Debug.Log("Target is in range");
+            return _distance <= attackRange;
+        }
 
-        return _target != null ? _distance <= attackRange : false;
+
     } 
 
 }
