@@ -5,18 +5,22 @@ using UnityEngine;
 public class AIStateMachine : StateMachine
 {
     private AIManager _aiManager;
+    private CircleCollider2D circleCollider;
 
     [SerializeField] private GameObject target;
-    //private GameObject _temporaryTarget;
-    private List<GameObject> targetList = new List<GameObject>();
+    [SerializeField] private bool debugMode;
+    private GameObject _closestTarget;
+    public List<GameObject> targetList = new List<GameObject>();
     private List<float> targetDistanceList = new List<float>();
 
+    public System.Action UpdateTargetList;
     private void Awake()
     {
         _aiManager = GetComponent<AIManager>();
         _aiManager.AIChanged += SetAIType;
+        circleCollider = GetComponent<CircleCollider2D>();
         SetAIType();
-
+        UpdateTargetList += GetClosestTarget;
     }
 
     private void SetAIType()
@@ -25,10 +29,9 @@ public class AIStateMachine : StateMachine
         switch (aiType)
         {
             case AI.None:
-                Debug.Log(gameObject.transform.parent.name + " has no AI.");
+                if (debugMode) Debug.Log(gameObject.transform.parent.name + " has no AI.");
                 return;
             case AI.Fighter:
-                SetFighterAI();
                 return;
             default:
                 return;
@@ -41,48 +44,93 @@ public class AIStateMachine : StateMachine
     // Look around to find a target
     // Filter it out by its Aggro stat and distance to the enemy
 
-    private void FindTarget(GameObject gobject)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (target == null)
+        // Adds to the target list
+        foreach (Targets t in _aiManager.HostileTowards)
         {
-            GameObject tempTarget = gobject;
-            float shortestDistance = GetComponent<CircleCollider2D>().radius;
-            foreach (Targets t in _aiManager.HostileTowards)
+            switch (t)
             {
-                switch (t)
-                {
-                    case Targets.Players:
-                        PlayerController player = gobject.GetComponent<PlayerController>();
-                        if(player!=null)
+                case Targets.Players:
+                    PlayerManager player = collision.GetComponent<PlayerManager>();
+                    if (player != null)
+                    {
+                        if (!targetList.Contains(collision.gameObject))
                         {
-                            // check for aggro (temporarily nothing)
-                            // check distance
-                            float distanceBetweenTarget = Vector2.Distance(transform.position, player.transform.position);
-                            if (distanceBetweenTarget < shortestDistance) shortestDistance = distanceBetweenTarget;
+                            targetList.Add(collision.gameObject);
+                            if (debugMode) Debug.Log("Added: " + collision.gameObject.name);
+                            //UpdateTargetList.Invoke();
                         }
-                        break;
-                    case Targets.Enemies:
-                        EnemyController enemy = gobject.GetComponent<EnemyController>();
-                        break;
-                    default:
-                        break;
-                }
-
-                // Check its aggro
-                // Check its distance
-
+                        else
+                        {
+                            if (debugMode) Debug.Log(collision.gameObject.name + " is already in the list.");
+                        }
+                    }
+                    else
+                    {
+                        if (debugMode) Debug.Log("Not a player target.");
+                    }
+                    break;
+                case Targets.Enemies:
+                    EnemyManager enemy = collision.GetComponent<EnemyManager>();
+                    if (enemy != null)
+                    {
+                        if (!targetList.Contains(collision.gameObject))
+                        {
+                            targetList.Add(collision.gameObject);
+                            if(debugMode) Debug.Log("Added: " + collision.gameObject.name);
+                            //UpdateTargetList.Invoke();
+                        }
+                        else
+                        {
+                            if (debugMode) Debug.Log(collision.gameObject.name + " is already in the list.");
+                        }
+                    }
+                    else
+                    {
+                        if (debugMode) Debug.Log("Not an enemy target.");
+                    }
+                    break;
+                default:
+                    break;
             }
-                
         }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        FindTarget();
 
-        // Find closest collision
-        // Filter it out
-        // 
+
+        UpdateTargetList.Invoke();
+        SetFighterAI();
+
     }
+
+    private void GetClosestTarget()
+    {
+        float closestDistance = circleCollider.radius; // radius
+        _closestTarget = null;
+        foreach (GameObject go in targetList)
+        {
+            // check distance
+            float distance = Vector2.Distance(this.transform.position, go.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                _closestTarget = go;
+            }
+        }
+        target = null;
+        target = _closestTarget;
+    }
+
+    private void FindTarget(GameObject gobject)
+    {
+
+        //  Find a means to get the target
+        //  Find a means to identify the target
+        //  Find a means to filter the target
+
+
+    }
+
 
     private void SetFighterAI()
     {
@@ -103,8 +151,8 @@ public class AIStateMachine : StateMachine
     }
 }
 
-public enum AI 
-{ 
+public enum AI
+{
     None,
     Fighter,
 }

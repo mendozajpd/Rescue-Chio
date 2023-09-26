@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class TargetHandler : Transition
 {
-    private Transform _origin;
-    private GameObject _target;
+    protected Transform _origin;
+    protected GameObject _target;
 
     protected const float maxDistance = 8f;
     protected float attackRange = 3f;
@@ -24,19 +24,35 @@ public class TargetIsFar : TargetHandler
 {
     public TargetIsFar(Transform origin, GameObject target) : base(origin, target) { }
 
-    public override bool CheckCondition() => _distance > maxDistance;
+    public override bool CheckCondition() 
+    {
+        Debug.Log("target is :" + _target.name);
+
+        return _target != null ? _distance > maxDistance : false;
+    }
 }
 
 public class TargetIsNear : TargetHandler
 {
     public TargetIsNear(Transform origin, GameObject target) : base(origin, target) { }
 
-    public override bool CheckCondition() => _distance <= maxDistance && _distance > attackRange;
+    public override bool CheckCondition() 
+    {
+        Debug.Log("target is :" + _target.name);
+
+        return _target != null ? _distance <= maxDistance && _distance > attackRange : false;
+    }
 }
 
 public class TargetIsInRange : TargetHandler
 {
     public TargetIsInRange(Transform origin, GameObject target) : base(origin, target) { }
 
-    public override bool CheckCondition() => _distance <= attackRange;
+    public override bool CheckCondition() 
+    {
+        Debug.Log("target is :" + _target.name);
+
+        return _target != null ? _distance <= attackRange : false;
+    } 
+
 }

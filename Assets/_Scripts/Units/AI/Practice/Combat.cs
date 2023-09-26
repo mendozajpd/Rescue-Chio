@@ -14,7 +14,7 @@ public class AttackState : Combat
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("In Attack mode");
+        //Debug.Log("In Attack mode");
     }
 }
 
@@ -24,7 +24,7 @@ public class ChaseState : Combat
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("In Chase mode");
+        //Debug.Log("In Chase mode");
     }
 
 }
@@ -36,6 +36,6 @@ public class PassiveState : Combat
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("In Passive mode");
+        //Debug.Log("In Passive mode");
     }
 }

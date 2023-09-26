@@ -3719,7 +3719,7 @@ MonoBehaviour:
   UnitController: {fileID: 0}
   FriendlyTowards: 01000000
   HostileTowards: 00000000
-  _aiType: 0
+  _aiType: 1
 --- !u!114 &1361173306
 MonoBehaviour:
   m_ObjectHideFlags: 0
